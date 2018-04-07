@@ -30,11 +30,11 @@
 
     <div class="login-box">
         <div class="login-logo">
-            <a href="../../index2.html"><b>Gestión de {{config('app.name')}}</b></a>
+            <a href="../../index2.html"><b>Sistema</b> {{config('app.name')}}</a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
-            <img src="http://www.municomas.gob.pe/wp-content/uploads/2017/06/logo-municomas.png" />
+            
             <p class="login-box-msg">Logeate para iniciar sesión</p>
 
             <form method="POST" action="{{ route('login') }}">
@@ -60,7 +60,7 @@
                 <div class="row">
                     <!-- /.col -->
                     <div class="col-xs-12">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">Iniciar Sesión</button>
+                        <button type="submit" class="btn btn-danger btn-block btn-flat">Iniciar Sesión</button>
                     </div>
                     <!-- /.col -->
                 </div>

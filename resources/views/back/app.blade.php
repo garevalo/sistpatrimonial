@@ -44,7 +44,7 @@
             <section class="content-header">
                 @section('menu-h1')
                     <h1>
-                        Gestión de Activos TI
+                        Sistema de control Patrimonial
                         {{-- <small>Control panel</small> --}}
                     </h1>
                 @show
@@ -78,7 +78,7 @@
     @show
 
     @section('asidecontrol')
-      @include('back.asidecontrol')
+     {{-- @include('back.asidecontrol') --}} 
     @show
 
     @section('endwrapper')
