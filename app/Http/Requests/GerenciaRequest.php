@@ -26,7 +26,7 @@ class GerenciaRequest extends FormRequest
 
         if($this->request->has('_method')){
             return [
-                'gerencia'=>'required|min:5|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:cargos,cargo,'.$this->route('gerencia').',idgerencia'
+                'gerencia'=>'required|min:5|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:gerencias,gerencia,'.$this->route('gerencia').',idgerencia'
             ];
         }else{
             return [

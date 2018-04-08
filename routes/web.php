@@ -23,7 +23,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('subgerencia','SubgerenciaController');
     Route::resource('gerencia','GerenciaController');
     Route::resource('sede','SedeController');
-    Route::resource('cargo','CargoController');
+
+    Route::resource('bien','BienController');
+    
     Route::resource('personal','PersonalController');
     Route::get('rol/alldata','RolController@alldata')->name('getroles');
     Route::resource('rol','RolController');

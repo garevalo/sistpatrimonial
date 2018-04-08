@@ -21,7 +21,15 @@
         <ul class="sidebar-menu">
             <li class="header">MENU</li>
             <li></li>
-
+            <li class="treeview">
+                <a href="/hardware">
+                    <i class="fa fa-archive"></i> <span>Almacén</span>
+                    <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="@if(request()->getRequestUri()=='/bien') active @endif"><a href="/bien"><i class="fa fa-circle-o"></i> Bienes</a></li>
+                </ul>
+            </li>
             <li class="treeview @if(in_array(request()->getRequestUri(),['/cargo','/sede','/gerencia','/subgerencia','/personal','/tiposoftware','/tipohardware'])) active @endif ">
                 <a href="#">
                     <i class="fa fa-pencil-square-o"></i>

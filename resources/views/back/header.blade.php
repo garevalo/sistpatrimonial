@@ -2,9 +2,9 @@
     <!-- Logo -->
     <a href="/" class="logo" style="background-color: #555299;">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b></b>S.P</span>
+        <span class="logo-mini"><b></b>C.I</span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg">Sist. <b>{{config('app.name')}}</b></span>
+        <span class="logo-lg">Control. <b>{{config('app.name')}}</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" style="background-color: #605ca8;">
