@@ -38,8 +38,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['middleware' => 'role'], function() {
 
-
-
     });
 
     
