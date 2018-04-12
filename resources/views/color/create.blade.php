@@ -19,7 +19,7 @@
                 <div class="form-group {{ $errors->has('color') ? ' has-error' : '' }}">
                     <label>Color:</label>
 
-                    <input type="text" class="form-control" name="color" id="color" value="{{old('color')}}" required>
+                    <input type="text" class="form-control" name="color" id="color" value="{{old('color')}}" required autofocus>
                     {!! $errors->first('color','<span class="help-block">:message</span>') !!}
                 </div>
             </div>

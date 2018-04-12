@@ -18,7 +18,7 @@
                         <div class="form-group-sm {{ $errors->has('codinventario') ? ' has-error' : '' }}">
                             <label>Código Inventario:</label>
 
-                            <input type="text" class="form-control" name="codinventario" id="codinventario" value="{{old('codinventario')}}">
+                            <input type="text" class="form-control" name="codinventario" id="codinventario" value="{{old('codinventario')}}" required autofocus >
                             {!! $errors->first('codinventario','<span class="help-block">:message</span>') !!}
                         </div>
 

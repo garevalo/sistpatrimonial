@@ -19,7 +19,7 @@
                 <div class="form-group {{ $errors->has('adquisicion') ? ' has-error' : '' }}">
                     <label>Adquisición:</label>
 
-                    <input type="text" class="form-control" name="adquisicion" id="adquisicion" value="{{old('adquisicion')}}" required>
+                    <input type="text" class="form-control" name="adquisicion" id="adquisicion" value="{{old('adquisicion')}}" required autofocus>
                     {!! $errors->first('adquisicion','<span class="help-block">:message</span>') !!}
                 </div>
             </div>
