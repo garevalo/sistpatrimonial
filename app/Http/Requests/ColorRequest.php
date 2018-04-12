@@ -25,11 +25,11 @@ class ColorRequest extends FormRequest
     {
         if($this->request->has('_method')){
             return [
-                'color'=>'required|min:5|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:colors,color,'.$this->route('color').',idcolor'
+                'color'=>'required|min:2|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:colors,color,'.$this->route('color').',idcolor'
             ];
         }else{
             return [
-                'color'=>'required|min:5|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:colors,color'
+                'color'=>'required|min:2|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:colors,color'
             ];
         }
 

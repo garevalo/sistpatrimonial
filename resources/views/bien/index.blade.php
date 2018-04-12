@@ -31,14 +31,11 @@
                     <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Cod. Inventario</th>
+                        <th>Código Patrimonial</th>
+                        <th>color</th>
                         <th>Marca</th>
                         <th>Modelo</th>
-                        <th>Num.Serie</th>
-                        <th>Cod. Inventario</th>
-                        <th>Orden Compra</th>
-                        <th>Código Patrimonial</th>
-                        <th width="20%">Descripción</th>
-                        <th>Fec. Adquision</th>
                         <th>Estado</th>
                         <th>Editar</th>
                     </tr>
@@ -72,6 +69,35 @@
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js"></script>
     <!-- page script -->
+
+    <script>
+        //var template = Handlebars.compile($("#details-template").html());
+
+        var table = $('#table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{{route('getcolores')}}',
+            columns: [
+                {data: 'idbien', name: 'idbien'},
+                {data: 'codinventario', name: 'codinventario'},
+                {data: 'codpatrimonial', name: 'codpatrimonial'},
+                {data: 'idcolor', name: 'idcolor'},
+                {data: 'idmmarca', name: 'idmmarca'},
+                {data: 'idmodelo', name: 'idmodelo'},
+                {data:'estado',name:'estado'},
+                {
+                    data: 'edit',
+                    name: 'edit',
+                    orderable:false,
+                    searchable:false
+                },
+            ],
+            order: [[0, 'desc']],
+            "language": {
+                "url": "{{asset("plugins/datatables/Spanish.json")}}"
+            }
+        });
+    </script>
 
 
 @endsection

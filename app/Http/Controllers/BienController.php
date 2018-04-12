@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests\BienRequest;
 use App\Bien;
+use App\Color;
+use App\Adquisicion;
+use App\Modelo;
+use App\Marca;
 use Carbon\Carbon;
 use DB;
 use Datatables;
@@ -29,7 +33,11 @@ class BienController extends Controller
      */
     public function create()
     {
-        return view('bien.create');
+        $colores = Color::all();
+        $adquisiciones = Adquisicion::all();
+        $marcas = Marca::all();
+        $modelos = Modelo::all();
+        return view('bien.create',compact('colores','adquisiciones','marcas','modelos'));
     }
 
     /**

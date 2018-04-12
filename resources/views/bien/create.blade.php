@@ -29,32 +29,43 @@
                             {!! $errors->first('codpatrimonial','<span class="help-block">:message</span>') !!}
                         </div>
 
-                        <div class="form-group-sm {{ $errors->has('orden_compra') ? ' has-error' : '' }}">
+                        <div class="form-group-sm {{ $errors->has('ordencompra') ? ' has-error' : '' }}">
                             <label>Orden de Compra:</label>
 
-                            <input type="text" class="form-control" name="orden_compra" id="orden_compra" value="{{old('orden_compra')}}" required>
-                            {!! $errors->first('orden_compra','<span class="help-block">:message</span>') !!}
+                            <input type="text" class="form-control" name="ordencompra" id="ordencompra" value="{{old('ordencompra')}}" required>
+                            {!! $errors->first('ordencompra','<span class="help-block">:message</span>') !!}
                         </div>
 
                         <div class="form-group-sm {{ $errors->has('idmarca') ? ' has-error' : '' }}">
                             <label>Marca:</label>
                             <select class="form-control" name="idmarca" id="idmarca" value="{{old('idmarca')}}" required>
                                 <option>Seleccione Marca</option>
+                                @foreach($marcas as $marca)
+                                <option value="{{$marca->idmarca}}">{{$marca->marca}}</option>
+                                @endforeach()
                             </select>
                             {!! $errors->first('idmarca','<span class="help-block">:message</span>') !!}
                         </div>
 
-                        <div class="form-group-sm {{ $errors->has('modelo') ? ' has-error' : '' }}">
+                        <div class="form-group-sm {{ $errors->has('idmodelo') ? ' has-error' : '' }}">
                             <label>Modelo:</label>
-
-                            <input type="text" class="form-control" name="modelo" id="modelo" value="{{old('modelo')}}" required>
-                            {!! $errors->first('modelo','<span class="help-block">:message</span>') !!}
+                            <select class="form-control" name="idmodelo" id="idmodelo" value="{{old('idmodelo')}}" required>
+                                <option value="">Seleccione Modelo</option>
+                                @foreach($modelos as $modelo)
+                                <option value="{{$modelo->idmodelo}}">{{$modelo->modelo}}</option>
+                                @endforeach()
+                            </select>
+                            {!! $errors->first('idmodelo','<span class="help-block">:message</span>') !!}
                         </div>
 
-                        <div class="form-group-sm {{ $errors->has('modelo') ? ' has-error' : '' }}">
+                        <div class="form-group-sm {{ $errors->has('idcolor') ? ' has-error' : '' }}">
                             <label>Color:</label>
-
-                            <input type="text" class="form-control" name="color" id="color" value="{{old('color')}}" required>
+                            <select class="form-control" name="idcolor" id="idcolor" value="{{old('idcolor')}}" required>
+                                <option value="">Seleccione Color</option>
+                                @foreach($colores as $color)
+                                <option value="{{$color->idcolor}}">{{$color->color}}</option>
+                                @endforeach()
+                            </select>
                             {!! $errors->first('color','<span class="help-block">:message</span>') !!}
                         </div>  
 
@@ -75,24 +86,29 @@
                             <label>Estado:</label>
 
                             <select name="estado" id="estado" class="form-control">
-                                <option value="">Estado</option>
-                               
+                                <option value="">Seleccione Estado</option>
+                                <option value="1">Activos</option>
+                                <option value="2">De baja</option>
                             </select>
                             {!! $errors->first('estado','<span class="help-block">:message</span>') !!}
                         </div>
 
-                        <div class="form-group-sm {{ $errors->has('orden_compra') ? ' has-error' : '' }}">
+                        <div class="form-group-sm {{ $errors->has('valor') ? ' has-error' : '' }}">
                             <label>Valor:</label>
 
-                            <input type="text" class="form-control" name="orden_compra" id="orden_compra" value="{{old('orden_compra')}}" required>
-                            {!! $errors->first('orden_compra','<span class="help-block">:message</span>') !!}
+                            <input type="text" class="form-control" name="valor" id="valor" value="{{old('valor')}}" required>
+                            {!! $errors->first('valor','<span class="help-block">:message</span>') !!}
                         </div>
 
-                        <div class="form-group-sm {{ $errors->has('orden_compra') ? ' has-error' : '' }}">
+                        <div class="form-group-sm {{ $errors->has('idadquisicion') ? ' has-error' : '' }}">
                             <label>Modo de Adquisición:</label>
-
-                            <input type="text" class="form-control" name="orden_compra" id="orden_compra" value="{{old('orden_compra')}}" required>
-                            {!! $errors->first('orden_compra','<span class="help-block">:message</span>') !!}
+                            <select class="form-control" name="idadquisicion" id="idadquisicion" required>
+                                <option value="">Seleccione Adquisición</option>
+                                @foreach($adquisiciones as $adquisicion)
+                                <option value="{{$adquisicion->idadquisicion}}">{{$adquisicion->adquisicion}}</option>
+                                @endforeach()
+                            </select>
+                            {!! $errors->first('idadquisicion','<span class="help-block">:message</span>') !!}
                         </div>
 
                         <div class="form-group-sm {{ $errors->has('fecha_adquisicion') ? ' has-error' : '' }}">
