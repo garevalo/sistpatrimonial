@@ -41,6 +41,10 @@
                 <ul class="treeview-menu">
                     <li class="@if(request()->getRequestUri()=='/gerencia') active @endif"><a href="/gerencia"><i class="fa fa-circle-o"></i> Gerencias</a></li>
                     <li class="@if(request()->getRequestUri()=='/subgerencia') active @endif"><a href="/subgerencia"><i class="fa fa-circle-o"></i> Subgerencia</a></li>
+                    <li class="@if(request()->getRequestUri()=='/marca') active @endif"><a href="/marca"><i class="fa fa-circle-o"></i> Marca</a></li>
+                    <li class="@if(request()->getRequestUri()=='/modelo') active @endif"><a href="/modelo"><i class="fa fa-circle-o"></i> Modelo</a></li>
+                    <li class="@if(request()->getRequestUri()=='/color') active @endif"><a href="/color"><i class="fa fa-circle-o"></i> Color</a></li>
+                    <li class="@if(request()->getRequestUri()=='/adquisicion') active @endif"><a href="/adquisicion"><i class="fa fa-circle-o"></i> Adquisición</a></li>
                     <li class="@if(request()->getRequestUri()=='/personal') active @endif"><a href="/personal"><i class="fa fa-circle-o"></i> Personal</a></li>
                     <li class="@if(request()->getRequestUri()=='/rol') active @endif"><a href="/rol"><i class="fa fa-circle-o"></i> Roles</a></li>
                     <li class="@if(request()->getRequestUri()=='/usuario') active @endif"><a href="/usuario"><i class="fa fa-circle-o"></i> Usuario</a></li>
