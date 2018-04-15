@@ -1,6 +1,6 @@
 @extends('back.app')
 
-@section('title')Módulo de Usuarios @endsection
+@section('title')Módulo de {{ucwords($modulo)}} @endsection
 
 @section('head')
     @parent
@@ -10,9 +10,9 @@
 
 @section('menu-h1')
     <h1>
-        <i class="fa fa-user"></i>  Usuarios &nbsp;&nbsp;
-        <a href="{{route('usuario.create')}}" class="btn btn-sm btn-success" title="Add Data">
-            <i class="fa fa-plus-circle"></i> Nuevo Usuario
+        <i class="fa fa-users"></i>  {{ucwords($modulo)}} &nbsp;&nbsp;
+        <a href="{{route('catalogo.create')}}" class="btn btn-sm btn-success" title="nuevo">
+            <i class="fa fa-plus-circle"></i> Nuevo {{ucwords($modulo)}}
         </a>
 
     </h1>
@@ -23,22 +23,17 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Usuarios</h3>
+                <h3 class="box-title">{{ucwords($modulo)}}</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <table id="table" class="table table-bordered table-hover table-condensed">
+                <table id="table" class="table table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Apellidos</th>
-                        <th>Usuario</th>
-                        <th>Email</th>
-                        <th>Rol</th>
+                        <th>Código</th>
+                        <th>Denominación</th>
                         <th>Estado</th>
                         <th>Editar</th>
-
                     </tr>
                     </thead>
                     <tbody></tbody>
@@ -76,15 +71,11 @@
         var table = $('#table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{{route('getalldatausuario')}}',
+            ajax: '{{route('getcatalogos')}}',
             columns: [
-                {data: 'id', name: 'id'},
-                {data: 'name', name: 'name'},
-                {data: 'apellidos', name: 'apellidos'},
-                {data: 'usuario', name: 'usuario'},
-                {data: 'email', name: 'email'},
-                {data: 'roluser', name: 'roluser'},
-                {data: 'estadouser', name: 'estadouser'},
+                {data: 'codcatalogo', name: 'codcatalogo'},
+                {data: 'denom_catalogo', name: 'denom_catalogo'},
+                {data: 'estado', name: 'estado'},
                 {
                     data: 'edit',
                     name: 'edit',

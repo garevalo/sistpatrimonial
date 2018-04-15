@@ -2,7 +2,7 @@
 @section('title') Gestion de Activos TI @endsection
 @section('menu-h1')
     <h1>
-        Gestion de Activos TI
+        Sistema de control de Inventario
         <small>Panel de Control</small>
     </h1>
 @endsection

@@ -43,6 +43,14 @@ Route::middleware(['auth'])->group(function () {
     //Adquisiones
     Route::get('adquisicion/alldata','AdquisicionController@alldata')->name('getadquisiciones');
     Route::resource('adquisicion','AdquisicionController');
+
+    //Catalogo
+    Route::get('catalogo/alldata','CatalogoController@alldata')->name('getcatalogos');
+    Route::resource('catalogo','CatalogoController');
+
+     //Catalogo
+    Route::get('cargo/alldata','CargoController@alldata')->name('getcargos');
+    Route::resource('cargo','CargoController');
     
     //Personal
     Route::resource('personal','PersonalController');

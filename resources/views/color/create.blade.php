@@ -16,7 +16,7 @@
 
             {{csrf_field()}}
             <div class="box-body">
-                <div class="form-group {{ $errors->has('color') ? ' has-error' : '' }}">
+                <div class="form-group-sm  {{ $errors->has('color') ? ' has-error' : '' }}">
                     <label>Color:</label>
 
                     <input type="text" class="form-control" name="color" id="color" value="{{old('color')}}" required autofocus>

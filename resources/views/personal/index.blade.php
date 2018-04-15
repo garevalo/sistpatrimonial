@@ -36,7 +36,6 @@
                         <th>Apellidos</th>
                         <th>Dni</th>
                         <th>Cargo</th>
-                        <th>Sede</th>
                         <th>Gerencia</th>
                         <th>Subgerencia</th>
                         <th>Editar</th>
@@ -51,7 +50,6 @@
                             <td>{{$personal->apellido_paterno .' '.$personal->apellido_materno  }}</td>
                             <td>{{ str_pad($personal->dni, 8, "0", STR_PAD_LEFT)  }}</td>
                             <td>{{$personal->cargo->cargo}}</td>
-                            <td>{{$personal->sede->sede}}</td>
                             <td>{{$personal->gerencia->gerencia}}</td>
                             <td> @if(isset($personal->subgerencia->subgerencia) && !empty($personal->subgerencia->subgerencia))  {{$personal->subgerencia->subgerencia }}@endif</td>
                             <td><a href="{{route('personal.edit',$personal->idpersonal)}}" class="btn btn-primary btn-sm">Editar</a></td>

@@ -6,7 +6,6 @@ use App\Gerencia;
 use App\Http\Requests\PersonalRequest;
 use App\Personal;
 use App\Cargo;
-use App\Sede;
 use App\Subgerencia;
 
 
@@ -24,7 +23,7 @@ class PersonalController extends Controller
     public function index()
     {
 
-        $personals = Personal::with('cargo','subgerencia','gerencia','sede')->get();
+        $personals = Personal::with('cargo','subgerencia','gerencia')->get();
         $modulo = "Personal";
 
         return view('personal.index',compact('modulo','personals'));
@@ -38,12 +37,11 @@ class PersonalController extends Controller
     public function create()
     {
         $cargos = Cargo::all();
-        $sedes = Sede::all();
         $gerencias = Gerencia::all();
         $subgerencias = Subgerencia::all();
         $modulo = "Personal";
 
-        return view('personal.create',compact('modulo','cargos','subgerencias','sedes','gerencias'));
+        return view('personal.create',compact('modulo','cargos','subgerencias','gerencias'));
     }
 
     /**
@@ -78,12 +76,10 @@ class PersonalController extends Controller
     public function edit($id)
     {
         $personal = Personal::FindOrFail($id);
-        $sedes = Sede::all();
         $cargos = Cargo::all();
         $subgerencias = Subgerencia::all();
         $gerencias = Gerencia::all();
         return view("personal.edit",['personal'=>$personal,
-                                            'sedes'=>$sedes,
                                             'subgerencias'=>$subgerencias,
                                             'gerencias'=>$gerencias,
                                             'cargos'=>$cargos,
