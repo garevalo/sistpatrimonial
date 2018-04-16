@@ -116,4 +116,15 @@ class CatalogoController extends Controller
             ->make(true);
 
     }
+
+    public function items(){
+
+        $catalogo =  Catalogo::all();
+
+        foreach ($catalogo as $key => $value) {
+            $result[]  = array('id' => $value->codcatalogo, 'text' => $value->denom_catalogo,'term' => $value->denom_catalogo , 'codcatalogo' => $value->codcatalogo);  
+        }
+
+        return response()->json(['results' => $result ]) ;
+    }
 }

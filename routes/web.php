@@ -45,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('adquisicion','AdquisicionController');
 
     //Catalogo
+    Route::get('catalogo/items','CatalogoController@items')->name('catalogoitems');
     Route::get('catalogo/alldata','CatalogoController@alldata')->name('getcatalogos');
     Route::resource('catalogo','CatalogoController');
 

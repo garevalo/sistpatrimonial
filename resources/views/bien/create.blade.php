@@ -15,6 +15,15 @@
                 {{csrf_field()}}
                 <div class="box-body">
                     <div class="col-md-6 col-xs-12">
+
+                        <div class="form-group-sm {{ $errors->has('codinventario') ? ' has-error' : '' }}">
+                            <label>Bien:</label>
+                            <select class="form-control bien" name="bien" id="bien" required>
+                                
+                            </select>
+                            {!! $errors->first('codinventario','<span class="help-block">:message</span>') !!}
+                        </div>
+
                         <div class="form-group-sm {{ $errors->has('codinventario') ? ' has-error' : '' }}">
                             <label>Código Inventario:</label>
 
@@ -85,7 +94,7 @@
                         <div class="form-group-sm {{ $errors->has('estado') ? ' has-error' : '' }}">
                             <label>Estado:</label>
 
-                            <select name="estado" id="estado" class="form-control">
+                            <select name="estado" id="estado" class="form-control select2">
                                 <option value="">Seleccione Estado</option>
                                 <option value="1">Activos</option>
                                 <option value="2">De baja</option>
@@ -164,4 +173,28 @@
         });
     </script>
 
+    <!-- Select2 -->
+    <script src="{{asset('plugins/select2//select2.full.min.js')}}"></script>
+
+    <script>
+        $(".bien").select2({
+            minimumInputLength: 2,
+            ajax: {
+                url:  "{{route('catalogoitems')}}",
+                results: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.text,
+                                id: item.id
+                            }
+                        })
+                    };
+                }
+            }
+        });
+    </script>
+
 @endsection
+
+
