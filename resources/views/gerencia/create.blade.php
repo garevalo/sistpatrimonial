@@ -15,7 +15,13 @@
         {{ csrf_field() }}
         <div class="box-body">
 
-            <div class="form-group {{ $errors->has('gerencia') ? ' has-error' : '' }}">
+            <div class="form-group-sm {{ $errors->has('gerencia') ? ' has-error' : '' }}">
+                <label>Cod Centro Costo:</label>
+                <input type="text" class="form-control" name="gerencia" id="gerencia" value="{{old('gerencia')}}" required>
+                {!! $errors->first('gerencia','<span class="help-block">:message</span>') !!}
+            </div>
+
+            <div class="form-group-sm {{ $errors->has('gerencia') ? ' has-error' : '' }}">
                 <label>Gerencia:</label>
                 <input type="text" class="form-control" name="gerencia" id="gerencia" value="{{old('gerencia')}}" required>
                 {!! $errors->first('gerencia','<span class="help-block">:message</span>') !!}
@@ -23,7 +29,7 @@
 
         </div>
         <div class="box-footer">
-            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="submit" class="btn-sm btn-primary">Guardar</button>
         </div>
         </form>
         <!-- /.box-body -->

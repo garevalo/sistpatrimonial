@@ -28,7 +28,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <table id="example1" class="table table-bordered table-hover">
+                <table id="example1" class="table table-bordered table-hover table-condensed">
                     <thead>
                     <tr>
                         <th>ID</th>
@@ -52,12 +52,12 @@
                             <td>{{$personal->cargo->cargo}}</td>
                             <td>{{$personal->gerencia->gerencia}}</td>
                             <td> @if(isset($personal->subgerencia->subgerencia) && !empty($personal->subgerencia->subgerencia))  {{$personal->subgerencia->subgerencia }}@endif</td>
-                            <td><a href="{{route('personal.edit',$personal->idpersonal)}}" class="btn btn-primary btn-sm">Editar</a></td>
+                            <td><a href="{{route('personal.edit',$personal->idpersonal)}}" class="btn btn-primary btn-xs">Editar</a></td>
                             <td>
                                 <form method="post" action="{{ route('personal.destroy',$personal->idpersonal) }}">
                                     {!! csrf_field() !!}
                                     {!! method_field('DELETE') !!}
-                                    <input type="submit" value="Eliminar" class="btn btn-danger btn-sm">
+                                    <input type="submit" value="Eliminar" class="btn btn-danger btn-xs">
                                 </form>
                             </td>
                         </tr>

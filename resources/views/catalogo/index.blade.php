@@ -27,7 +27,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <table id="table" class="table table-bordered table-hover">
+                <table id="table" class="table table-bordered table-hover table-condensed">
                     <thead>
                     <tr>
                         <th>Código</th>
@@ -69,6 +69,7 @@
         //var template = Handlebars.compile($("#details-template").html());
 
         var table = $('#table').DataTable({
+            responsive: true,
             processing: true,
             serverSide: true,
             ajax: '{{route('getcatalogos')}}',
