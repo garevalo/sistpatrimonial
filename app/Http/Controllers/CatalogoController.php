@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Catalogo;
 use App\Http\Requests\CatalogoRequest;
+
+use Illuminate\Http\Request;
+
 use Datatables;
 
 class CatalogoController extends Controller
@@ -117,9 +120,11 @@ class CatalogoController extends Controller
 
     }
 
-    public function items(){
+    public function items(Request $request){
 
-        $catalogo =  Catalogo::all();
+        $term       =   $request->term ? : ''; 
+        $catalogo   =   Catalogo::where('denom_catalogo', 'like', $term.'%')->get();
+        $result     =   array();
 
         foreach ($catalogo as $key => $value) {
             $result[]  = array('id' => $value->codcatalogo, 'text' => $value->denom_catalogo,'term' => $value->denom_catalogo , 'codcatalogo' => $value->codcatalogo);  

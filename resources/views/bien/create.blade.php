@@ -18,16 +18,16 @@
 
                         <div class="form-group-sm {{ $errors->has('codinventario') ? ' has-error' : '' }}">
                             <label>Bien:</label>
-                            <select class="form-control bien" name="bien" id="bien" required>
+                            <select class="form-control bien" name="bien" id="bien" required autofocus>
                                 
                             </select>
                             {!! $errors->first('codinventario','<span class="help-block">:message</span>') !!}
                         </div>
 
-                        <div class="form-group-sm {{ $errors->has('codinventario') ? ' has-error' : '' }}">
+                        <div class="form-group-sm {{ $errors->has('codinventario') ? ' has-error' : 'has-info' }}">
                             <label>Código Inventario:</label>
 
-                            <input type="text" class="form-control" name="codinventario" id="codinventario" value="{{old('codinventario')}}" required autofocus >
+                            <input type="text" class="form-control" name="codinventario" id="codinventario" value="{{old('codinventario')}}" required  >
                             {!! $errors->first('codinventario','<span class="help-block">:message</span>') !!}
                         </div>
 
@@ -177,10 +177,19 @@
     <script src="{{asset('plugins/select2//select2.full.min.js')}}"></script>
 
     <script>
-        $(".bien").select2({
+        
+        $("#bien").select2({
+            language: "es",
             minimumInputLength: 2,
             ajax: {
                 url:  "{{route('catalogoitems')}}",
+                delay: 250,
+                dataType: 'json',
+                data: function(params) {
+                    return {
+                        term: params.term
+                    }
+                },
                 results: function (data) {
                     return {
                         results: $.map(data, function (item) {
@@ -191,10 +200,18 @@
                         })
                     };
                 }
-            }
+            },
+            templateResult: formatRepo,
         });
-    </script>
 
+        function formatRepo (repo) {
+          //if (repo.loading) {
+            $("#codinventario").val(repo.id);
+            return repo.text;
+          //}
+        }
+
+    </script>
 @endsection
 
 
