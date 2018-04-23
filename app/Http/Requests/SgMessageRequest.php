@@ -27,11 +27,13 @@ class SgMessageRequest extends FormRequest
 
         if($this->request->has('_method')){
             return [
-                'subgerencia'=>'required|min:5|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:subgerencias,subgerencia,'.$this->route('subgerencia').',idsubgerencia'
+                'subgerencia'=>'required|min:5|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:subgerencias,subgerencia,'.$this->route('subgerencia').',idsubgerencia',
+                'centrocosto'=>'required|min:2|unique:centro_costos,codcentrocosto'
             ];
         }else{
             return [
-                'subgerencia' => 'required|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:subgerencias,subgerencia'
+                'subgerencia' => 'required|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:subgerencias,subgerencia',
+                'centrocosto'=>'required|min:2|unique:centro_costos,codcentrocosto'
             ];
         }
     }
@@ -39,8 +41,7 @@ class SgMessageRequest extends FormRequest
     public function messages()
     {
         return [
-            'idgerencia.required' => 'Campo Gerencia es requerido',
-            'idgerencia.integer' => 'Campo Gerencia debe ser entero',
+            'centrocosto.unique' => 'Centro de costo ya existe',
         ];
     }
 }

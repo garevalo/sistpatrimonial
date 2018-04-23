@@ -12,6 +12,11 @@
     <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
     <!-- iCheck -->
     <link rel="stylesheet" href="plugins/iCheck/square/blue.css">
+    <style type="text/css">
+        html,body{
+            height: auto;
+        }
+    </style>
 @endsection
 
 @section('header') @endsection
@@ -20,7 +25,7 @@
 @section('content-wrapp') @endsection
 @section('end-content-wrapp') @endsection
 @section('body')
-    <body class="hold-transition login-page">
+    <body class="hold-transition login-page" style="background-image: url({{asset('images/banner-login.png')}}); background-repeat: round; " >
 @endsection
 
 @section('wrapper') @endsection
@@ -28,15 +33,15 @@
 
 @section('content')
 
-    <div class="login-box">
+    <div class="login-box" >
         <div class="login-logo">
-            <a href="../../index2.html"><b>Sistema</b> {{config('app.name')}}</a>
+            <a href="#"><b>Sistema</b> {{config('app.name')}}</a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
             
             <p class="login-box-msg">Logeate para iniciar sesión</p>
-
+            <img src="{{ asset('images/logo-municomas.png') }}" class="img-circle" />
             <form method="POST" action="{{ route('login') }}">
                 {{ csrf_field() }}
                 <div class="form-group has-feedback">

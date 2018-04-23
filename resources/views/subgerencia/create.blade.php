@@ -16,10 +16,10 @@
 
         {{csrf_field()}}
         <div class="box-body">
-            <div class="form-group-sm {{ $errors->has('gerencia') ? ' has-error' : '' }}">
+            <div class="form-group-sm {{ $errors->has('centrocosto') ? ' has-error' : '' }}">
                 <label>Cod Centro Costo:</label>
-                <input type="text" class="form-control" name="gerencia" id="gerencia" value="{{old('gerencia')}}" required>
-                {!! $errors->first('gerencia','<span class="help-block">:message</span>') !!}
+                <input type="text" class="form-control" name="centrocosto" id="centrocosto" value="{{old('centrocosto')}}" required>
+                {!! $errors->first('centrocosto','<span class="help-block">:message</span>') !!}
             </div>
 
             <div class="form-group-sm {{ $errors->has('subgerencia') ? ' has-error' : '' }}">

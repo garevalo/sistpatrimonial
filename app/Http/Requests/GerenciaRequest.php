@@ -19,19 +19,28 @@ class GerenciaRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return arrays
      */
     public function rules()
     {
 
         if($this->request->has('_method')){
             return [
-                'gerencia'=>'required|min:5|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:gerencias,gerencia,'.$this->route('gerencia').',idgerencia'
+                'gerencia'=>'required|min:5|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:gerencias,gerencia,'.$this->route('gerencia').',idgerencia',
+                'centrocosto'=>'required|min:2|unique:centro_costos,codcentrocosto'
             ];
         }else{
             return [
-                'gerencia' => 'required|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:gerencias,gerencia'
+                'gerencia' => 'required|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:gerencias,gerencia',
+                'centrocosto'=>'required|min:2|unique:centro_costos,codcentrocosto',
             ];
         }
+    }
+
+     public function messages()
+    {
+        return [
+            'centrocosto.unique' => 'Centro de costo ya existe',
+        ];
     }
 }

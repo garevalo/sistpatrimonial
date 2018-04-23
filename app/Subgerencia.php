@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Subgerencia extends Model
 {
-    protected $fillable = ['idsubgerencia','subgerencia','idgerencia'];
+    protected $fillable = ['idsubgerencia','subgerencia','centrocosto'];
     protected $primaryKey = 'idsubgerencia';
 
     public function gerencia()

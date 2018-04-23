@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class CentroCosto extends Model
 {
     protected $primaryKey = "idcentrocosto";
-    protected $fillable = ['',''];
+    protected $fillable = ['codcentrocosto','centrocosto'];
 }

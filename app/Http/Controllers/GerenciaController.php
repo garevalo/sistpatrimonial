@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Gerencia;
 use App\Http\Requests\GerenciaRequest;
-use App\Sede;
+use App\CentroCosto;
+use DB;
 
 class GerenciaController extends Controller
 {
@@ -15,23 +16,25 @@ class GerenciaController extends Controller
     {
 
         $gerencias = Gerencia::all();
-        $sedes = Sede::all()->pluck('sede','idsede');
 
-        return view('gerencia.index',compact('gerencias','sedes','modulo'));
+        return view('gerencia.index',compact('gerencias','modulo'));
     }
 
 
     public function create()
     {
-        $sedes = Sede::all();
-        return view('gerencia.create',compact('sedes'));
+        return view('gerencia.create');
     }
 
 
     public function store(GerenciaRequest $request)
     {
+        DB::transaction(function () use ($request) {
+            Gerencia::create($request->all());
+            CentroCosto::create(["codcentrocosto"=>$request->centrocosto,'centrocosto'=>$request->gerencia]);
+        });
+        
 
-        Gerencia::create($request->all());
         return redirect()->route(self::REDIRECT);
     }
 
@@ -45,8 +48,7 @@ class GerenciaController extends Controller
     public function edit($id)
     {
         $gerencia = Gerencia::FindOrFail($id);
-        $sedes = Sede::all();
-        return view("gerencia.edit",['gerencia'=>$gerencia,'sedes'=>$sedes,'modulo'=>self::MODULO]);
+        return view("gerencia.edit",['gerencia'=>$gerencia,'modulo'=>self::MODULO]);
     }
 
 

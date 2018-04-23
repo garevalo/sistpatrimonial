@@ -32,6 +32,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Gerencia</th>
+                        <th>Centro Costo</th>
                         <th>Editar</th>
                         <th>Eliminar</th>
                     </tr>
@@ -41,6 +42,7 @@
                     <tr>
                         <td><a href="{{route('gerencia.show',$gerencia->idgerencia)}}">{{$gerencia->idgerencia}}</a></td>
                         <td>{{$gerencia->gerencia}}</td>
+                        <td>{{$gerencia->centrocosto}}</td>
                         <td><a href="{{route('gerencia.edit',$gerencia->idgerencia)}}" class="btn btn-primary btn-sm">Editar</a></td>
                         <td>
                             <form method="post" action="{{route('gerencia.destroy',$gerencia->idgerencia)}}">

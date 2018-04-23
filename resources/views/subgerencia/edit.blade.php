@@ -16,7 +16,13 @@
                 {!! method_field('PUT') !!}
 
                 <div class="box-body">
-                    <div class="form-group {{ $errors->has('subgerencia') ? ' has-error' : '' }}">
+                    <div class="form-group-sm {{ $errors->has('centrocosto') ? ' has-error' : '' }}">
+                        <label>Cod Centro Costo:</label>
+                        <input type="text" class="form-control" name="centrocosto" id="centrocosto" value="{{ (old('centrocosto'))? old('centrocosto'): $gerencia->centrocosto  }}" required>
+                        {!! $errors->first('centrocosto','<span class="help-block">:message</span>') !!}
+                    </div>
+
+                    <div class="form-group-sm {{ $errors->has('subgerencia') ? ' has-error' : '' }}">
                         <label>Subgerencia:</label>
 
                         <input type="text" class="form-control" name="subgerencia" id="subgerencia" value="{{ (old('subgerencia'))? old('subgerencia'): $subgerencia->subgerencia  }}" required>

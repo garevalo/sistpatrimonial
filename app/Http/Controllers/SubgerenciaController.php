@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SgMessageRequest;
 use App\Subgerencia;
-use App\Gerencia;
+use App\CentroCosto;
+use DB;
 
 
 class SubgerenciaController extends Controller
@@ -13,22 +14,26 @@ class SubgerenciaController extends Controller
     public function index()
     {
         $subgerencias = Subgerencia::all();
-        $gerencias = Gerencia::all()->pluck('gerencia','idgerencia');
         //dd($gerencias);
-        return view('subgerencia.index',['subgerencias'=>$subgerencias,'gerencias'=>$gerencias]);
+        return view('subgerencia.index',['subgerencias'=>$subgerencias]);
 
     }
 
     public function create()
     {
-        $gerencias = Gerencia::all();
-        return view('subgerencia.create',compact('gerencias'));
+        
+        return view('subgerencia.create');
     }
 
 
     public function store(SgMessageRequest $request)
     {
-        Subgerencia::create($request->all());
+
+        DB::transaction(function () use ($request) {
+            Subgerencia::create($request->all());
+            CentroCosto::create(["codcentrocosto"=>$request->centrocosto,'centrocosto'=>$request->subgerencia]);
+        });
+
 
        return redirect()->route('subgerencia.index');
     }
@@ -47,8 +52,8 @@ class SubgerenciaController extends Controller
     public function edit($id)
     {
         $subgerencia = Subgerencia::FindOrFail($id);
-        $gerencias = Gerencia::all();
-        return view("subgerencia.edit",['subgerencia'=>$subgerencia,'gerencias'=>$gerencias]);
+        
+        return view("subgerencia.edit",['subgerencia'=>$subgerencia]);
     }
 
     /**

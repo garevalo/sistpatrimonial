@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCentroCostosTable extends Migration
+class AddCodToGerencias extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateCentroCostosTable extends Migration
      */
     public function up()
     {
-        Schema::create('centro_costos', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('codcentrocosto',10);
-            $table->string('centrocosto',20);
-            $table->timestamps();
+        Schema::table('gerencias', function (Blueprint $table) {
+            $table->string('centrocosto',10);
         });
     }
 
@@ -28,6 +25,8 @@ class CreateCentroCostosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('centro_costos');
+        Schema::table('gerencias', function (Blueprint $table) {
+            $table->dropColumn('centrocosto');
+        });
     }
 }

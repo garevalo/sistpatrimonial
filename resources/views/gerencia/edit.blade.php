@@ -18,6 +18,11 @@
 
                 <div class="box-body">
 
+                    <div class="form-group-sm {{ $errors->has('centrocosto') ? ' has-error' : '' }}">
+                        <label>Cod Centro Costo:</label>
+                        <input type="text" class="form-control" name="centrocosto" id="centrocosto" value="{{ (old('centrocosto'))? old('centrocosto'): $gerencia->centrocosto  }}" required>
+                        {!! $errors->first('centrocosto','<span class="help-block">:message</span>') !!}
+                    </div>
                     <div class="form-group {{ $errors->has('gerencia') ? ' has-error' : '' }}">
                         <label>Gerencia:</label>
                         <input type="text" class="form-control" name="gerencia" id="gerencia" value="{{ (old('gerencia'))? old('gerencia'): $gerencia->gerencia  }}" required>
