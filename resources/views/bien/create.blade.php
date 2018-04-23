@@ -11,7 +11,7 @@
                 <h3 class="box-title">Registrar Bien</h3>
             </div>
 
-            <form method="POST" action="{{route('bien.store')}}">
+            <form method="POST" action="{{route('bien.store')}}"  enctype="multipart/form-data">
                 {{csrf_field()}}
                 <div class="box-body">
                     <div class="col-md-6 col-xs-12">
@@ -76,6 +76,13 @@
                                 @endforeach()
                             </select>
                             {!! $errors->first('color','<span class="help-block">:message</span>') !!}
+                        </div>
+
+                        <div class="form-group-sm {{ $errors->has('num_serie') ? ' has-error' : '' }}">
+                            <label>Imagen:</label>
+
+                            <input type="file" class="form-control" name="imagen" id="imagen" value="{{old('imagen')}}">
+                            {!! $errors->first('imagen','<span class="help-block">:message</span>') !!}
                         </div>  
 
                         <div class="form-group-sm {{ $errors->has('num_serie') ? ' has-error' : '' }}">
@@ -90,6 +97,30 @@
                     </div>
                     
                     <div class="col-md-6 col-xs-12">
+
+                        <div class="form-group-sm {{ $errors->has('centrocosto') ? ' has-error' : '' }}">
+                            <label>Centro de Costo:</label>
+                            <select name="centrocosto" id="centrocosto" class="form-control select2">
+                                <option value="">Seleccione Personal</option>
+                                @foreach($centrocostos as $centrocosto)
+                                <option value="{{$centrocosto->codcentrocosto}}">{{$centrocosto->FullCentroCosto}}</option>
+                                @endforeach()
+                            </select>
+                            {!! $errors->first('centrocosto','<span class="help-block">:message</span>') !!}
+
+                        </div>
+
+                        <div class="form-group-sm {{ $errors->has('estado') ? ' has-error' : '' }}">
+                            <label>Personal:</label>
+
+                            <select name="personal" id="personal" class="form-control select2">
+                                <option value="">Seleccione Personal</option>
+                                @foreach($personals as $personal)
+                                <option value="{{$personal->idpersonal}}">{{$personal->FullName}}</option>
+                                @endforeach()
+                            </select>
+                            {!! $errors->first('personal','<span class="help-block">:message</span>') !!}
+                        </div>
 
                         <div class="form-group-sm {{ $errors->has('estado') ? ' has-error' : '' }}">
                             <label>Estado:</label>

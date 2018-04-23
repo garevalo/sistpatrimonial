@@ -50,6 +50,14 @@
                     <li class="@if(request()->getRequestUri()=='/cargo') active @endif"><a href="/cargo"><i class="fa fa-circle-o text-aqua"></i> Cargo</a></li>
                 </ul>
             </li>
+
+            <li class="">
+                <a href="#">
+                    <i class="fa fa-exchange"></i>
+                    <span>Solicitar Equipo</span>
+                </a>
+            </li>
+            
             <li class="treeview @if(in_array(request()->getRequestUri(),['/rol','/usuario'])) active @endif ">
                 <a href="#">
                     <i class="fa fa-user-plus"></i>

@@ -10,6 +10,8 @@ use App\Color;
 use App\Adquisicion;
 use App\Modelo;
 use App\Marca;
+use App\Personal;
+use App\CentroCosto;
 use Carbon\Carbon;
 use DB;
 use Datatables;
@@ -33,11 +35,14 @@ class BienController extends Controller
      */
     public function create()
     {
-        $colores = Color::all();
-        $adquisiciones = Adquisicion::all();
-        $marcas = Marca::all();
-        $modelos = Modelo::all();
-        return view('bien.create',compact('colores','adquisiciones','marcas','modelos'));
+        $colores        =   Color::all();
+        $adquisiciones  =   Adquisicion::all();
+        $marcas         =   Marca::all();
+        $modelos        =   Modelo::all();
+        $personals      =   Personal::all();
+        $centrocostos   =   CentroCosto::all();
+        
+        return view('bien.create',compact('colores','adquisiciones','marcas','modelos','personals','centrocostos'));
     }
 
     /**

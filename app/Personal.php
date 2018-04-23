@@ -29,5 +29,10 @@ class Personal extends Model
         return $this->belongsTo('App\Cargo', 'idcargo_personal', 'idcargo');
     }
 
+    public function getFullNameAttribute()
+    {
+        return ucfirst($this->nombres) . ' ' . ucfirst($this->apellido_paterno).' '. ucfirst($this->apellido_materno);
+    }
+
 
 }
