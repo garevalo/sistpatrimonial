@@ -27,7 +27,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <table id="table-hardware" class="table table-condensed table-bordered table-responsive table-hover">
+                <table id="table" class="table table-condensed table-bordered table-responsive table-hover">
                     <thead>
                     <tr>
                         <th>ID</th>
@@ -36,6 +36,7 @@
                         <th>color</th>
                         <th>Marca</th>
                         <th>Modelo</th>
+                        <th>Imagen</th>
                         <th>Estado</th>
                         <th>Editar</th>
                     </tr>
@@ -76,15 +77,16 @@
         var table = $('#table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{{route('getcolores')}}',
+            ajax: '{{route('getbienes')}}',
             columns: [
                 {data: 'idbien', name: 'idbien'},
                 {data: 'codinventario', name: 'codinventario'},
                 {data: 'codpatrimonial', name: 'codpatrimonial'},
                 {data: 'idcolor', name: 'idcolor'},
-                {data: 'idmmarca', name: 'idmmarca'},
+                {data: 'idmarca', name: 'idmarca'},
                 {data: 'idmodelo', name: 'idmodelo'},
-                {data:'estado',name:'estado'},
+                {data:'imagen',name:'imagen'},
+                {data:'idestado',name:'idestado'},
                 {
                     data: 'edit',
                     name: 'edit',

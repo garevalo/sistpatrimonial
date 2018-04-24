@@ -46,7 +46,8 @@ class BienController extends Controller
         $personals      =   Personal::all();
         $centrocostos   =   CentroCosto::all();
         $estados = array(1=>'Activo',2=>'Inactivo');
-        return view('bien.create',compact('colores','adquisiciones','marcas','modelos','personals','centrocostos','estados'));
+        echo "<img src='".asset('storage/fotos/123.png')."'>";
+        //return view('bien.create',compact('colores','adquisiciones','marcas','modelos','personals','centrocostos','estados'));
     }
 
     /**
@@ -70,7 +71,7 @@ class BienController extends Controller
             'idmarca'           => $request->idmarca,
             'idmodelo'          => $request->idmodelo,
             'idcolor'           => $request->idcolor,
-            'imagen'            => $path,
+            'imagen'            => asset('storage/'.$path),
             'numserie'          => $request->numserie,
             'centrocosto'       => $request->centrocosto,
             'idpersonal'        => $request->idpersonal,

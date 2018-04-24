@@ -25,7 +25,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('sede','SedeController');
 
     //Bienes
-    Route::get('bien/alldata','BienController@alldata')->name('getbienes');
+    Route::get('bien/alldata','BienController@dataTable')->name('getbienes');
     Route::resource('bien','BienController');
 
     //Marcas
