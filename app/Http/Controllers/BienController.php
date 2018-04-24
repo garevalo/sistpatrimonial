@@ -16,6 +16,8 @@ use Carbon\Carbon;
 use DB;
 use Datatables;
 
+use Illuminate\Support\Facades\Storage;
+
 class BienController extends Controller
 {   
 
@@ -46,7 +48,10 @@ class BienController extends Controller
         $personals      =   Personal::all();
         $centrocostos   =   CentroCosto::all();
         $estados = array(1=>'Activo',2=>'Inactivo');
-        echo "<img src='".asset('storage/fotos/123.png')."'>";
+
+        $url = Storage::url('storage/fotos/123.png');
+
+        echo $url;
         //return view('bien.create',compact('colores','adquisiciones','marcas','modelos','personals','centrocostos','estados'));
     }
 
@@ -59,9 +64,11 @@ class BienController extends Controller
     public function store(BienRequest $request)
     {
 
-        $path = $request->file('imagen')->storeAs(
+        /*$path = $request->file('imagen')->storeAs(
             'fotos', $request->codpatrimonial.'.'.$request->imagen->extension()
-        );
+        );*/
+
+         $path = $request->file('imagen')->store('fotos');
 
         Bien::create([
             'codcatalogo'       => $request->codcatalogo,
