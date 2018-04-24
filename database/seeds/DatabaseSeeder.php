@@ -13,6 +13,10 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
         	UsersTableSeeder::class,
+            SubGerenciasTableSeeder::class,
+            GerenciasTableSeeder::class,
+            ColorTableSeeder::class,
+            CargosTableSeeder::class,
         ]);
     }
 }

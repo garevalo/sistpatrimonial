@@ -16,7 +16,7 @@ class CreateCentroCostosTable extends Migration
         Schema::create('centro_costos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('codcentrocosto',10);
-            $table->string('centrocosto',20);
+            $table->string('centrocosto',100);
             $table->timestamps();
         });
     }

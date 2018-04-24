@@ -45,8 +45,8 @@ class BienController extends Controller
         $modelos        =   Modelo::all();
         $personals      =   Personal::all();
         $centrocostos   =   CentroCosto::all();
-        
-        return view('bien.create',compact('colores','adquisiciones','marcas','modelos','personals','centrocostos'));
+        $estados = array(1=>'Activo',2=>'Inactivo');
+        return view('bien.create',compact('colores','adquisiciones','marcas','modelos','personals','centrocostos','estados'));
     }
 
     /**
@@ -57,10 +57,6 @@ class BienController extends Controller
      */
     public function store(BienRequest $request)
     {
-
-        //$imageName = time().'.'.$request->imagen->getClientOriginalExtension();
-
-        //$request->imagen->move(public_path('images'), $imageName);
 
         $path = $request->file('imagen')->storeAs(
             'fotos', $request->codpatrimonial.'.'.$request->imagen->extension()
@@ -84,7 +80,6 @@ class BienController extends Controller
             'fecha_adquisicion' => Carbon::createFromFormat('d/m/Y', $request->fecha_adquisicion),
             'descripcion'       => $request->descripcion
         ]);
-
 
         return redirect()->route(self::MODULO.'.index');
     }

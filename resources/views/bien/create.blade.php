@@ -58,7 +58,7 @@
                             <select class="form-control" name="idmarca" id="idmarca" value="{{old('idmarca')}}" required>
                                 <option>Seleccione Marca</option>
                                 @foreach($marcas as $marca)
-                                <option value="{{$marca->idmarca}}">{{$marca->marca}}</option>
+                                <option value="{{$marca->idmarca}}" @if($marca->idmarca == old('idmarca') ) selected @endif >{{$marca->marca}}</option>
                                 @endforeach()
                             </select>
                             {!! $errors->first('idmarca','<span class="help-block">:message</span>') !!}
@@ -69,7 +69,7 @@
                             <select class="form-control" name="idmodelo" id="idmodelo" value="{{old('idmodelo')}}" required>
                                 <option value="">Seleccione Modelo</option>
                                 @foreach($modelos as $modelo)
-                                <option value="{{$modelo->idmodelo}}">{{$modelo->modelo}}</option>
+                                <option value="{{$modelo->idmodelo}}" @if($modelo->idmodelo == old('idmodelo') ) selected @endif >{{$modelo->modelo}}</option>
                                 @endforeach()
                             </select>
                             {!! $errors->first('idmodelo','<span class="help-block">:message</span>') !!}
@@ -80,7 +80,7 @@
                             <select class="form-control" name="idcolor" id="idcolor" value="{{old('idcolor')}}" required>
                                 <option value="">Seleccione Color</option>
                                 @foreach($colores as $color)
-                                <option value="{{$color->idcolor}}">{{$color->color}}</option>
+                                <option value="{{$color->idcolor}}" @if($color->idcolor == old('idcolor') ) selected @endif >{{$color->color}}</option>
                                 @endforeach()
                             </select>
                             {!! $errors->first('color','<span class="help-block">:message</span>') !!}
@@ -111,7 +111,7 @@
                             <select name="centrocosto" id="centrocosto" class="form-control select2">
                                 <option value="">Seleccione Personal</option>
                                 @foreach($centrocostos as $centrocosto)
-                                <option value="{{$centrocosto->codcentrocosto}}">{{$centrocosto->FullCentroCosto}}</option>
+                                <option value="{{$centrocosto->codcentrocosto}}" @if($centrocosto->codcentrocosto == old('centrocosto') ) selected @endif >{{$centrocosto->FullCentroCosto}}</option>
                                 @endforeach()
                             </select>
                             {!! $errors->first('centrocosto','<span class="help-block">:message</span>') !!}
@@ -124,7 +124,7 @@
                             <select name="idpersonal" id="idpersonal" class="form-control select2">
                                 <option value="">Seleccione Personal</option>
                                 @foreach($personals as $personal)
-                                <option value="{{$personal->idpersonal}}">{{$personal->FullName}}</option>
+                                <option value="{{$personal->idpersonal}}" @if($personal->idpersonal == old('idpersonal') ) selected @endif >{{$personal->FullName}}</option>
                                 @endforeach()
                             </select>
                             {!! $errors->first('idpersonal','<span class="help-block">:message</span>') !!}
@@ -135,8 +135,10 @@
 
                             <select name="idestado" id="idestado" class="form-control select2" required="">
                                 <option value="">Seleccione Estado</option>
-                                <option value="1">Activos</option>
-                                <option value="2">De baja</option>
+                                @foreach($estados as $key => $estado)
+                                <option value="{{$key}}" @if($key==old('idestado')) selected @endif >{{$estado}}</option>
+                                @endforeach
+
                             </select>
                             {!! $errors->first('idestado','<span class="help-block">:message</span>') !!}
                         </div>

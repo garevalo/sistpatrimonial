@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 
+use App\Color;
+
 class ColorTableSeeder extends Seeder
 {
     /**
@@ -11,6 +13,8 @@ class ColorTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Color::create(['Color'=>'Rojo']);
+        Color::create(['Color'=>'Marron']);
+        Color::create(['Color'=>'Verde']);
     }
 }
