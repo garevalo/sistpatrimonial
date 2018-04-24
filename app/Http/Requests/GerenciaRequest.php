@@ -26,13 +26,13 @@ class GerenciaRequest extends FormRequest
 
         if($this->request->has('_method')){
             return [
-                'gerencia'=>'required|min:5|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:gerencias,gerencia,'.$this->route('gerencia').',idgerencia',
+                'gerencia'=>'required|min:3|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:gerencias,gerencia,'.$this->route('gerencia').',idgerencia',
                 'centrocosto'=>'required|min:2|unique:centro_costos,codcentrocosto'
             ];
         }else{
             return [
                 'gerencia' => 'required|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:gerencias,gerencia',
-                'centrocosto'=>'required|min:2|unique:centro_costos,codcentrocosto',
+                'centrocosto'=>'required|min:3|unique:centro_costos,codcentrocosto',
             ];
         }
     }

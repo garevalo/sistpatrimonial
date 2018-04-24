@@ -17,7 +17,11 @@ use DB;
 use Datatables;
 
 class BienController extends Controller
-{
+{   
+
+    const REDIRECT = "bien.index";
+    const MODULO   = "bien";
+
     /**
      * Display a listing of the resource.
      *
@@ -51,9 +55,38 @@ class BienController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BienRequest $request)
     {
-        //
+
+        //$imageName = time().'.'.$request->imagen->getClientOriginalExtension();
+
+        //$request->imagen->move(public_path('images'), $imageName);
+
+        $path = $request->file('imagen')->storeAs(
+            'fotos', $request->codpatrimonial.'.'.$request->imagen->extension()
+        );
+
+        Bien::create([
+            'codcatalogo'       => $request->codcatalogo,
+            'codinventario'     => $request->codinventario,
+            'codpatrimonial'    => $request->codpatrimonial,
+            'ordencompra'       => $request->ordencompra,
+            'idmarca'           => $request->idmarca,
+            'idmodelo'          => $request->idmodelo,
+            'idcolor'           => $request->idcolor,
+            'imagen'            => $path,
+            'numserie'          => $request->numserie,
+            'centrocosto'       => $request->centrocosto,
+            'idpersonal'        => $request->idpersonal,
+            'idestado'          => $request->idestado,
+            'valor'             => $request->valor,
+            'idadquisicion'     => $request->idadquisicion,
+            'fecha_adquisicion' => Carbon::createFromFormat('d/m/Y', $request->fecha_adquisicion),
+            'descripcion'       => $request->descripcion
+        ]);
+
+
+        return redirect()->route(self::MODULO.'.index');
     }
 
     /**
@@ -99,5 +132,16 @@ class BienController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function dataTable(){
+
+        return Datatables::of(Bien::all())
+            ->addColumn('edit',function($bien){
+                return '<a href="'.route('bien.edit',$bien->idbien).'" class="btn btn-primary btn-sm">Movimientos</a>' ;
+            })
+            ->rawColumns(['edit'])
+            ->make(true);
+
     }
 }

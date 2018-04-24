@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Requests;
-
 use Illuminate\Foundation\Http\FormRequest;
 
 class SgMessageRequest extends FormRequest
@@ -15,7 +13,6 @@ class SgMessageRequest extends FormRequest
     {
         return true;
     }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -23,8 +20,6 @@ class SgMessageRequest extends FormRequest
      */
     public function rules()
     {
-
-
         if($this->request->has('_method')){
             return [
                 'subgerencia'=>'required|min:5|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:subgerencias,subgerencia,'.$this->route('subgerencia').',idsubgerencia',
@@ -37,7 +32,6 @@ class SgMessageRequest extends FormRequest
             ];
         }
     }
-
     public function messages()
     {
         return [

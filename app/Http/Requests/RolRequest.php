@@ -25,11 +25,11 @@ class RolRequest extends FormRequest
     {
         if($this->request->has('_method')){
             return [
-                'rol'=>'required|min:5|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:roles,rol,'.$this->route('rol').',idrol'
+                'rol'=>'required|min:2|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:roles,rol,'.$this->route('rol').',idrol'
             ];
         }else{
             return [
-                'rol'=>'required|min:5|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:roles,rol'
+                'rol'=>'required|min:2|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:roles,rol'
             ];
         }
     }

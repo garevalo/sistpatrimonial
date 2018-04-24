@@ -8,7 +8,7 @@ class Bien extends Model
 {
     protected $primaryKey = 'idbien';
     
-    protected $fillable = ['codinventario','codpatrimonial','ordencompra','denominacion','idmarca','idmodelo','numserie','idestado','idadquisicion','fecha_adquision','descripcion'];
+   protected $fillable = ['codcatalogo','codinventario','codpatrimonial','ordencompra','idmarca','idmodelo','idcolor','imagen','numserie','centrocosto','idpersonal','idestado','valor','idadquisicion','fecha_adquisicion','descripcion'];
 
     protected $dates = ['fecha_adquisicion'];
 

@@ -15,13 +15,21 @@
                 {{csrf_field()}}
                 <div class="box-body">
                     <div class="col-md-6 col-xs-12">
-
-                        <div class="form-group-sm {{ $errors->has('codinventario') ? ' has-error' : '' }}">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        <div class="form-group-sm {{ $errors->has('codcatalogo') ? ' has-error' : '' }}">
                             <label>Bien:</label>
-                            <select class="form-control bien" name="bien" id="bien" required autofocus>
+                            <select class="form-control bien" name="codcatalogo" id="catalogo" required autofocus>
                                 
                             </select>
-                            {!! $errors->first('codinventario','<span class="help-block">:message</span>') !!}
+                            {!! $errors->first('codcatalogo','<span class="help-block">:message</span>') !!}
                         </div>
 
                         <div class="form-group-sm {{ $errors->has('codinventario') ? ' has-error' : 'has-info' }}">
@@ -78,18 +86,18 @@
                             {!! $errors->first('color','<span class="help-block">:message</span>') !!}
                         </div>
 
-                        <div class="form-group-sm {{ $errors->has('num_serie') ? ' has-error' : '' }}">
+                        <div class="form-group-sm {{ $errors->has('imagen') ? ' has-error' : '' }}">
                             <label>Imagen:</label>
 
                             <input type="file" class="form-control" name="imagen" id="imagen" value="{{old('imagen')}}">
                             {!! $errors->first('imagen','<span class="help-block">:message</span>') !!}
                         </div>  
 
-                        <div class="form-group-sm {{ $errors->has('num_serie') ? ' has-error' : '' }}">
+                        <div class="form-group-sm {{ $errors->has('numserie') ? ' has-error' : '' }}">
                             <label>Número Serie:</label>
 
-                            <input type="text" class="form-control" name="num_serie" id="num_serie" value="{{old('num_serie')}}">
-                            {!! $errors->first('num_serie','<span class="help-block">:message</span>') !!}
+                            <input type="text" class="form-control" name="numserie" id="numserie" value="{{old('numserie')}}">
+                            {!! $errors->first('numserie','<span class="help-block">:message</span>') !!}
                         </div>
                         
                         
@@ -110,27 +118,27 @@
 
                         </div>
 
-                        <div class="form-group-sm {{ $errors->has('estado') ? ' has-error' : '' }}">
+                        <div class="form-group-sm {{ $errors->has('idpersonal') ? ' has-error' : '' }}">
                             <label>Personal:</label>
 
-                            <select name="personal" id="personal" class="form-control select2">
+                            <select name="idpersonal" id="idpersonal" class="form-control select2">
                                 <option value="">Seleccione Personal</option>
                                 @foreach($personals as $personal)
                                 <option value="{{$personal->idpersonal}}">{{$personal->FullName}}</option>
                                 @endforeach()
                             </select>
-                            {!! $errors->first('personal','<span class="help-block">:message</span>') !!}
+                            {!! $errors->first('idpersonal','<span class="help-block">:message</span>') !!}
                         </div>
 
-                        <div class="form-group-sm {{ $errors->has('estado') ? ' has-error' : '' }}">
+                        <div class="form-group-sm {{ $errors->has('idestado') ? ' has-error' : '' }}">
                             <label>Estado:</label>
 
-                            <select name="estado" id="estado" class="form-control select2">
+                            <select name="idestado" id="idestado" class="form-control select2" required="">
                                 <option value="">Seleccione Estado</option>
                                 <option value="1">Activos</option>
                                 <option value="2">De baja</option>
                             </select>
-                            {!! $errors->first('estado','<span class="help-block">:message</span>') !!}
+                            {!! $errors->first('idestado','<span class="help-block">:message</span>') !!}
                         </div>
 
                         <div class="form-group-sm {{ $errors->has('valor') ? ' has-error' : '' }}">
@@ -209,7 +217,7 @@
 
     <script>
         
-        $("#bien").select2({
+        $("#catalogo").select2({
             language: "es",
             minimumInputLength: 2,
             ajax: {
