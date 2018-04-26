@@ -31,6 +31,7 @@
                     <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Catálogo</th>
                         <th>Cod. Inventario</th>
                         <th>Código Patrimonial</th>
                         <th>color</th>
@@ -80,6 +81,7 @@
             ajax: '{{route('getbienes')}}',
             columns: [
                 {data: 'idbien', name: 'idbien'},
+                {data: 'catalogo', name: 'catalogo'},
                 {data: 'codinventario', name: 'codinventario'},
                 {data: 'codpatrimonial', name: 'codpatrimonial'},
                 {data: 'color', name: 'color'},

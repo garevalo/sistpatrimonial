@@ -42,4 +42,9 @@ class Bien extends Model
 	{
 	    return $this->belongsTo('App\Personal', 'idpersonal','idpersonal');
 	}
+
+	public function catalogo()
+	{
+	    return $this->belongsTo('App\Catalogo', 'codcatalogo','codcatalogo');
+	}
 }

@@ -13,7 +13,10 @@ use App\Marca;
 use App\Personal;
 use App\CentroCosto;
 use App\Movimiento;
+use App\Catalogo;
 use Carbon\Carbon;
+
+
 use DB;
 use Datatables;
 
@@ -119,6 +122,7 @@ class BienController extends Controller
         $modelos        =   Modelo::all();
         $personals      =   Personal::all();
         $centrocostos   =   CentroCosto::all();
+
         $estados        =   array(1=>'Activo',2=>'Inactivo');
 
         $bien    = Bien::with('marca','modelo','color','adquisicion','centrocostos','personal')->FindOrFail($id);
@@ -159,6 +163,29 @@ class BienController extends Controller
         //
     }
 
+
+    public function movimiento($id)
+    {
+        $colores        =   Color::all();
+        $adquisiciones  =   Adquisicion::all();
+        $marcas         =   Marca::all();
+        $modelos        =   Modelo::all();
+        $personals      =   Personal::all();
+        $centrocostos   =   CentroCosto::all();
+        $catalogos       =   Catalogo::all();
+
+        $estados        =   array(1=>'Activo',2=>'Inactivo');
+
+        $bien    = Bien::with('marca','modelo','color','adquisicion','centrocostos','personal','catalogo')->FindOrFail($id);
+
+        return view('bien.movimiento',compact('colores','adquisiciones','marcas','modelos','personals','centrocostos','estados','catalogos','bien'));
+    }
+
+    public function movimientoStore(Request $request, $id)
+    {
+        //
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -172,10 +199,10 @@ class BienController extends Controller
 
     public function dataTable(){
 
-        return Datatables::of(Bien::with('marca','modelo','color','adquisicion','centrocostos','personal')->get())
+        return Datatables::of(Bien::with('marca','modelo','color','adquisicion','centrocostos','personal','catalogo')->get())
             ->addColumn('edit',function($bien){
                 return '<a href="'.route('bien.edit',$bien->idbien).'" class="btn btn-primary btn-xs">Editar</a>
-                        <a href="'.route('bien.edit',$bien->idbien).'" class="btn btn-success btn-xs">Movimiento</a>
+                        <a href="'.route('bien.movimiento',$bien->idbien).'" class="btn btn-success btn-xs">Movimiento</a>
                         <a href="'.route('bien.show',$bien->idbien).'" class="btn btn-info btn-xs">Ver</a>' ;
             })
             ->addColumn('foto',function($bien){
@@ -189,6 +216,9 @@ class BienController extends Controller
             })
             ->addColumn('modelo',function($field){
                 return $field->modelo->modelo;
+            })
+            ->addColumn('catalogo',function($field){
+                return $field->catalogo->denom_catalogo;
             })
             ->rawColumns(['edit','foto'])
             ->make(true);
