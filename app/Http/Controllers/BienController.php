@@ -121,7 +121,7 @@ class BienController extends Controller
         $centrocostos   =   CentroCosto::all();
         $estados        =   array(1=>'Activo',2=>'Inactivo');
 
-        $bien    = Bien::with('marca','modelo','color','adquisicion','centrocosto','personal')->FindOrFail($id);
+        $bien    = Bien::with('marca','modelo','color','adquisicion','centrocostos','personal')->FindOrFail($id);
 
         return view('bien.view',compact('colores','adquisiciones','marcas','modelos','personals','centrocostos','estados','bien'));
     }
@@ -172,7 +172,7 @@ class BienController extends Controller
 
     public function dataTable(){
 
-        return Datatables::of(Bien::with('marca','modelo','color','adquisicion','centrocosto','personal')->get())
+        return Datatables::of(Bien::with('marca','modelo','color','adquisicion','centrocostos','personal')->get())
             ->addColumn('edit',function($bien){
                 return '<a href="'.route('bien.edit',$bien->idbien).'" class="btn btn-primary btn-xs">Editar</a>
                         <a href="'.route('bien.edit',$bien->idbien).'" class="btn btn-success btn-xs">Movimiento</a>

@@ -33,7 +33,7 @@ class Bien extends Model
 	    return $this->belongsTo('App\Adquisicion', 'idadquisicion','idadquisicion');
 	}
 
-	public function centrocosto()
+	public function centrocostos()
 	{
 	    return $this->belongsTo('App\CentroCosto', 'centrocosto','codcentrocosto');
 	}
