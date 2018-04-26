@@ -120,14 +120,19 @@ class CatalogoController extends Controller
 
     }
 
-    public function items(Request $request){
+    public function items(Request $request,$id=null){
 
         $term       =   $request->term ? : ''; 
         $catalogo   =   Catalogo::where('denom_catalogo', 'like', $term.'%')->get();
         $result     =   array();
 
         foreach ($catalogo as $key => $value) {
-            $result[]  = array('id' => $value->codcatalogo, 'text' => $value->denom_catalogo,'term' => $value->denom_catalogo , 'codcatalogo' => $value->codcatalogo);  
+            if( $id==$catalogo->codcatalogo ){
+                $result[]  = array('id' => $value->codcatalogo, 'text' => $value->denom_catalogo,'term' => $value->denom_catalogo , 'codcatalogo' => $value->codcatalogo,'selected'=>'selected');  
+            }else{
+                $result[]  = array('id' => $value->codcatalogo, 'text' => $value->denom_catalogo,'term' => $value->denom_catalogo , 'codcatalogo' => $value->codcatalogo);  
+            }
+            
         }
 
         return response()->json(['results' => $result ]) ;

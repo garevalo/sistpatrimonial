@@ -1,6 +1,6 @@
 @extends('back.app')
 
-@section('title','Editar Hardware')
+@section('title','Editar Bien')
 
 @section('content')
 
@@ -8,131 +8,185 @@
 
         <div class="box box-danger">
             <div class="box-header">
-                <h3 class="box-title">Editar Hardware</h3>
+                <h3 class="box-title">Editar Bien</h3>
             </div>
 
-            <form method="POST" action="{{route('hardware.update',$hardware->idhardware)}}">
-
+            <form method="POST" action="{{route('bien.store')}}"  enctype="multipart/form-data">
                 {{csrf_field()}}
-                {!! method_field('PUT') !!}
-
                 <div class="box-body">
-
-                    <div class="form-group-sm {{ $errors->has('idtipo_hardware') ? ' has-error' : '' }}">
-                        <label>Tipo:</label>
-                        <select name="idtipo_hardware" id="idtipo_hardware" class="form-control" required>
-                            <option value="">Seleccione</option>
-                            @foreach($tipohardwares as $tipohardware)
-                                <option value="{{$tipohardware->id_tipo_hardware}}" @if($hardware->idtipo_hardware==$tipohardware->id_tipo_hardware) selected @endif>{{$tipohardware->tipo_hardware}}</option>
-                            @endforeach
-                        </select>
-                        {!! $errors->first('idtipo_hardware','<span class="help-block">:message</span>') !!}
-                    </div>
-                    <div class="form-group-sm {{ $errors->has('cod_inventario') ? ' has-error' : '' }}">
-                        <label>Código Inventario:</label>
-
-                        <input type="text" class="form-control" name="cod_inventario" id="cod_inventario" value="{{$hardware->cod_inventario}}">
-                        {!! $errors->first('cod_inventario','<span class="help-block">:message</span>') !!}
-                    </div>
-                     <div class="form-group-sm {{ $errors->has('codigo_patrimonial') ? ' has-error' : '' }}">
-                        <label>Código Patrimonial:</label>
-
-                        <input type="text" class="form-control" name="codigo_patrimonial" id="codigo_patrimonial" value="{{ $hardware->codigo_patrimonial }}">
-                        {!! $errors->first('codigo_patrimonial','<span class="help-block">:message</span>') !!}
-                    </div>
-                    <div class="form-group-sm {{ $errors->has('marca') ? ' has-error' : '' }}">
-                        <label>Marca:</label>
-
-                        <input type="text" class="form-control" name="marca" id="marca" value="{{ $hardware->marca  }}" required>
-                        {!! $errors->first('marca','<span class="help-block">:message</span>') !!}
-                    </div>
-                    <div class="form-group-sm {{ $errors->has('modelo') ? ' has-error' : '' }}">
-                        <label>Modelo:</label>
-
-                        <input type="text" class="form-control" name="modelo" id="modelo" value="{{$hardware->modelo}}" required>
-                        {!! $errors->first('modelo','<span class="help-block">:message</span>') !!}
-                    </div>
-
-                    <div class="form-group-sm {{ $errors->has('num_serie') ? ' has-error' : '' }}">
-                        <label>Número Serie:</label>
-
-                        <input type="text" class="form-control" name="num_serie" id="num_serie" value="{{ $hardware->num_serie  }}">
-                        {!! $errors->first('num_serie','<span class="help-block">:message</span>') !!}
-                    </div>
-                    <div class="form-group-sm {{ $errors->has('orden_compra') ? ' has-error' : '' }}">
-                        <label>Orden de Compra:</label>
-
-                        <input type="text" class="form-control" name="orden_compra" id="orden_compra" value="{{ $hardware->activo->orden_compra }}" required>
-                        {!! $errors->first('orden_compra','<span class="help-block">:message</span>') !!}
-                    </div>
-                    <div class="form-group-sm {{ $errors->has('estado_activo') ? ' has-error' : '' }}">
-                        <label>Estado del Activo:</label>
-
-                        <select name="estado_activo" id="estado_activo" class="form-control">
-                            <option value="">Estado del Activo</option>
-                            @foreach($estados_activos as $key => $estado_activo)
-                                <option value="{{$key}}" @if($key == $hardware->activo->estado_activo ) selected @endif >{{$estado_activo}}</option>
-                            @endforeach
-                        </select>
-                        {!! $errors->first('estado_activo','<span class="help-block">:message</span>') !!}
-                    </div>
-
-                    <div class="form-group-sm {{ $errors->has('estado') ? ' has-error' : '' }}">
-                        <label>Estado:</label>
-
-                        <select name="estado" id="estado" class="form-control">
-                            <option value="">Estado</option>
-                            @foreach($estados as $key => $estado)
-                                <option value="{{$key}}" @if($key==$hardware->estado ) selected @endif >{{$estado}}</option>
-                            @endforeach
-                        </select>
-                        {!! $errors->first('estado','<span class="help-block">:message</span>') !!}
-                    </div>
-                    <div class="form-group-sm {{ $errors->has('fecha_adquisicion') ? ' has-error' : '' }}">
-                        <label>Fecha de Adquisición:</label>
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
+                    <div class="col-md-6 col-xs-12">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
-                            <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="fecha_adquisicion" id="fecha_adquisicion" value="{{$hardware->fecha_adquisicion->format('d/m/Y')}}">
+                        @endif
+                        <div class="form-group-sm {{ $errors->has('codcatalogo') ? ' has-error' : '' }}">
+                            <label>Bien:</label>
+                            <select class="form-control bien" name="codcatalogo" id="catalogo" required autofocus>
+                                
+                            </select>
+                            {!! $errors->first('codcatalogo','<span class="help-block">:message</span>') !!}
                         </div>
-                    {!! $errors->first('fecha_adquisicion','<span class="help-block">:message</span>') !!}
-                    <!-- /.input group -->
-                    </div>
-                    {{-- dfdfd f
-                    <div class="form-group-sm {{ $errors->has('capacidad') ? ' has-error' : '' }}">
-                        <label>Capacidad:</label>
 
-                        <input type="text" class="form-control" name="capacidad" id="capacidad" value="{{$hardware->capacidad}}">
-                        {!! $errors->first('capacidad','<span class="help-block">:message</span>') !!}
-                    </div>
-                    <div class="form-group-sm {{ $errors->has('interfaz') ? ' has-error' : '' }}">
-                        <label>Interfaz:</label>
+                        <div class="form-group-sm {{ $errors->has('codinventario') ? ' has-error' : 'has-info' }}">
+                            <label>Código Inventario:</label>
 
-                        <input type="text" class="form-control" name="interfaz" id="interfaz" value="{{$hardware->interfaz}}" >
-                        {!! $errors->first('interfaz','<span class="help-block">:message</span>') !!}
-                    </div>
+                            <input type="text" class="form-control" name="codinventario" id="codinventario" value="{{ $bien->codinventario }}" required  >
+                            {!! $errors->first('codinventario','<span class="help-block">:message</span>') !!}
+                        </div>
 
-                    <div class="form-group-sm {{ $errors->has('tipo') ? ' has-error' : '' }}">
-                        <label>Tipo Componente:</label>
+                        <div class="form-group-sm {{ $errors->has('codpatrimonial') ? ' has-error' : '' }}">
+                            <label>Código Patrimonial:</label>
 
-                        <input type="text" class="form-control" name="tipo" id="tipo" value="{{$hardware->tipo}}" >
-                        {!! $errors->first('tipo','<span class="help-block">:message</span>') !!}
-                    </div>
-                    --}}
-                    <div class="form-group-sm {{ $errors->has('descripcion') ? ' has-error' : '' }}">
-                        <label>Descripción:</label>
-                        <textarea name="descripcion" id="descripcion" cols="30" rows="10" class="form-control" required >{{$hardware->descripcion }}</textarea>
-                        {!! $errors->first('descripcion','<span class="help-block">:message</span>') !!}
-                    </div>
-                    <input type="hidden" value="{{$hardware->id_activo_hardware}}" name="idactivo">
+                            <input type="text" class="form-control" name="codpatrimonial" id="codpatrimonial" value="{{old('codpatrimonial')}}">
+                            {!! $errors->first('codpatrimonial','<span class="help-block">:message</span>') !!}
+                        </div>
 
+                        <div class="form-group-sm {{ $errors->has('ordencompra') ? ' has-error' : '' }}">
+                            <label>Orden de Compra:</label>
+
+                            <input type="text" class="form-control" name="ordencompra" id="ordencompra" value="{{old('ordencompra')}}" required>
+                            {!! $errors->first('ordencompra','<span class="help-block">:message</span>') !!}
+                        </div>
+
+                        <div class="form-group-sm {{ $errors->has('idmarca') ? ' has-error' : '' }}">
+                            <label>Marca:</label>
+                            <select class="form-control" name="idmarca" id="idmarca" value="{{old('idmarca')}}" required>
+                                <option>Seleccione Marca</option>
+                                @foreach($marcas as $marca)
+                                <option value="{{$marca->idmarca}}" @if($marca->idmarca == old('idmarca') ) selected @endif >{{$marca->marca}}</option>
+                                @endforeach()
+                            </select>
+                            {!! $errors->first('idmarca','<span class="help-block">:message</span>') !!}
+                        </div>
+
+                        <div class="form-group-sm {{ $errors->has('idmodelo') ? ' has-error' : '' }}">
+                            <label>Modelo:</label>
+                            <select class="form-control" name="idmodelo" id="idmodelo" value="{{old('idmodelo')}}" required>
+                                <option value="">Seleccione Modelo</option>
+                                @foreach($modelos as $modelo)
+                                <option value="{{$modelo->idmodelo}}" @if($modelo->idmodelo == old('idmodelo') ) selected @endif >{{$modelo->modelo}}</option>
+                                @endforeach()
+                            </select>
+                            {!! $errors->first('idmodelo','<span class="help-block">:message</span>') !!}
+                        </div>
+
+                        <div class="form-group-sm {{ $errors->has('idcolor') ? ' has-error' : '' }}">
+                            <label>Color:</label>
+                            <select class="form-control" name="idcolor" id="idcolor" value="{{old('idcolor')}}" required>
+                                <option value="">Seleccione Color</option>
+                                @foreach($colores as $color)
+                                <option value="{{$color->idcolor}}" @if($color->idcolor == old('idcolor') ) selected @endif >{{$color->color}}</option>
+                                @endforeach()
+                            </select>
+                            {!! $errors->first('color','<span class="help-block">:message</span>') !!}
+                        </div>
+
+                        <div class="form-group-sm {{ $errors->has('imagen') ? ' has-error' : '' }}">
+                            <label>Imagen:</label>
+
+                            <input type="file" class="form-control" name="imagen" id="imagen" value="{{old('imagen')}}">
+                            {!! $errors->first('imagen','<span class="help-block">:message</span>') !!}
+                        </div>  
+
+                        <div class="form-group-sm {{ $errors->has('numserie') ? ' has-error' : '' }}">
+                            <label>Número Serie:</label>
+
+                            <input type="text" class="form-control" name="numserie" id="numserie" value="{{old('numserie')}}">
+                            {!! $errors->first('numserie','<span class="help-block">:message</span>') !!}
+                        </div>
+                        
+                        
+
+                    </div>
+                    
+                    <div class="col-md-6 col-xs-12">
+
+                        <div class="form-group-sm {{ $errors->has('centrocosto') ? ' has-error' : '' }}">
+                            <label>Centro de Costo:</label>
+                            <select name="centrocosto" id="centrocosto" class="form-control select2">
+                                <option value="">Seleccione Personal</option>
+                                @foreach($centrocostos as $centrocosto)
+                                <option value="{{$centrocosto->codcentrocosto}}" @if($centrocosto->codcentrocosto == old('centrocosto') ) selected @endif >{{$centrocosto->FullCentroCosto}}</option>
+                                @endforeach()
+                            </select>
+                            {!! $errors->first('centrocosto','<span class="help-block">:message</span>') !!}
+
+                        </div>
+
+                        <div class="form-group-sm {{ $errors->has('idpersonal') ? ' has-error' : '' }}">
+                            <label>Personal:</label>
+
+                            <select name="idpersonal" id="idpersonal" class="form-control select2">
+                                <option value="">Seleccione Personal</option>
+                                @foreach($personals as $personal)
+                                <option value="{{$personal->idpersonal}}" @if($personal->idpersonal == old('idpersonal') ) selected @endif >{{$personal->FullName}}</option>
+                                @endforeach()
+                            </select>
+                            {!! $errors->first('idpersonal','<span class="help-block">:message</span>') !!}
+                        </div>
+
+                        <div class="form-group-sm {{ $errors->has('idestado') ? ' has-error' : '' }}">
+                            <label>Estado:</label>
+
+                            <select name="idestado" id="idestado" class="form-control select2" required="">
+                                <option value="">Seleccione Estado</option>
+                                @foreach($estados as $key => $estado)
+                                <option value="{{$key}}" @if($key==old('idestado')) selected @endif >{{$estado}}</option>
+                                @endforeach
+
+                            </select>
+                            {!! $errors->first('idestado','<span class="help-block">:message</span>') !!}
+                        </div>
+
+                        <div class="form-group-sm {{ $errors->has('valor') ? ' has-error' : '' }}">
+                            <label>Valor:</label>
+
+                            <input type="text" class="form-control" name="valor" id="valor" value="{{old('valor')}}" required>
+                            {!! $errors->first('valor','<span class="help-block">:message</span>') !!}
+                        </div>
+
+                        <div class="form-group-sm {{ $errors->has('idadquisicion') ? ' has-error' : '' }}">
+                            <label>Modo de Adquisición:</label>
+                            <select class="form-control" name="idadquisicion" id="idadquisicion" required>
+                                <option value="">Seleccione Adquisición</option>
+                                @foreach($adquisiciones as $adquisicion)
+                                <option value="{{$adquisicion->idadquisicion}}">{{$adquisicion->adquisicion}}</option>
+                                @endforeach()
+                            </select>
+                            {!! $errors->first('idadquisicion','<span class="help-block">:message</span>') !!}
+                        </div>
+
+                        <div class="form-group-sm {{ $errors->has('fecha_adquisicion') ? ' has-error' : '' }}">
+                            <label>Fecha de Adquisición:</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="fecha_adquisicion" id="fecha_adquisicion">
+                            </div>
+                            {!! $errors->first('fecha_adquisicion','<span class="help-block">:message</span>') !!}
+                        </div>
+                        <div class="form-group-sm {{ $errors->has('descripcion') ? ' has-error' : '' }}">
+                            <label>Descripción:</label>
+                            <textarea name="descripcion" id="descripcion" cols="30" rows="10" class="form-control" required >{{old('descripcion')}}</textarea>
+                            {!! $errors->first('descripcion','<span class="help-block">:message</span>') !!}
+                        </div>
+
+                    </div>
+                    
                 </div>
+
+
                 <div class="box-footer">
                     <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
             </form>
-<!-- /.box-body -->
+            <!-- /.box-body -->
         </div>
 
     </div>
@@ -160,4 +214,43 @@
         });
     </script>
 
+    <!-- Select2 -->
+    <script src="{{asset('plugins/select2//select2.full.min.js')}}"></script>
+
+    <script>
+        
+        $("#catalogo").select2({
+            language: "es",
+            minimumInputLength: 2,
+            ajax: {
+                url:  "{{route('catalogoitems')}}",
+                delay: 250,
+                dataType: 'json',
+                data: function(params) {
+                    return {
+                        term: params.term
+                    }
+                },
+                results: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.text,
+                                id: item.id
+                            }
+                        })
+                    };
+                }
+            },
+            templateResult: formatRepo,
+        });
+
+        function formatRepo (repo) {
+          //if (repo.loading) {
+            $("#codinventario").val(repo.id);
+            return repo.text;
+          //}
+        }
+
+    </script>
 @endsection

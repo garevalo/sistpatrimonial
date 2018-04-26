@@ -12,6 +12,7 @@ use App\Modelo;
 use App\Marca;
 use App\Personal;
 use App\CentroCosto;
+use App\Movimiento;
 use Carbon\Carbon;
 use DB;
 use Datatables;
@@ -47,12 +48,9 @@ class BienController extends Controller
         $modelos        =   Modelo::all();
         $personals      =   Personal::all();
         $centrocostos   =   CentroCosto::all();
-        $estados = array(1=>'Activo',2=>'Inactivo');
+        $estados        =   array(1=>'Activo',2=>'Inactivo');
 
-        $url = Storage::url('storage/fotos/123.png');
-
-        echo $url;
-        //return view('bien.create',compact('colores','adquisiciones','marcas','modelos','personals','centrocostos','estados'));
+        return view('bien.create',compact('colores','adquisiciones','marcas','modelos','personals','centrocostos','estados'));
     }
 
     /**
@@ -64,32 +62,51 @@ class BienController extends Controller
     public function store(BienRequest $request)
     {
 
-        /*$path = $request->file('imagen')->storeAs(
-            'fotos', $request->codpatrimonial.'.'.$request->imagen->extension()
-        );*/
+        $path = $request->file('imagen')->storeAs(
+            'public/fotos', $request->codpatrimonial.'.'.$request->imagen->extension()
+        );
 
-         $path = $request->file('imagen')->store('fotos');
+        DB::transaction(function () use ($request) {
 
-        Bien::create([
-            'codcatalogo'       => $request->codcatalogo,
-            'codinventario'     => $request->codinventario,
-            'codpatrimonial'    => $request->codpatrimonial,
-            'ordencompra'       => $request->ordencompra,
-            'idmarca'           => $request->idmarca,
-            'idmodelo'          => $request->idmodelo,
-            'idcolor'           => $request->idcolor,
-            'imagen'            => asset('storage/'.$path),
-            'numserie'          => $request->numserie,
-            'centrocosto'       => $request->centrocosto,
-            'idpersonal'        => $request->idpersonal,
-            'idestado'          => $request->idestado,
-            'valor'             => $request->valor,
-            'idadquisicion'     => $request->idadquisicion,
-            'fecha_adquisicion' => Carbon::createFromFormat('d/m/Y', $request->fecha_adquisicion),
-            'descripcion'       => $request->descripcion
-        ]);
+            $bien = Bien::insertGetId([
+                'codcatalogo'       => $request->codcatalogo,
+                'codinventario'     => $request->codinventario,
+                'codpatrimonial'    => $request->codpatrimonial,
+                'ordencompra'       => $request->ordencompra,
+                'idmarca'           => $request->idmarca,
+                'idmodelo'          => $request->idmodelo,
+                'idcolor'           => $request->idcolor,
+                'imagen'            => asset(Storage::url($path)),
+                'numserie'          => $request->numserie,
+                'centrocosto'       => $request->centrocosto,
+                'idpersonal'        => $request->idpersonal,
+                'idestado'          => $request->idestado,
+                'valor'             => $request->valor,
+                'idadquisicion'     => $request->idadquisicion,
+                'fecha_adquisicion' => Carbon::createFromFormat('d/m/Y', $request->fecha_adquisicion),
+                'descripcion'       => $request->descripcion
+            ]);
+
+            if($bien){
+                Movimiento::create([
+                    'idbien'            => $bien,
+                    'codinventario'     => $request->codinventario,
+                    'codpatrimonial'    => $request->codpatrimonial,
+                    'centrocosto'       => $request->centrocosto,
+                    'idpersonal'        => $request->idpersonal,
+                    'idestado'          => $request->idestado,
+                    'fecha_movimiento'  => Carbon::createFromFormat('d/m/Y', $request->fecha_adquisicion)
+                ]);
+            }
+
+        });
+
+
+
+
 
         return redirect()->route(self::MODULO.'.index');
+
     }
 
     /**
@@ -100,7 +117,7 @@ class BienController extends Controller
      */
     public function show($id)
     {
-        //
+        return Bien::with('marca','modelo','color','adquisicion','centrocosto','personal')->get();
     }
 
     /**
@@ -111,7 +128,19 @@ class BienController extends Controller
      */
     public function edit($id)
     {
-        //
+        $colores        =   Color::all();
+        $adquisiciones  =   Adquisicion::all();
+        $marcas         =   Marca::all();
+        $modelos        =   Modelo::all();
+        $personals      =   Personal::all();
+        $centrocostos   =   CentroCosto::all();
+        $estados        =   array(1=>'Activo',2=>'Inactivo');
+
+        //$hardware = Bien::with('activo')->where('idhardware',$id)->get();
+
+        $bien    = Bien::FindOrFail($id);
+
+        return view('bien.edit',compact('colores','adquisiciones','marcas','modelos','personals','centrocostos','estados','bien'));
     }
 
     /**
@@ -139,11 +168,25 @@ class BienController extends Controller
 
     public function dataTable(){
 
-        return Datatables::of(Bien::all())
+        return Datatables::of(Bien::with('marca','modelo','color','adquisicion','centrocosto','personal')->get())
             ->addColumn('edit',function($bien){
-                return '<a href="'.route('bien.edit',$bien->idbien).'" class="btn btn-primary btn-sm">Movimientos</a>' ;
+                return '<a href="'.route('bien.edit',$bien->idbien).'" class="btn btn-primary btn-xs">Editar</a>
+                        <a href="'.route('bien.edit',$bien->idbien).'" class="btn btn-success btn-xs">Movimiento</a>
+                        <a href="'.route('bien.edit',$bien->idbien).'" class="btn btn-info btn-xs">Ver</a>' ;
             })
-            ->rawColumns(['edit'])
+            ->addColumn('foto',function($bien){
+                return '<img src="'.$bien->imagen.'" style="width: 120px;height: 100px;" >' ;
+            })
+            ->addColumn('marca',function($field){
+                return $field->marca->marca;
+            })
+            ->addColumn('color',function($field){
+                return $field->color->color;
+            })
+            ->addColumn('modelo',function($field){
+                return $field->modelo->modelo;
+            })
+            ->rawColumns(['edit','foto'])
             ->make(true);
 
     }

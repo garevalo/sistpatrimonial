@@ -38,7 +38,7 @@
                         <th>Modelo</th>
                         <th>Imagen</th>
                         <th>Estado</th>
-                        <th>Editar</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -82,10 +82,10 @@
                 {data: 'idbien', name: 'idbien'},
                 {data: 'codinventario', name: 'codinventario'},
                 {data: 'codpatrimonial', name: 'codpatrimonial'},
-                {data: 'idcolor', name: 'idcolor'},
-                {data: 'idmarca', name: 'idmarca'},
-                {data: 'idmodelo', name: 'idmodelo'},
-                {data:'imagen',name:'imagen'},
+                {data: 'color', name: 'color'},
+                {data: 'marca', name: 'marca'},
+                {data: 'modelo', name: 'modelo'},
+                {data:'foto',name:'foto'},
                 {data:'idestado',name:'idestado'},
                 {
                     data: 'edit',
