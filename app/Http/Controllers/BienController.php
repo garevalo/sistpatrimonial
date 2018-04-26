@@ -66,7 +66,7 @@ class BienController extends Controller
             'public/fotos', $request->codpatrimonial.'.'.$request->imagen->extension()
         );
 
-        DB::transaction(function () use ($request) {
+       // DB::transaction(function () use ($request) {
 
             $bien = Bien::insertGetId([
                 'codcatalogo'       => $request->codcatalogo,
@@ -99,11 +99,7 @@ class BienController extends Controller
                 ]);
             }
 
-        });
-
-
-
-
+        //});
 
         return redirect()->route(self::MODULO.'.index');
 
@@ -117,7 +113,17 @@ class BienController extends Controller
      */
     public function show($id)
     {
-        return Bien::with('marca','modelo','color','adquisicion','centrocosto','personal')->get();
+        $colores        =   Color::all();
+        $adquisiciones  =   Adquisicion::all();
+        $marcas         =   Marca::all();
+        $modelos        =   Modelo::all();
+        $personals      =   Personal::all();
+        $centrocostos   =   CentroCosto::all();
+        $estados        =   array(1=>'Activo',2=>'Inactivo');
+
+        $bien    = Bien::with('marca','modelo','color','adquisicion','centrocosto','personal')->FindOrFail($id);
+
+        return view('bien.view',compact('colores','adquisiciones','marcas','modelos','personals','centrocostos','estados','bien'));
     }
 
     /**
@@ -135,8 +141,6 @@ class BienController extends Controller
         $personals      =   Personal::all();
         $centrocostos   =   CentroCosto::all();
         $estados        =   array(1=>'Activo',2=>'Inactivo');
-
-        //$hardware = Bien::with('activo')->where('idhardware',$id)->get();
 
         $bien    = Bien::FindOrFail($id);
 
@@ -172,7 +176,7 @@ class BienController extends Controller
             ->addColumn('edit',function($bien){
                 return '<a href="'.route('bien.edit',$bien->idbien).'" class="btn btn-primary btn-xs">Editar</a>
                         <a href="'.route('bien.edit',$bien->idbien).'" class="btn btn-success btn-xs">Movimiento</a>
-                        <a href="'.route('bien.edit',$bien->idbien).'" class="btn btn-info btn-xs">Ver</a>' ;
+                        <a href="'.route('bien.show',$bien->idbien).'" class="btn btn-info btn-xs">Ver</a>' ;
             })
             ->addColumn('foto',function($bien){
                 return '<img src="'.$bien->imagen.'" style="width: 120px;height: 100px;" >' ;

@@ -27,7 +27,7 @@
                         <div class="form-group-sm {{ $errors->has('codcatalogo') ? ' has-error' : '' }}">
                             <label>Bien:</label>
                             <select class="form-control bien" name="codcatalogo" id="catalogo" required autofocus>
-                                
+                                <option value=""></option>
                             </select>
                             {!! $errors->first('codcatalogo','<span class="help-block">:message</span>') !!}
                         </div>
@@ -223,7 +223,7 @@
             language: "es",
             minimumInputLength: 2,
             ajax: {
-                url:  "{{route('catalogoitems')}}",
+                url:  "{{route('catalogoitems',['id'=> substr($bien->codinventario,0,8)  ])}}",
                 delay: 250,
                 dataType: 'json',
                 data: function(params) {

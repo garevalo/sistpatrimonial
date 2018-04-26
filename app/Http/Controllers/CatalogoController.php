@@ -127,8 +127,8 @@ class CatalogoController extends Controller
         $result     =   array();
 
         foreach ($catalogo as $key => $value) {
-            if( $id==$catalogo->codcatalogo ){
-                $result[]  = array('id' => $value->codcatalogo, 'text' => $value->denom_catalogo,'term' => $value->denom_catalogo , 'codcatalogo' => $value->codcatalogo,'selected'=>'selected');  
+            if( $id==$value->codcatalogo ){
+                $result[]  = array('id' => $value->codcatalogo, 'text' => $value->denom_catalogo,'term' => $value->denom_catalogo , 'codcatalogo' => $value->codcatalogo,"selected"=> true);  
             }else{
                 $result[]  = array('id' => $value->codcatalogo, 'text' => $value->denom_catalogo,'term' => $value->denom_catalogo , 'codcatalogo' => $value->codcatalogo);  
             }
