@@ -32,51 +32,34 @@
                             <label  class="form-control">{{ $bien->codpatrimonial }} </label>
                         </div>
 
-                        <div class="form-group-sm {{ $errors->has('ordencompra') ? ' has-error' : '' }}">
+                        <div class="form-group-sm has-warning">
                             <label>Orden de Compra:</label>
                             <label  class="form-control">{{ $bien->ordencompra }} </label>
                         </div>
 
-                        <div class="form-group-sm {{ $errors->has('idmarca') ? ' has-error' : '' }}">
+                        <div class="form-group-sm has-warning">
                             <label>Marca:</label>
                             <label  class="form-control">{{ $bien->marca->marca }} </label>
                         </div>
 
-                        <div class="form-group-sm {{ $errors->has('idmodelo') ? ' has-error' : '' }}">
+                        <div class="form-group-sm has-warning">
                             <label>Modelo:</label>
-                            <label  class="form-control">{{ $bien->marca->marca }} </label>
-                            <select class="form-control" name="idmodelo" id="idmodelo" value="{{old('idmodelo')}}" required>
-                                <option value="">Seleccione Modelo</option>
-                                @foreach($modelos as $modelo)
-                                <option value="{{$modelo->idmodelo}}" @if($modelo->idmodelo == old('idmodelo') ) selected @endif >{{$modelo->modelo}}</option>
-                                @endforeach()
-                            </select>
-                            {!! $errors->first('idmodelo','<span class="help-block">:message</span>') !!}
+                            <label  class="form-control">{{ $bien->modelo->modelo }} </label>
                         </div>
 
-                        <div class="form-group-sm {{ $errors->has('idcolor') ? ' has-error' : '' }}">
+                        <div class="form-group-sm has-warning">
                             <label>Color:</label>
-                            <select class="form-control" name="idcolor" id="idcolor" value="{{old('idcolor')}}" required>
-                                <option value="">Seleccione Color</option>
-                                @foreach($colores as $color)
-                                <option value="{{$color->idcolor}}" @if($color->idcolor == old('idcolor') ) selected @endif >{{$color->color}}</option>
-                                @endforeach()
-                            </select>
-                            {!! $errors->first('color','<span class="help-block">:message</span>') !!}
+                            <label  class="form-control">{{ $bien->color->color }} </label>
                         </div>
 
-                        <div class="form-group-sm {{ $errors->has('imagen') ? ' has-error' : '' }}">
+                        <div class="form-group-sm has-warning">
                             <label>Imagen:</label>
-
-                            <input type="file" class="form-control" name="imagen" id="imagen" value="{{old('imagen')}}">
-                            {!! $errors->first('imagen','<span class="help-block">:message</span>') !!}
+                            <img src="{{ $bien->imagen }}" width="150" height="100">
                         </div>  
 
-                        <div class="form-group-sm {{ $errors->has('numserie') ? ' has-error' : '' }}">
+                        <div class="form-group-sm has-warning">
                             <label>Número Serie:</label>
-
-                            <input type="text" class="form-control" name="numserie" id="numserie" value="{{old('numserie')}}">
-                            {!! $errors->first('numserie','<span class="help-block">:message</span>') !!}
+                            <label  class="form-control">{{ $bien->numserie }} </label>
                         </div>
                         
                         
