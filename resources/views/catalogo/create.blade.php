@@ -17,6 +17,20 @@
             {{csrf_field()}}
             <div class="box-body">
                 <div class="form-group-sm  {{ $errors->has('codcatalogo') ? ' has-error' : '' }}">
+                    <label>Grupo Genérico:</label>
+
+                    <input type="text" class="form-control" name="codcatalogo" id="codcatalogo" value="{{old('codcatalogo')}}" required autofocus>
+                    {!! $errors->first('codcatalogo','<span class="help-block">:message</span>') !!}
+                </div>
+
+                <div class="form-group-sm  {{ $errors->has('codcatalogo') ? ' has-error' : '' }}">
+                    <label>Clase Genérico:</label>
+
+                    <input type="text" class="form-control" name="codcatalogo" id="codcatalogo" value="{{old('codcatalogo')}}" required autofocus>
+                    {!! $errors->first('codcatalogo','<span class="help-block">:message</span>') !!}
+                </div>
+
+                <div class="form-group-sm  {{ $errors->has('codcatalogo') ? ' has-error' : '' }}">
                     <label>Código:</label>
 
                     <input type="text" class="form-control" name="codcatalogo" id="codcatalogo" value="{{old('codcatalogo')}}" required autofocus>

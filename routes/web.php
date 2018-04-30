@@ -45,6 +45,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('adquisicion/alldata','AdquisicionController@alldata')->name('getadquisiciones');
     Route::resource('adquisicion','AdquisicionController');
 
+    //Grupo Generico
+    Route::get('grupogenerico/alldata','GrupoGenericoController@alldata')->name('getgruposgenericos');
+    Route::resource('grupogenerico','GrupoGenericoController');
+
     //Catalogo
     Route::get('catalogo/items/{id?}','CatalogoController@items')->name('catalogoitems');
     Route::get('catalogo/alldata','CatalogoController@alldata')->name('getcatalogos');
