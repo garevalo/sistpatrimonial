@@ -58,9 +58,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('catalogo/alldata','CatalogoController@alldata')->name('getcatalogos');
     Route::resource('catalogo','CatalogoController');
 
-     //Catalogo
+     //Cargo
     Route::get('cargo/alldata','CargoController@alldata')->name('getcargos');
     Route::resource('cargo','CargoController');
+
+    //Proveedor
+    Route::get('proveedor/alldata','ProveedorController@alldata')->name('getproveedores');
+    Route::resource('proveedor','ProveedorController');
+
+     //Local
+    Route::get('local/alldata','LocalController@alldata')->name('getlocales');
+    Route::resource('local','LocalController');
     
     //Personal
     Route::resource('personal','PersonalController');

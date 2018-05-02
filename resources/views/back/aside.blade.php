@@ -21,17 +21,21 @@
         <ul class="sidebar-menu">
             <li class="header">MENU</li>
             <li></li>
-            <li class="treeview @if(in_array(request()->getRequestUri(),['/bien','/catalogo'])) active @endif ">
+            <li class="treeview @if(in_array(request()->getRequestUri(),['/bien','/catalogo','/grupogenerico','/clasegenerico'])) active @endif ">
                 <a href="/hardware">
                     <i class="fa fa-archive"></i> <span>Almacén</span>
                     <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                 </a>
                 <ul class="treeview-menu">
                     <li class="@if(request()->getRequestUri()=='/bien') active @endif"><a href="/bien"><i class="fa fa-circle-o text-aqua"></i> Bienes</a></li>
-                    <li class="@if(request()->getRequestUri()=='/catalogo') active @endif"><a href="/catalogo"><i class="fa fa-folder-open text-aqua"></i> Calálogo</a></li>
+                    <li class="@if(request()->getRequestUri()=='/catalogo') active @endif"><a href="/catalogo"><i class="fa fa-circle-o text-aqua"></i> Calálogo</a></li>
+
+                    <li class="@if(request()->getRequestUri()=='/grupogenerico') active @endif"><a href="/grupogenerico"><i class="fa fa-circle-o text-aqua"></i> Grupo Genérico</a></li>
+
+                    <li class="@if(request()->getRequestUri()=='/clasegenerico') active @endif"><a href="/clasegenerico"><i class="fa fa-circle-o text-aqua"></i> Clase Generico</a></li>
                 </ul>
             </li>
-            <li class="treeview @if(in_array(request()->getRequestUri(),['/cargo','/gerencia','/subgerencia','/marca','/modelo','/adquisicion','/personal','/color'])) active @endif ">
+            <li class="treeview @if(in_array(request()->getRequestUri(),['/cargo','/gerencia','/subgerencia','/marca','/modelo','/adquisicion','/personal','/color','/proveedor','/local'])) active @endif ">
                 <a href="#">
                     <i class="fa fa-pencil-square-o"></i>
                     <span>Módulo Mantenimientos</span>
@@ -48,6 +52,10 @@
                     <li class="@if(request()->getRequestUri()=='/adquisicion') active @endif"><a href="/adquisicion"><i class="fa fa-circle-o text-aqua"></i> Adquisición</a></li>
                     <li class="@if(request()->getRequestUri()=='/personal') active @endif"><a href="/personal"><i class="fa fa-circle-o text-aqua"></i> Personal</a></li>
                     <li class="@if(request()->getRequestUri()=='/cargo') active @endif"><a href="/cargo"><i class="fa fa-circle-o text-aqua"></i> Cargo</a></li>
+
+                    <li class="@if(request()->getRequestUri()=='/proveedor') active @endif"><a href="/proveedor"><i class="fa fa-circle-o text-aqua"></i> Proveedor</a></li>
+
+                    <li class="@if(request()->getRequestUri()=='/local') active @endif"><a href="/local"><i class="fa fa-circle-o text-aqua"></i> Local</a></li>
                 </ul>
             </li>
 
