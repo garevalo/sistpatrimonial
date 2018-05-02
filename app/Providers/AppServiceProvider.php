@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Form;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Form::component('textfield', 'components.form.text', ['name','label', 'value' => null, 'attributes' => []]);
+        Form::component('selectfield', 'components.form.select', ['name','label','options' => [],'placeholder','selected' => null, 'attributes' => []]);
     }
 
     /**

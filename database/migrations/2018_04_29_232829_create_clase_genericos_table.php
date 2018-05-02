@@ -14,7 +14,10 @@ class CreateClaseGenericosTable extends Migration
     public function up()
     {
         Schema::create('clase_genericos', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('idclasegenerico');
+            $table->string('cod_clase_generico',10);
+            $table->string('clase_generico',50);
+            $table->string('cod_grupo_generico',10);
             $table->timestamps();
         });
     }

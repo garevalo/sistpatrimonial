@@ -11,13 +11,14 @@
                 <h3 class="box-title">Editar {{ucwords($titulomod)}}</h3>
             </div>
 
-
-            {{ Form::model($table, ['action' => ['GrupoGenericoController@update',$table->idgrupogenerico],'method'=>'put']) }}
+        {!! Form::model($table, ['action' => ['ClaseGenericoController@update',$table->idclasegenerico],'method'=>'put'] ) !!}
             <div class="box-body">
 
-                {{ Form::textfield('cod_grupo_generico','Cod. Grupo Genérico',$table->cod_grupo_generico ) }}
+                {{ Form::selectfield('cod_grupo_generico','Grupo Genérico',$grupos,'Seleccione Grupo',$table->cod_grupo_generico) }}
 
-                {{ Form::textfield('grupo_generico','Grupo Genérico', $grupos) }}
+                {{ Form::textfield('cod_clase_generico','Cod. Clase Genérico',$table->cod_clase_generico) }}
+
+                {{ Form::textfield('clase_generico','Clase Genérico',$table->clase_generico) }}
                
             </div>  
             <div class="box-footer">

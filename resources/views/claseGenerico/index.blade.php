@@ -10,8 +10,8 @@
 
 @section('menu-h1')
     <h1>
-        <i class="fa fa-users"></i>  {{ucwords($titulomod)}} &nbsp;&nbsp;
-        <a href="{{route('grupogenerico.create')}}" class="btn btn-sm btn-success" title="nuevo">
+        <i class="fa fa-cogs"></i> Lista de {{ucwords($titulomod)}} &nbsp;&nbsp;
+        <a href="{{route('clasegenerico.create')}}" class="btn btn-sm btn-success" title="nuevo">
             <i class="fa fa-plus-circle"></i> Nuevo {{ucwords($titulomod)}}
         </a>
 
@@ -23,14 +23,15 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">{{ucwords($modulo)}}</h3>
+                <h3 class="box-title">{{ucwords($titulomod)}}</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <table id="table" class="table table-bordered table-hover">
+                <table id="table" class="table table-bordered table-hover table-condensed">
                     <thead>
                     <tr>
                         <th>Código</th>
+                        <th>Clase Genérico</th>
                         <th>Grupo Genérico</th>
                         <th>Editar</th>
 
@@ -71,10 +72,11 @@
         var table = $('#table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{{route('getgruposgenericos')}}',
+            ajax: '{{route('getclasesgenericos')}}',
             columns: [
+                {data: 'cod_clase_generico', name: 'cod_clase_generico'},
+                {data: 'clase_generico', name: 'clase_generico'},
                 {data: 'cod_grupo_generico', name: 'cod_grupo_generico'},
-                {data: 'grupo_generico', name: 'grupo_generico'},
                 {
                     data: 'edit',
                     name: 'edit',

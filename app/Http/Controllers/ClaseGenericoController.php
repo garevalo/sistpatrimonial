@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\ClaseGenerico;
 use App\GrupoGenerico;
 use Datatables;
-use App\Http\Requests\GrupoGenericoRequest;
+use App\Http\Requests\ClaseGenericoRequest;
 
-class GrupoGenericoController extends Controller
+class ClaseGenericoController extends Controller
 {
 
-    const REDIRECT = "grupogenerico.index";
-    const MODULO   = "grupoGenerico";
-    const TITLEMOD = 'Grupo Genérico';
+    const REDIRECT = "clasegenerico.index";
+    const MODULO   = "claseGenerico";
+    const TITLEMOD = 'Clase Genérica';
+
     /**
      * Display a listing of the resource.
      *
@@ -33,9 +35,10 @@ class GrupoGenericoController extends Controller
     {
         $modulo = self::MODULO;
         $titulomod = self::TITLEMOD;
-        $table = new GrupoGenerico;
+        $table = new ClaseGenerico;
+        $grupos = GrupoGenerico::all()->pluck('grupo_generico','cod_grupo_generico');
 
-        return view(self::MODULO.'.create',compact('modulo','table','titulomod'));
+        return view(self::MODULO.'.create',compact('modulo','table','titulomod','grupos'));
     }
 
     /**
@@ -44,10 +47,9 @@ class GrupoGenericoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(GrupoGenericoRequest $request)
+    public function store(ClaseGenericoRequest $request)
     {
-        
-        GrupoGenerico::create($request->all());
+        ClaseGenerico::create($request->all());
         return redirect()->route(self::REDIRECT);
     }
 
@@ -59,7 +61,7 @@ class GrupoGenericoController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -70,10 +72,12 @@ class GrupoGenericoController extends Controller
      */
     public function edit($id)
     {
-        $table = GrupoGenerico::FindOrFail($id);
+        $table = ClaseGenerico::FindOrFail($id);
         $modulo = self::MODULO;
         $titulomod = self::TITLEMOD;
-        return view(self::MODULO.".edit",compact('table','modulo','titulomod'));
+
+        $grupos = GrupoGenerico::all()->pluck('grupo_generico','cod_grupo_generico');
+        return view(self::MODULO.".edit",compact('table','modulo','titulomod','grupos'));
     }
 
     /**
@@ -83,9 +87,9 @@ class GrupoGenericoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(GrupoGenericoRequest $request, $id)
+    public function update(ClaseGenericoRequest $request, $id)
     {
-        GrupoGenerico::FindOrFail($id)->update($request->all());
+        ClaseGenerico::FindOrFail($id)->update($request->all());
         return redirect()->route(self::REDIRECT);
     }
 
@@ -102,9 +106,9 @@ class GrupoGenericoController extends Controller
 
     public function alldata(){
 
-        return Datatables::of(GrupoGenerico::all())
-            ->addColumn('edit',function($grupogenerico){
-                return '<a href="'.route('grupogenerico.edit',$grupogenerico->idgrupogenerico).'" class="btn btn-primary btn-sm">Editar</a>' ;
+        return Datatables::of(ClaseGenerico::all())
+            ->addColumn('edit',function($table){
+                return '<a href="'.route('clasegenerico.edit',$table->idclasegenerico).'" class="btn btn-primary btn-sm">Editar</a>' ;
             })
             ->rawColumns(['edit'])
             ->make(true);
