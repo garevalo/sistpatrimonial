@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Catalogo;
+use App\GrupoGenerico;
+use App\ClaseGenerico;
+
 use App\Http\Requests\CatalogoRequest;
-
 use Illuminate\Http\Request;
-
 use Datatables;
 
 class CatalogoController extends Controller
@@ -37,7 +38,11 @@ class CatalogoController extends Controller
     {
         $modulo = self::MODULO;
         $estados = array(1=>'Activo',2=>'Inactivo');
-        return view(self::MODULO.'.create',compact('modulo','estados'));
+        $grupos = GrupoGenerico::all()->pluck('grupo_generico','cod_grupo_generico');
+
+        $clases = ClaseGenerico::all()->pluck('clase_generico','cod_clase_generico');
+
+        return view(self::MODULO.'.create',compact('modulo','estados','grupos','clases'));
     }
 
     /**

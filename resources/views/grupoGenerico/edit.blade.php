@@ -17,7 +17,7 @@
 
                 {{ Form::textfield('cod_grupo_generico','Cod. Grupo Genérico',$table->cod_grupo_generico ) }}
 
-                {{ Form::textfield('grupo_generico','Grupo Genérico', $grupos) }}
+                {{ Form::textfield('grupo_generico','Grupo Genérico', $table->grupo_generico) }}
                
             </div>  
             <div class="box-footer">

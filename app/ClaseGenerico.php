@@ -10,7 +10,7 @@ class ClaseGenerico extends Model
     protected $primaryKey = 'idclasegenerico';
 
 
-    public function GrupoGenerico()
+    public function GrupoGenericos()
     {
        return $this->belongsTo('App\GrupoGenerico', 'cod_grupo_generico', 'cod_grupo_generico');
     }

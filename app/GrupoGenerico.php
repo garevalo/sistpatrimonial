@@ -21,25 +21,4 @@ class GrupoGenerico extends Model
         return $this->hasMany('App\ClaseGenerico','cod_grupo_generico','cod_grupo_generico');
     }
 
-    /**
-     * Get the user's first name.
-     *
-     * @param  string  $value
-     * @return string
-     */
-    public function getDateOfBirthAttribute($value)
-    {
-        return Carbon::parse($value)->format('m/d/Y');
-    }
-
-    /**
-     * Get the user's first name for forms.
-     *
-     * @param  string  $value
-     * @return string
-     */
-    public function formDateOfBirthAttribute($value)
-    {
-        return Carbon::parse($value)->format('Y-m-d');
-    }
 }

@@ -104,6 +104,12 @@ class ClaseGenericoController extends Controller
         //
     }
 
+    public function getClasesByGrupo($id=null){
+
+        return  ClaseGenerico::where('cod_grupo_generico',$id)->get();
+
+    }
+
     public function alldata(){
 
         return Datatables::of(ClaseGenerico::all())

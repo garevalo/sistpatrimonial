@@ -16,19 +16,9 @@
 
             {{csrf_field()}}
             <div class="box-body">
-                <div class="form-group-sm  {{ $errors->has('codcatalogo') ? ' has-error' : '' }}">
-                    <label>Grupo Genérico:</label>
+                {{ Form::selectfield('cod_grupo_generico','Grupo Genérico',$grupos,'Seleccione Grupo') }}
 
-                    <input type="text" class="form-control" name="codcatalogo" id="codcatalogo" value="{{old('codcatalogo')}}" required autofocus>
-                    {!! $errors->first('codcatalogo','<span class="help-block">:message</span>') !!}
-                </div>
-
-                <div class="form-group-sm  {{ $errors->has('codcatalogo') ? ' has-error' : '' }}">
-                    <label>Clase Genérico:</label>
-
-                    <input type="text" class="form-control" name="codcatalogo" id="codcatalogo" value="{{old('codcatalogo')}}" required autofocus>
-                    {!! $errors->first('codcatalogo','<span class="help-block">:message</span>') !!}
-                </div>
+                {{ Form::selectfield('cod_clase_generico','Clase Genérico',$clases,'Seleccione Clase') }}
 
                 <div class="form-group-sm  {{ $errors->has('codcatalogo') ? ' has-error' : '' }}">
                     <label>Código:</label>
@@ -67,5 +57,39 @@
     </div>
 
 </div>
+
+@endsection
+
+@section('javascript')
+    @parent()
+
+    <script type="text/javascript">
+
+        function getData(){
+          $.ajax({
+            type: "GET",
+            url: '{{ route() }}', 
+            dataType: "json",
+            success: function(data){
+              $.each(data,function(key, registro) {
+                $("#cod_clase_generico").append('<option value='+registro.id+'>'+registro.nombre+'</option>');
+              });        
+            },
+            error: function(data) {
+              alert('error');
+            }
+          });
+        }
+
+        $("#cod_clase_generico").post
+
+        $( "#cod_clase_generico" ).change(function() {
+            $("#codcatalogo").val( $("#cod_grupo_generico").val() + $("#cod_clase_generico").val()  );  
+        });
+
+        $( "#cod_grupo_generico" ).change(function() {
+            $("#codcatalogo").val( $("#cod_grupo_generico").val() + $("#cod_clase_generico").val()  );  
+        });
+    </script>
 
 @endsection

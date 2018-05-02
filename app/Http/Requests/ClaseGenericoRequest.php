@@ -27,13 +27,13 @@ class ClaseGenericoRequest extends FormRequest
             return [
                 'cod_clase_generico'=>'required|min:1|unique:clase_genericos,cod_clase_generico,'.$this->route('clasegenerico').',idclasegenerico',
                 'clase_generico'    =>'required|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|min:2|unique:clase_genericos,clase_generico,'.$this->route('clasegenerico').',idclasegenerico',
-                'cod_grupo_generico'    =>'required|min:1|unique:clase_genericos,cod_grupo_generico,'.$this->route('clasegenerico').',idclasegenerico',
+                'cod_grupo_generico'    =>'required',
             ];
         } else {
             return [
                 'cod_clase_generico'=>'required|min:1|unique:clase_genericos,cod_clase_generico',
                 'clase_generico'    =>'required|min:2|unique:clase_genericos,clase_generico',
-                'cod_grupo_generico'    =>'required|min:1|unique:clase_genericos,cod_grupo_generico',
+                'cod_grupo_generico'    =>'required',
             ];
         }
     }
