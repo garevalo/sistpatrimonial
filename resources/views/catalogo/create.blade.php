@@ -68,11 +68,13 @@
         function getData(id){
           $.ajax({
             type: "GET",
-            url: '<?php echo route("catalogoitems",["id"=>'+ id +']) ?>', 
+            url: '<?php echo route("getclasesxgrupo") ?>/'+id, 
             dataType: "json",
             success: function(data){
+                console.log(data);
+              $("#cod_clase_generico").html('<option value="">Seleccione Clase</option>');  
               $.each(data,function(key, registro) {
-                $("#cod_clase_generico").append('<option value='+registro.id+'>'+registro.nombre+'</option>');
+                $("#cod_clase_generico").append('<option value='+registro.cod_clase_generico+'>'+registro.clase_generico+'</option>');
               });        
             },
             error: function(data) {
@@ -81,15 +83,13 @@
           });
         }
 
-        $("#cod_clase_generico").post
-
         $( "#cod_clase_generico" ).change(function() {
             $("#codcatalogo").val( $("#cod_grupo_generico").val() + $("#cod_clase_generico").val()  );  
         });
 
         $( "#cod_grupo_generico" ).change(function() {
             $("#codcatalogo").val( $("#cod_grupo_generico").val() + $("#cod_clase_generico").val()  );
-
+            getData($("#cod_grupo_generico").val());
 
         });
     </script>

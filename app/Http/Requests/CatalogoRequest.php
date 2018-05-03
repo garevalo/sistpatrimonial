@@ -29,13 +29,17 @@ class CatalogoRequest extends FormRequest
             $validation = array(
                 'codcatalogo' => 'required|size:8|unique:catalogos,codcatalogo,'.$this->route('catalogo').',idcatalogo',
                 'denom_catalogo' => 'required|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|min:2|unique:catalogos,denom_catalogo,'.$this->route('catalogo').',idcatalogo',
-                'idestado' => 'required|integer'
+                'idestado' => 'required|integer',
+                'cod_grupo_generico' => 'required',
+                'cod_clase_generico' => 'required'
             );
         }else{
             $validation = array(
                 'codcatalogo' => 'required|size:8|unique:catalogos,codcatalogo',
                 'denom_catalogo' => 'required|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|min:2|unique:catalogos,denom_catalogo',
-                'idestado' => 'required|integer'
+                'idestado' => 'required|integer',
+                'cod_grupo_generico' => 'required',
+                'cod_clase_generico' => 'required'
             );
         }
 

@@ -17,6 +17,11 @@
                 {{csrf_field()}}
                 {!! method_field('PUT') !!}
                 <div class="box-body">
+
+                    {{ Form::selectfield('cod_grupo_generico','Grupo Genérico',$grupos,'Seleccione Grupo',$catalogo->cod_grupo_generico) }}
+
+                    {{ Form::selectfield('cod_clase_generico','Clase Genérico',$clases,'Seleccione Clase',$catalogo->cod_clase_generico) }}
+
                     <div class="form-group-sm  {{ $errors->has('codcatalogo') ? ' has-error' : '' }}">
                         <label>Código:</label>
 
@@ -52,5 +57,41 @@
         </div>
 
     </div>
+
+@endsection
+
+@section('javascript')
+    @parent()
+
+    <script type="text/javascript">
+
+        function getData(id){
+          $.ajax({
+            type: "GET",
+            url: '<?php echo route("getclasesxgrupo") ?>/'+id, 
+            dataType: "json",
+            success: function(data){
+                console.log(data);
+              $("#cod_clase_generico").html('<option value="">Seleccione Clase</option>');  
+              $.each(data,function(key, registro) {
+                $("#cod_clase_generico").append('<option value='+registro.cod_clase_generico+'>'+registro.clase_generico+'</option>');
+              });        
+            },
+            error: function(data) {
+              alert('error');
+            }
+          });
+        }
+
+        $( "#cod_clase_generico" ).change(function() {
+            $("#codcatalogo").val( $("#cod_grupo_generico").val() + $("#cod_clase_generico").val()  );  
+        });
+
+        $( "#cod_grupo_generico" ).change(function() {
+            $("#codcatalogo").val( $("#cod_grupo_generico").val() + $("#cod_clase_generico").val()  );
+            getData($("#cod_grupo_generico").val());
+
+        });
+    </script>
 
 @endsection

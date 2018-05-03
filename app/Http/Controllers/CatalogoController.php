@@ -79,7 +79,12 @@ class CatalogoController extends Controller
         $catalogo = Catalogo::FindOrFail($id);
         $modulo = self::MODULO;
         $estados = array(1=>'Activo',2=>'Inactivo');
-        return view(self::MODULO.".edit",compact('catalogo','modulo','estados'));
+
+        $grupos = GrupoGenerico::all()->pluck('grupo_generico','cod_grupo_generico');
+
+        $clases = ClaseGenerico::all()->pluck('clase_generico','cod_clase_generico');
+
+        return view(self::MODULO.".edit",compact('catalogo','modulo','estados','grupos','clases'));
     }
 
     /**
