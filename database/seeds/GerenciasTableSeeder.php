@@ -14,14 +14,14 @@ class GerenciasTableSeeder extends Seeder
     public function run()
     {   
 
-        /*Gerencia::truncate();
+        Gerencia::truncate();
         CentroCosto::truncate();
 
         Gerencia::create(['gerencia'=>'Alcaldía','centrocosto'=>'10001']);
         Gerencia::create(['gerencia'=>'Gerencia de Administración y Finanzas','centrocosto'=>'10002']);
         Gerencia::create(['gerencia'=>'Gerencia de Asuntos Jurídicos','centrocosto'=>'10003']);
         Gerencia::create(['gerencia'=>'Gerencia de Comunicación','centrocosto'=>'10004']);
-        Gerencia::create(['gerencia'=>'Gerencia de Desarrollo Humano','centrocosto'=>'10005']);*/
+        Gerencia::create(['gerencia'=>'Gerencia de Desarrollo Humano','centrocosto'=>'10005']);
 
 
         CentroCosto::create(['codcentrocosto'=>'10001',  'centrocosto' => 'Alcaldía']);

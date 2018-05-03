@@ -14,7 +14,10 @@ class AddResponsableToTable extends Migration
     public function up()
     {
         Schema::table('centro_costos', function (Blueprint $table) {
-            //
+            $table->string('idgerencia',50)->nullable();
+            $table->string('idsubgerencia',50)->nullable();
+            $table->string('idlocal',50)->nullable();
+            $table->string('idpersonal',50)->nullable();
         });
     }
 
@@ -26,7 +29,10 @@ class AddResponsableToTable extends Migration
     public function down()
     {
         Schema::table('centro_costos', function (Blueprint $table) {
-            //
+            $table->dropColumn('idgerencia');
+            $table->dropColumn('idsubgerencia');
+            $table->dropColumn('idlocal');
+            $table->dropColumn('idpersonal');
         });
     }
 }

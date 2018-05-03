@@ -70,6 +70,10 @@ Route::middleware(['auth'])->group(function () {
      //Local
     Route::get('local/alldata','LocalController@alldata')->name('getlocales');
     Route::resource('local','LocalController');
+
+     //Centro Costo
+    Route::get('centrocosto/alldata','CentroCostoController@alldata')->name('getcentrocostos');
+    Route::resource('centrocosto','CentroCostoController');
     
     //Personal
     Route::resource('personal','PersonalController');

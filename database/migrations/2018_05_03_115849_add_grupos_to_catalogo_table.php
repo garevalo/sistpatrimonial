@@ -27,8 +27,8 @@ class AddGruposToCatalogoTable extends Migration
     public function down()
     {
         Schema::table('catalogos', function (Blueprint $table) {
-            $table->dropColumn('cod_grupo_generico',50);
-            $table->dropColumn('cod_clase_generico',50);
+            $table->dropColumn('cod_grupo_generico');
+            $table->dropColumn('cod_clase_generico');
         });
     }
 }

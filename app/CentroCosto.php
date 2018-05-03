@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class CentroCosto extends Model
 {
-    protected $primaryKey = "idcentrocosto";
-    protected $fillable = ['codcentrocosto','centrocosto'];
-
+	protected $table = 'centro_costos';
+    protected $primaryKey = "id";
+    protected $fillable = ['codcentrocosto','centrocosto','idgerencia','idsubgerencia','idlocal','idpersonal'];
+    
     public function getFullCentroCostoAttribute()
     {
         return ucfirst($this->codcentrocosto) . ' - ' . ucfirst($this->centrocosto);
