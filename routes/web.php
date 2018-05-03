@@ -50,7 +50,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('grupogenerico','GrupoGenericoController');
 
     //clase Generico
-    Route::get('clasegenerico/getclasesxgrupo/{id}','ClaseGenericoController@getClasesByGrupo')->name('getclasesxgrupo');
+    Route::get('clasegenerico/getclasesxgrupo/{id?}','ClaseGenericoController@getClasesByGrupo')->name('getclasesxgrupo');
     Route::get('clasegenerico/alldata','ClaseGenericoController@alldata')->name('getclasesgenericos');
     Route::resource('clasegenerico','ClaseGenericoController');
 

@@ -65,10 +65,10 @@
 
     <script type="text/javascript">
 
-        function getData(){
+        function getData(id){
           $.ajax({
             type: "GET",
-            url: '{{ route() }}', 
+            url: '<?php echo route("catalogoitems",["id"=>'+ id +']) ?>', 
             dataType: "json",
             success: function(data){
               $.each(data,function(key, registro) {
@@ -88,7 +88,9 @@
         });
 
         $( "#cod_grupo_generico" ).change(function() {
-            $("#codcatalogo").val( $("#cod_grupo_generico").val() + $("#cod_clase_generico").val()  );  
+            $("#codcatalogo").val( $("#cod_grupo_generico").val() + $("#cod_clase_generico").val()  );
+
+
         });
     </script>
 
