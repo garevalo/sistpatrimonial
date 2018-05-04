@@ -79,10 +79,10 @@
             columns: [
                 {data: 'codcentrocosto', name: 'codcentrocosto'},
                 {data: 'centrocosto', name: 'centrocosto'},
-                {data: 'idgerencia', name: 'idgerencia'},
-                {data: 'idsubgerencia', name: 'idsubgerencia'},
-                {data: 'idlocal', name: 'idlocal'},
-                {data: 'idpersonal', name: 'idpersonal'},
+                {data: 'gerencia', name: 'gerencia'},
+                {data: 'subgerencia', name: 'subgerencia'},
+                {data: 'local', name: 'local'},
+                {data: 'personal', name: 'personal'},
                 {
                     data: 'edit',
                     name: 'edit',

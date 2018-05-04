@@ -117,9 +117,21 @@ class CentroCostoController extends Controller
 
     public function alldata(){
 
-        return Datatables::of(CentroCosto::all())
+        return Datatables::of(CentroCosto::with('gerencia','subgerencia','local','personal')->get())
             ->addColumn('edit',function($table){
                 return '<a href="'.route('centrocosto.edit',$table->id).'" class="btn btn-primary btn-sm">Editar</a>' ;
+            })
+            ->addColumn('gerencia',function($field){
+                return (isset($field->gerencia->gerencia)) ? $field->gerencia->gerencia : '' ;
+            })
+            ->addColumn('subgerencia',function($field){
+                return (isset($field->subgerencia->subgerencia)) ? $field->subgerencia->subgerencia : '' ;
+            })
+            ->addColumn('local',function($field){
+                return (isset($field->local->local)) ? $field->local->local : '' ;
+            })
+            ->addColumn('personal',function($field){
+                return (isset($field->personal->FullName)) ? $field->personal->FullName : '' ;
             })
             ->rawColumns(['edit'])
             ->make(true);
