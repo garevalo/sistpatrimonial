@@ -76,7 +76,7 @@
             columns: [
                 {data: 'cod_clase_generico', name: 'cod_clase_generico'},
                 {data: 'clase_generico', name: 'clase_generico'},
-                {data: 'cod_grupo_generico', name: 'cod_grupo_generico'},
+                {data: 'grupo_generico', name: 'grupo_generico'},
                 {
                     data: 'edit',
                     name: 'edit',

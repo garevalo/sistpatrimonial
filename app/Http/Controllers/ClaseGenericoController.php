@@ -112,10 +112,15 @@ class ClaseGenericoController extends Controller
 
     public function alldata(){
 
-        return Datatables::of(ClaseGenerico::all())
+        return Datatables::of(ClaseGenerico::with('GrupoGenericos')->get())
             ->addColumn('edit',function($table){
                 return '<a href="'.route('clasegenerico.edit',$table->idclasegenerico).'" class="btn btn-primary btn-sm">Editar</a>' ;
             })
+
+            ->addColumn('grupo_generico',function($table){
+               return  (isset($table->GrupoGenericos))? $table->GrupoGenericos->cod_grupo_generico .' - '. $table->GrupoGenericos->grupo_generico : '';
+            })
+
             ->rawColumns(['edit'])
             ->make(true);
 
