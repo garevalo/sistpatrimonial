@@ -247,7 +247,7 @@
 
         function formatRepo (repo) {
           //if (repo.loading) {
-            $("#codinventario").val(repo.id);
+            $("#codpatrimonial").val(repo.id);
             return repo.text;
           //}
         }
