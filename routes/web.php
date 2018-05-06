@@ -74,6 +74,10 @@ Route::middleware(['auth'])->group(function () {
      //Centro Costo
     Route::get('centrocosto/alldata','CentroCostoController@alldata')->name('getcentrocostos');
     Route::resource('centrocosto','CentroCostoController');
+
+     //Pedido
+    Route::get('pedido/alldata','PedidoController@alldata')->name('getpedidos');
+    Route::resource('pedido','PedidoController');
     
     //Personal
     Route::resource('personal','PersonalController');
