@@ -25,19 +25,15 @@ class CentroCostoRequest extends FormRequest
     {
         if($this->request->has('_method')){
             return [
-                'idgerencia'    => 'min:1',
-                'idsubgerencia'    => 'min:1',
-                'idlocal'       => 'min:1',
-                'idpersonal'    => 'min:1',
+                'idlocal'       => 'required|min:1',
+                'idpersonal'    => 'required|min:1',
                 'codcentrocosto'    => 'required|min:1|unique:centro_costos,codcentrocosto,'.$this->route('centrocosto').',id',
                 'centrocosto'    => 'required|min:1|unique:centro_costos,centrocosto,'.$this->route('centrocosto').',id',
             ];
         } else {
             return [
-                'idgerencia'        => 'min:1',
-                'idsubgerencia'     => 'min:1',
-                'idlocal'           => 'min:1',
-                'idpersonal'        => 'min:1',
+                'idlocal'           => 'required|min:1',
+                'idpersonal'        => 'required|min:1',
                 'codcentrocosto'    => 'required|min:1|unique:centro_costos,codcentrocosto',
                 'centrocosto'       => 'required|min:1|unique:centro_costos,centrocosto',
             ];

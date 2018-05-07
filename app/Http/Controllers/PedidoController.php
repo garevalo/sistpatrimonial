@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Pedido;
+use App\CentroCosto;
+use App\Personal;
 use Datatables;
 use App\Http\Requests\PedidoRequest;
 
@@ -36,7 +38,10 @@ class PedidoController extends Controller
         $titulomod = self::TITLEMOD;
         $table = new Pedido;
 
-        return view(self::MODULO.'.create',compact('modulo','table','titulomod'));
+        $centrocostos = CentroCosto::all()->pluck('centrocosto','codcentrocosto');
+        $personales = Personal::all()->pluck('FullName','idpersonal');
+
+        return view(self::MODULO.'.create',compact('modulo','table','titulomod','centrocostos','personales'));
     }
 
     /**
@@ -45,8 +50,10 @@ class PedidoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PedidoRequest $request)
     {
+
+        dd($request->all());
         Pedido::create($request->all());
         return redirect()->route(self::REDIRECT);
     }
@@ -83,7 +90,7 @@ class PedidoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PedidoRequest $request, $id)
     {
         GrupoGenerico::FindOrFail($id)->update($request->all());
         return redirect()->route(self::REDIRECT);
@@ -102,7 +109,7 @@ class PedidoController extends Controller
 
     public function alldata(){
 
-        return Datatables::of(GrupoGenerico::all())
+        return Datatables::of(Pedido::all())
             ->addColumn('edit',function($field){
                 return '<a href="'.route(self::MODULO.'.edit',$field->idpedido).'" class="btn btn-primary btn-sm">Editar</a>' ;
             })

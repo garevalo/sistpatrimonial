@@ -19,6 +19,7 @@ class CreateArticulosTable extends Migration
             $table->string('umedida');
             $table->string('descripcion');
             $table->string('idpedido');
+            $table->string('estado_articulo');
             $table->timestamps();
         });
     }

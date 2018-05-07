@@ -11,7 +11,7 @@
 @section('menu-h1')
     <h1>
         <i class="fa fa-users"></i>  {{ucwords($titulomod)}} &nbsp;&nbsp;
-        <a href="{{route('grupogenerico.create')}}" class="btn btn-sm btn-success" title="nuevo">
+        <a href="{{route($modulo.'.create')}}" class="btn btn-sm btn-success" title="nuevo">
             <i class="fa fa-plus-circle"></i> Nuevo {{ucwords($titulomod)}}
         </a>
 
@@ -30,8 +30,9 @@
                 <table id="table" class="table table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th>Código</th>
-                        <th>Grupo Genérico</th>
+                        <th>ID</th>
+                        <th>Cantidad</th>
+                        <th>Descripción</th>
                         <th>Editar</th>
 
                     </tr>
@@ -71,10 +72,11 @@
         var table = $('#table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{{route('getgruposgenericos')}}',
+            ajax: '{{route('getpedidos')}}',
             columns: [
-                {data: 'cod_grupo_generico', name: 'cod_grupo_generico'},
-                {data: 'grupo_generico', name: 'grupo_generico'},
+                {data: 'idpedidos', name: 'idpedidos'},
+                {data: 'cantidad', name: 'cantidad'},
+                {data: 'descripcion', name: 'descripcion'},
                 {
                     data: 'edit',
                     name: 'edit',

@@ -14,7 +14,7 @@
         {!! Form::model($table, ['action' => ['CentroCostoController@update',$table->id],'method'=>'put'] ) !!}
             <div class="box-body">
 
-                {{ Form::selectfield('idgerencia','Gerencia',$gerencias,'Seleccione Gerencias',$table->idgerencia) }}
+               {{ Form::selectfield('idgerencia','Gerencia',$gerencias,'Seleccione Gerencias',$table->idgerencia) }}
 
                 {{ Form::selectfield('idsubgerencia','Sub Gerencia',$subgerencias,'Seleccione Subgerencias',$table->idsubgerencia) }}
 
@@ -24,8 +24,7 @@
 
                 {{ Form::textfield('centrocosto','Cod. Centro Costo',$table->centrocosto) }}
 
-                {{ Form::textfield('codcentrocosto','Centro Costo',$table->codcentrocosto) }}
-               
+                {{ Form::textfield('codcentrocosto','Centro Costo',$table->codcentrocosto) }}               
             </div>  
             <div class="box-footer">
                 <button class="btn btn-sm btn-primary" type="submit">Guardar</button>
