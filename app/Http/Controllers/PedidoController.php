@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Pedido;
+use App\Articulo;
 use App\CentroCosto;
 use App\Personal;
 use Datatables;
@@ -53,7 +54,29 @@ class PedidoController extends Controller
     public function store(PedidoRequest $request)
     {
 
-        dd($request->all());
+            $idpedido = Pedido::insertGetId([
+                'estado_pedido'=>'1',
+                'cc_solicitante'=> $request->cc_solicitante,
+                'cc_destino'    => $request->cc_destino,
+                'responsable'    => $request->responsable,
+            ]);
+            if($idpedido){
+                $hardware = Articulo::create([
+                    "id_activo_hardware" => $idactivo,
+                    "idtipo_hardware" => $request->idtipo_hardware,
+                    "marca" => $request->marca,
+                    "modelo" => $request->modelo,
+                    "num_serie" => $request->num_serie,
+                    "cod_inventario" => $request->cod_inventario,
+                    "estado" => $request->estado,
+                    "fecha_adquisicion" => Carbon::createFromFormat('d/m/Y', $request->fecha_adquisicion),
+                    "descripcion"   => $request->descripcion,
+                    "tipo" => $request->tipo,
+                    "codigo_patrimonial" => $request->codigo_patrimonial
+                     ]);
+            }
+
+
         Pedido::create($request->all());
         return redirect()->route(self::REDIRECT);
     }

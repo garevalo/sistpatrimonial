@@ -6,5 +6,27 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pedido extends Model
 {
-    //
+    protected $fillable = ['cc_solicitante','cc_destino','responsable','lugar','estado_pedido','descripcion','fecha_entrega'];
+    protected $primaryKey = 'idpedido';
+
+
+    public function centroCostoSolicitante()
+    {
+       return $this->belongsTo('App\CentroCosto', 'cc_solicitante', 'codcentrocosto');
+    } 
+
+    public function CentroCostoDestino()
+    {
+       return $this->belongsTo('App\CentroCosto', 'cc_destino', 'codcentrocosto');
+    } 
+
+    public function PersonalResponsable()
+    {
+       return $this->belongsTo('App\Personal', 'responsable', 'codcentrocosto');
+    } 
+
+    public function articulo()
+    {
+        return $this->hasMany('App\Articulo','idpedido','idpedido');
+    }
 }
