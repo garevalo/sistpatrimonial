@@ -6,148 +6,126 @@
 
     <div class="col-xs-12">
 
-        <div class="box box-danger">
-            <div class="box-header">
-                <h3 class="box-title">Editar Bien</h3>
-            </div>
+        <div class="box">
+            <div class="box-body">
+                <form method="POST" action="{{route('bien.movimientostore',$bien->idbien)}}"  enctype="multipart/form-data">
+                    {{csrf_field()}}
 
-            <form method="POST" action="{{route('bien.store')}}"  enctype="multipart/form-data">
-                {{csrf_field()}}
-                <div class="box-body">
-                    <div class="col-md-6 col-xs-12">
 
-                        <div class="form-group-sm has-warning">
-                            <label for="catalogo">Catálogo: </label>
-                            <label id="catalogo" class="form-control disabled">{{ $bien->catalogo->denom_catalogo}} </label>
-                        </div>
+                    <input type="hidden" name="idbien" value="{{$bien->idbien}}">
+                    <div class="box-body">
+                        <div class="col-md-6 col-xs-12">
 
-                        <div class="form-group-sm has-warning">
-                            <label>Código Inventario:</label>
+                                <div class="box box-danger">
+                                    <div class="box-header with-border">
+                                      <h3 class="box-title">Datos del Bien:</h3>
+                                    </div>
+                                    <div class="box-body box-profile">
+                                      <img class="img img-responsive img-thumbnail" src="{{ $bien->imagen }}" alt="IMG" style="width: 300px;">
 
-                            <label  class="form-control">{{ $bien->codinventario }} </label>
-                        </div>
-
-                        <div class="form-group-sm has-warning">
-                            <label>Código Patrimonial:</label>
-                            <label  class="form-control">{{ $bien->codpatrimonial }} </label>
-                        </div>
-
-                        <div class="form-group-sm has-warning">
-                            <label>Orden de Compra:</label>
-                            <label  class="form-control">{{ $bien->ordencompra }} </label>
-                        </div>
-
-                        <div class="form-group-sm has-warning">
-                            <label>Marca:</label>
-                            <label  class="form-control">{{ $bien->marca->marca }} </label>
-                        </div>
-
-                        <div class="form-group-sm has-warning">
-                            <label>Modelo:</label>
-                            <label  class="form-control">{{ $bien->modelo->modelo }} </label>
-                        </div>
-
-                        <div class="form-group-sm has-warning">
-                            <label>Color:</label>
-                            <label  class="form-control">{{ $bien->color->color }} </label>
-                        </div>
-
-                        <div class="form-group-sm has-warning">
-                            <label>Imagen:</label>
-                            <img src="{{ $bien->imagen }}" width="150" height="100">
-                        </div>  
-
-                        <div class="form-group-sm has-warning">
-                            <label>Número Serie:</label>
-                            <label  class="form-control">{{ $bien->numserie }} </label>
+                                      <ul class="list-group list-group-unbordered">
+                                        <li class="list-group-item">
+                                          <b>Bien:</b> <a class="pull-right">{{ $bien->catalogo->denom_catalogo}}</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <b>Código Inventario:</b> <a class="pull-right">{{ $bien->codinventario}}</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <b>Código Patrimonial:</b> <a class="pull-right">{{ $bien->codpatrimonial}}</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <b>Orden de Compra:</b> <a class="pull-right">{{ $bien->ordencompra}}</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <b>Marca:</b> <a class="pull-right">{{ $bien->marca->marca}}</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <b>Modelo:</b> <a class="pull-right">{{ $bien->modelo->modelo}}</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <b>Color:</b> <a class="pull-right">{{ $bien->color->color}}</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <b>Num. Serie:</b> <a class="pull-right">{{ $bien->numserie}}</a>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                    <!-- /.box-body -->
+                                  </div>
                         </div>
                         
-                        
-
-                    </div>
-                    
-                    <div class="col-md-6 col-xs-12">
-
-                        <div class="form-group-sm {{ $errors->has('centrocosto') ? ' has-error' : '' }}">
-                            <label>Centro de Costo:</label>
-                            <select name="centrocosto" id="centrocosto" class="form-control select2">
-                                <option value="">Seleccione Personal</option>
-                                @foreach($centrocostos as $centrocosto)
-                                <option value="{{$centrocosto->codcentrocosto}}" @if($centrocosto->codcentrocosto == old('centrocosto') ) selected @endif >{{$centrocosto->FullCentroCosto}}</option>
-                                @endforeach()
-                            </select>
-                            {!! $errors->first('centrocosto','<span class="help-block">:message</span>') !!}
-
-                        </div>
-
-                        <div class="form-group-sm {{ $errors->has('idpersonal') ? ' has-error' : '' }}">
-                            <label>Personal:</label>
-
-                            <select name="idpersonal" id="idpersonal" class="form-control select2">
-                                <option value="">Seleccione Personal</option>
-                                @foreach($personals as $personal)
-                                <option value="{{$personal->idpersonal}}" @if($personal->idpersonal == old('idpersonal') ) selected @endif >{{$personal->FullName}}</option>
-                                @endforeach()
-                            </select>
-                            {!! $errors->first('idpersonal','<span class="help-block">:message</span>') !!}
-                        </div>
-
-                        <div class="form-group-sm {{ $errors->has('idestado') ? ' has-error' : '' }}">
-                            <label>Estado:</label>
-
-                            <select name="idestado" id="idestado" class="form-control select2" required="">
-                                <option value="">Seleccione Estado</option>
-                                @foreach($estados as $key => $estado)
-                                <option value="{{$key}}" @if($key==old('idestado')) selected @endif >{{$estado}}</option>
-                                @endforeach
-
-                            </select>
-                            {!! $errors->first('idestado','<span class="help-block">:message</span>') !!}
-                        </div>
-
-                        <div class="form-group-sm {{ $errors->has('valor') ? ' has-error' : '' }}">
-                            <label>Valor:</label>
-
-                            <input type="text" class="form-control" name="valor" id="valor" value="{{old('valor')}}" required>
-                            {!! $errors->first('valor','<span class="help-block">:message</span>') !!}
-                        </div>
-
-                        <div class="form-group-sm {{ $errors->has('idadquisicion') ? ' has-error' : '' }}">
-                            <label>Modo de Adquisición:</label>
-                            <select class="form-control" name="idadquisicion" id="idadquisicion" required>
-                                <option value="">Seleccione Adquisición</option>
-                                @foreach($adquisiciones as $adquisicion)
-                                <option value="{{$adquisicion->idadquisicion}}">{{$adquisicion->adquisicion}}</option>
-                                @endforeach()
-                            </select>
-                            {!! $errors->first('idadquisicion','<span class="help-block">:message</span>') !!}
-                        </div>
-
-                        <div class="form-group-sm {{ $errors->has('fecha_adquisicion') ? ' has-error' : '' }}">
-                            <label>Fecha de Adquisición:</label>
-                            <div class="input-group">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
+                        <div class="col-md-6 col-xs-12">
+                            <div class="box box-danger">
+                                <div class="box-header with-border">
+                                  <h3 class="box-title text text-danger">Origen:</h3>
                                 </div>
-                                <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="fecha_adquisicion" id="fecha_adquisicion">
+                                <div class="box-body">
+                                    <div class="form-group-sm {{ $errors->has('centrocosto') ? ' has-error' : '' }}">
+                                        <label>Centro de Costo:</label>
+                                        <select name="centrocostoold" id="centrocosto" class="form-control select2" disabled>
+                                            <option value="">Seleccione Personal</option>
+                                            @foreach($centrocostos as $centrocosto)
+                                            <option value="{{$centrocosto->codcentrocosto}}" @if($bien->centrocosto == $centrocosto->codcentrocosto ) selected @endif >{{$centrocosto->FullCentroCosto}}</option>
+                                            @endforeach()
+                                        </select>
+                                        {!! $errors->first('centrocosto','<span class="help-block">:message</span>') !!}
+
+                                    </div>
+                                    <div class="form-group-sm {{ $errors->has('idpersonal') ? ' has-error' : '' }}">
+                                        <label>Personal:</label>
+
+                                        <select name="idpersonalold" id="idpersonal" class="form-control select2" disabled>
+                                            <option value="">Seleccione Personal</option>
+                                            @foreach($personals as $personal)
+                                            <option value="{{$personal->idpersonal}}" @if($personal->idpersonal == $bien->idpersonal  ) selected @endif >{{$personal->FullName}}</option>
+                                            @endforeach()
+                                        </select>
+                                        {!! $errors->first('idpersonal','<span class="help-block">:message</span>') !!}
+                                    </div>
+                                </div>
                             </div>
-                            {!! $errors->first('fecha_adquisicion','<span class="help-block">:message</span>') !!}
-                        </div>
-                        <div class="form-group-sm {{ $errors->has('descripcion') ? ' has-error' : '' }}">
-                            <label>Descripción:</label>
-                            <textarea name="descripcion" id="descripcion" cols="30" rows="10" class="form-control" required >{{old('descripcion')}}</textarea>
-                            {!! $errors->first('descripcion','<span class="help-block">:message</span>') !!}
-                        </div>
 
+                            <div class="box box-danger">
+                                <div class="box-header with-border">
+                                  <h3 class="box-title text text-danger">Destino:</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="form-group-sm {{ $errors->has('centrocosto') ? ' has-error' : '' }}">
+                                        <label>Centro de Costo:</label>
+                                        <select name="centrocosto" id="centrocosto" class="form-control select2">
+                                            <option value="">Seleccione Personal</option>
+                                            @foreach($centrocostos as $centrocosto)
+                                            <option value="{{$centrocosto->codcentrocosto}}" @if($centrocosto->codcentrocosto == old('centrocosto') ) selected @endif >{{$centrocosto->FullCentroCosto}}</option>
+                                            @endforeach()
+                                        </select>
+                                        {!! $errors->first('centrocosto','<span class="help-block">:message</span>') !!}
+
+                                    </div>
+                                    <div class="form-group-sm {{ $errors->has('idpersonal') ? ' has-error' : '' }}">
+                                        <label>Personal:</label>
+
+                                        <select name="idpersonal" id="idpersonal" class="form-control select2">
+                                            <option value="">Seleccione Personal</option>
+                                            @foreach($personals as $personal)
+                                            <option value="{{$personal->idpersonal}}" @if($personal->idpersonal == old('idpersonal') ) selected @endif >{{$personal->FullName}}</option>
+                                            @endforeach()
+                                        </select>
+                                        {!! $errors->first('idpersonal','<span class="help-block">:message</span>') !!}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="box-footer">
+                                <button type="submit" class="btn btn-primary">Registrar Movimiento</button>
+                            </div>
+
+
+                        </div>
+                        
                     </div>
-                    
-                </div>
 
-
-                <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Registrar Movimiento</button>
-                </div>
-            </form>
+                </form>
+            </div>
             <!-- /.box-body -->
         </div>
 

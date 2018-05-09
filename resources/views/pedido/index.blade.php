@@ -27,12 +27,14 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <table id="table" class="table table-bordered table-hover">
+                <table id="table" class="table table-bordered table-condensed">
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Cantidad</th>
-                        <th>Descripción</th>
+                        <th>Solicitante</th>
+                        <th>Destino</th>
+                        <th>Responsable</th>
+                        <th>Estado</th>
                         <th>Editar</th>
 
                     </tr>
@@ -74,9 +76,11 @@
             serverSide: true,
             ajax: '{{route('getpedidos')}}',
             columns: [
-                {data: 'idpedidos', name: 'idpedidos'},
-                {data: 'cantidad', name: 'cantidad'},
-                {data: 'descripcion', name: 'descripcion'},
+                {data: 'idpedido', name: 'idpedido'},
+                {data: 'solicitante', name: 'solicitante'},
+                {data: 'destino', name: 'destino'},
+                {data: 'responsable', name: 'responsable'},
+                {data: 'estado', name: 'estado'},
                 {
                     data: 'edit',
                     name: 'edit',

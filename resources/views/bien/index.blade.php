@@ -38,7 +38,8 @@
                         <th>Marca</th>
                         <th>Modelo</th>
                         <th>Imagen</th>
-                        <th>Estado</th>
+                        <th>Centro Costo</th>
+                        <th>Responsable</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -88,7 +89,8 @@
                 {data: 'marca', name: 'marca'},
                 {data: 'modelo', name: 'modelo'},
                 {data:'foto',name:'foto'},
-                {data:'idestado',name:'idestado'},
+                {data:'centrocosto',name:'centrocosto'},
+                {data:'responsable',name:'responsable'},
                 {
                     data: 'edit',
                     name: 'edit',

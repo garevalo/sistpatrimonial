@@ -22,4 +22,9 @@ class Movimiento extends Model
 	{
 	    return $this->belongsTo('App\Personal', 'idpersonal','idpersonal');
 	}
+
+	public function bien()
+	{
+	    return $this->belongsTo('App\Bien', 'idbien','idbien');
+	}
 }

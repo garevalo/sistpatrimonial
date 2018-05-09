@@ -78,16 +78,19 @@
           <table class="table table-striped">
             <thead>
             <tr>
-              <th></th>
-              <th>Cod.Patrimonial</th>
               <th>Centro costo</th>
-              <th>Fecha Movimiento</th>
               <th>Personal</th>
-              
+              <th>Fecha Movimiento</th>
             </tr>
             </thead>
             <tbody>
-            
+            @foreach($bien->movimientos as $movimiento)
+            <tr>
+            	<td>{{$movimiento->centrocosto}}</td>
+            	<td>{{$movimiento->idpersonal}}</td>
+            	<td>{{$movimiento->fecha_movimiento}}</td>
+            </tr>
+            @endforeach
             </tbody>
           </table>
         </div>

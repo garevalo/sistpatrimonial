@@ -28,7 +28,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li class="@if(request()->getRequestUri()=='/bien') active @endif"><a href="/bien"><i class="fa fa-circle-o text-aqua"></i> Bienes</a></li>
-                    <li class="@if(request()->getRequestUri()=='/catalogo') active @endif"><a href="/catalogo"><i class="fa fa-circle-o text-aqua"></i> Calálogo</a></li>
+                    <li class="@if(request()->getRequestUri()=='/catalogo') active @endif"><a href="/catalogo"><i class="fa fa-circle-o text-aqua"></i> Catálogo</a></li>
 
                     <li class="@if(request()->getRequestUri()=='/grupogenerico') active @endif"><a href="/grupogenerico"><i class="fa fa-circle-o text-aqua"></i> Grupo Genérico</a></li>
 
@@ -61,7 +61,7 @@
             </li>
 
             <li class="">
-                <a href="#">
+                <a href="/pedido">
                     <i class="fa fa-exchange"></i>
                     <span>Solicitar Equipo</span>
                 </a>

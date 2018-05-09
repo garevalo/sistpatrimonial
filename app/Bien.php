@@ -47,4 +47,9 @@ class Bien extends Model
 	{
 	    return $this->belongsTo('App\Catalogo', 'codcatalogo','codcatalogo');
 	}
+
+	public function movimientos()
+    {
+        return $this->hasMany('App\Movimiento','idbien','idbien');
+    }
 }

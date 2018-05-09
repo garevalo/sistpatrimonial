@@ -18,10 +18,10 @@ class CreatePedidosTable extends Migration
             $table->string('cc_solicitante',10);
             $table->string('cc_destino',10);
             $table->string('responsable',10);
-            $table->string('lugar',100);
+            $table->string('lugar',100)->nullable();
             $table->integer('estado_pedido');
-            $table->string('descripcion');
-            $table->date('fecha_entrega');
+            $table->string('descripcion')->nullable();
+            $table->date('fecha_entrega')->nullable();
             $table->timestamps();
         });
     }

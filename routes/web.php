@@ -27,6 +27,7 @@ Route::middleware(['auth'])->group(function () {
     //Bienes
     Route::get('bien/alldata','BienController@dataTable')->name('getbienes');
     Route::get('bien/movimiento/{id}','BienController@movimiento')->name('bien.movimiento');
+    Route::post('bien/movimiento/{id}','BienController@movimientoStore')->name('bien.movimientostore');
     Route::resource('bien','BienController');
 
     //Marcas
@@ -76,6 +77,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('centrocosto','CentroCostoController');
 
      //Pedido
+    Route::get('pedido/atencion/{id?}','PedidoController@atencion')->name('atencion');
     Route::get('pedido/alldata','PedidoController@alldata')->name('getpedidos');
     Route::resource('pedido','PedidoController');
     

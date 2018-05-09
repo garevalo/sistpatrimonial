@@ -54,30 +54,29 @@ class PedidoController extends Controller
     public function store(PedidoRequest $request)
     {
 
-            $idpedido = Pedido::insertGetId([
-                'estado_pedido'=>'1',
-                'cc_solicitante'=> $request->cc_solicitante,
-                'cc_destino'    => $request->cc_destino,
-                'responsable'    => $request->responsable,
-            ]);
-            if($idpedido){
-                $hardware = Articulo::create([
-                    "id_activo_hardware" => $idactivo,
-                    "idtipo_hardware" => $request->idtipo_hardware,
-                    "marca" => $request->marca,
-                    "modelo" => $request->modelo,
-                    "num_serie" => $request->num_serie,
-                    "cod_inventario" => $request->cod_inventario,
-                    "estado" => $request->estado,
-                    "fecha_adquisicion" => Carbon::createFromFormat('d/m/Y', $request->fecha_adquisicion),
-                    "descripcion"   => $request->descripcion,
-                    "tipo" => $request->tipo,
-                    "codigo_patrimonial" => $request->codigo_patrimonial
-                     ]);
+
+
+        $idpedido = Pedido::insertGetId([
+            
+            'cc_solicitante'=> $request->cc_solicitante,
+            'cc_destino'    => $request->cc_destino,
+            'responsable'    => $request->responsable,
+            'estado_pedido'  => 1
+        ]);
+
+        if($idpedido){
+
+            foreach ($request->cantidad as $key => $value) {
+                Articulo::create([
+                    "cantidad"          => $request->cantidad[$key],
+                    "umedida"           => $request->umedida[$key],
+                    "descripcion"       => $request->descripcion[$key],
+                    "estado_articulo"   => '1',
+                    "idpedido"          => $idpedido
+                ]);
             }
+        }
 
-
-        Pedido::create($request->all());
         return redirect()->route(self::REDIRECT);
     }
 
@@ -89,7 +88,14 @@ class PedidoController extends Controller
      */
     public function show($id)
     {
-        //
+        
+        $estados        =   array(1=>'Activo',2=>'Inactivo');
+
+        $pedido = Pedido::with('centroCostoSolicitante','CentroCostoDestino','PersonalResponsable','articulo')->FindOrFail($id);
+
+       // dd($pedido);
+
+        return view(self::MODULO.'.show',compact('pedido'));  
     }
 
     /**
@@ -103,7 +109,11 @@ class PedidoController extends Controller
         $table = Pedido::FindOrFail($id);
         $modulo = self::MODULO;
         $titulomod = self::TITLEMOD;
-        return view(self::MODULO.".edit",compact('table','modulo','titulomod'));
+
+        $centrocostos = CentroCosto::all()->pluck('centrocosto','codcentrocosto');
+        $personales = Personal::all()->pluck('FullName','idpersonal');
+
+        return view(self::MODULO.".edit",compact('table','modulo','titulomod','centrocostos','personales'));
     }
 
     /**
@@ -130,11 +140,51 @@ class PedidoController extends Controller
         //
     }
 
+    public function atencion($id=null){
+
+
+        $centrocostos = CentroCosto::all()->pluck('centrocosto','codcentrocosto');
+        $personales = Personal::all()->pluck('FullName','idpersonal');
+
+        $modulo = self::MODULO;
+        $titulomod = self::TITLEMOD;
+
+        $table = Pedido::with('centroCostoSolicitante','CentroCostoDestino','PersonalResponsable','articulo')->FindOrFail($id);
+
+        return view(self::MODULO.'.attend',compact('titulomod','modulo','table','centrocostos','personales'));
+
+    }
+
     public function alldata(){
 
-        return Datatables::of(Pedido::all())
+        return Datatables::of(Pedido::with('centroCostoSolicitante','CentroCostoDestino','PersonalResponsable','articulo')->get()  )
+            
+            ->addColumn('solicitante',function($field){
+                return  $field->centroCostoSolicitante->codcentrocosto .' - '. $field->centroCostoSolicitante->centrocosto;
+            })
+
+            ->addColumn('destino',function($field){
+                return  $field->CentroCostoDestino->codcentrocosto .' - '. $field->CentroCostoDestino->centrocosto;
+            })
+
+            ->addColumn('responsable',function($field){
+                return  $field->PersonalResponsable->FullName;
+            })
+
+            ->addColumn('estado',function($field){
+                if($field->estado_pedido == 1 ){
+                    return 'Solicitado';
+                }else{
+                    return 'Atendido';
+                }
+            })
+
             ->addColumn('edit',function($field){
-                return '<a href="'.route(self::MODULO.'.edit',$field->idpedido).'" class="btn btn-primary btn-sm">Editar</a>' ;
+                return '<a href="'.route(self::MODULO.'.edit',$field->idpedido).'" class="btn btn-primary btn-xs">Editar</a>
+                    <a href="'.route(self::MODULO.'.show',$field->idpedido).'" class="btn btn-info btn-xs">Ver</a>
+                    <a href="'.route(self::MODULO.'.edit',$field->idpedido).'" class="btn btn-danger btn-xs">Eliminar</a>
+                    <a href="'.route('atencion',$field->idpedido).'" class="btn btn-success btn-xs">Atender </a>
+                    ' ;
             })
             ->rawColumns(['edit'])
             ->make(true);

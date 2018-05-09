@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pedido extends Model
 {
-    protected $fillable = ['cc_solicitante','cc_destino','responsable','lugar','estado_pedido','descripcion','fecha_entrega'];
+    protected $fillable = ['cc_solicitante','cc_destino','responsable','lugar','estado_pedido','fecha_entrega'];
     protected $primaryKey = 'idpedido';
 
 
@@ -22,7 +22,7 @@ class Pedido extends Model
 
     public function PersonalResponsable()
     {
-       return $this->belongsTo('App\Personal', 'responsable', 'codcentrocosto');
+       return $this->belongsTo('App\Personal', 'responsable', 'idpersonal');
     } 
 
     public function articulo()

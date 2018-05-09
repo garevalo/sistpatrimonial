@@ -1,6 +1,6 @@
 @extends('back.app')
 
-@section('title','Registrar '. ucwords($titulomod))
+@section('title','Atender '. ucwords($titulomod))
 
 @section('content')
 
@@ -8,17 +8,20 @@
 
     <div class="box box-danger">
         <div class="box-header">
-            <h3 class="box-title">Registrar {{ucwords($titulomod)}}</h3>
+            <h3 class="box-title">Atender {{ucwords($titulomod)}}</h3>
         </div>
         {!! Form::model($table, ['route' => $modulo.'.store']) !!}
             <div class="box-body">
-
                 <div class="col-xs-12">
-                    {{ Form::selectfield('cc_solicitante','Dependencia Solicitante',$centrocostos,'Seleccione Centro Costo') }}
+                    {{ Form::selectfield('cc_solicitante','Dependencia Solicitante',$centrocostos,'Seleccione Centro Costo',$table->centroCostoSolicitante->codcentrocosto,['disabled'=>'disabled']) }}
 
-                    {{ Form::selectfield('cc_destino','Con Destino a',$centrocostos,'Seleccione Centro Costo') }}
+                    {{ Form::selectfield('cc_destino','Con Destino a',$centrocostos,'Seleccione Centro Costo',$table->CentroCostoDestino->codcentrocosto,['disabled'=>'disabled']) }}
 
-                    {{ Form::selectfield('responsable','Entregar a',$personales,'Seleccione Personal') }}
+                    {{ Form::selectfield('responsable','Entregar a',$personales,'Seleccione Personal',$table->PersonalResponsable->idpersonal,['disabled'=>'disabled']) }}
+
+                    {{ Form::selectfield('estado','Estado',$centrocostos,'Seleccione Centro Costo',$table->centroCostoSolicitante->codcentrocosto) }}
+                    {{Form::textfield('fecha_entrega','Fecha de Entrega','',["data-inputmask"=>"alias: dd/mm/yyyy", "data-mask"=>"" ])}}
+                    {{Form::textfield('descripcion','Descripción')}}
                 </div>
 
                 <div class="col-xs-12">
@@ -34,14 +37,15 @@
                                     <th width="10%">Cantidad</th>
                                     <th width="10%">Unidad</th>
                                     <th width="80%">Articulos Solicitados</th>
-                                    <th><button class="btn btn-xs btn-primary" id="agregar" type="button"><i class="fa fa-plus-circle"></i> Agregar  </button></th>
                                 </thead>
                                 <tbody>
+                                	@foreach($table->articulo as $articulo)
                                     <tr> 
-                                        <td><input type="number" name="cantidad[]" required=""  class="form-control input-sm"></td> 
-                                        <td> <input type="text" name="umedida[]" value="Unidad" required="" class="form-control input-sm"> </td>
-                                        <td> <input type="text" name="descripcion[]" required="" class="form-control input-sm"> </td>
+                                        <td><input type="number" name="cantidad[]" required=""  class="form-control input-sm" value="{{$articulo->cantidad}}" disabled></td> 
+                                        <td> <input type="text" name="umedida[]" value="Unidad" required="" class="form-control input-sm" value="{{$articulo->umedida}}" disabled> </td>
+                                        <td> <input type="text" name="descripcion[]" required="" class="form-control input-sm" value="{{$articulo->descripcion}}" disabled> </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -83,4 +87,14 @@
             });
 </script>
 
+    <script>
+        $(function () {
+            //Datemask dd/mm/yyyy
+            $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+            //Datemask2 mm/dd/yyyy
+            $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
+            //Money Euro
+            $("[data-mask]").inputmask();
+        });
+    </script>
 @endsection

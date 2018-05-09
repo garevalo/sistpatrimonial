@@ -125,7 +125,7 @@ class BienController extends Controller
 
         $estados        =   array(1=>'Activo',2=>'Inactivo');
 
-        $bien    = Bien::with('marca','modelo','color','adquisicion','centrocostos','personal')->FindOrFail($id);
+        $bien    = Bien::with('marca','modelo','color','adquisicion','centrocostos','personal','movimientos')->FindOrFail($id);
 
         return view('bien.view',compact('colores','adquisiciones','marcas','modelos','personals','centrocostos','estados','bien'));
     }
@@ -166,10 +166,7 @@ class BienController extends Controller
 
     public function movimiento($id)
     {
-        $colores        =   Color::all();
-        $adquisiciones  =   Adquisicion::all();
-        $marcas         =   Marca::all();
-        $modelos        =   Modelo::all();
+        
         $personals      =   Personal::all();
         $centrocostos   =   CentroCosto::all();
         $catalogos       =   Catalogo::all();
@@ -178,12 +175,29 @@ class BienController extends Controller
 
         $bien    = Bien::with('marca','modelo','color','adquisicion','centrocostos','personal','catalogo')->FindOrFail($id);
 
-        return view('bien.movimiento',compact('colores','adquisiciones','marcas','modelos','personals','centrocostos','estados','catalogos','bien'));
+        return view('bien.movimiento',compact('personals','centrocostos','estados','catalogos','bien'));
     }
 
     public function movimientoStore(Request $request, $id)
     {
-        //
+
+        DB::transaction(function () use ($request,$id) {
+            Bien::FindOrFail($id)->update([
+                'centrocosto'=> $request->centrocosto,
+                'idpersonal' => $request->idpersonal
+            ]);
+
+            Movimiento::create([
+                'idbien' => $id,
+                'centrocosto' => $request->centrocosto,
+                'idpersonal'  => $request->idpersonal,
+                'fecha_movimiento'  => Carbon::now()
+            ]);
+        });
+
+        
+
+        return redirect()->route(self::REDIRECT);
     }
 
     /**
@@ -198,6 +212,8 @@ class BienController extends Controller
     }
 
     public function dataTable(){
+
+
 
         return Datatables::of(Bien::with('marca','modelo','color','adquisicion','centrocostos','personal','catalogo')->get())
             ->addColumn('edit',function($bien){
@@ -219,6 +235,20 @@ class BienController extends Controller
             })
             ->addColumn('catalogo',function($field){
                 return $field->catalogo->denom_catalogo;
+            })
+
+            ->addColumn('estado',function($field){
+                if($field->idestado==1){
+                    return "Activo";
+                }else{
+                    return "Inactivo";
+                }
+            })
+            ->addColumn('centrocosto',function($field){
+                return isset($field->centrocostos->centrocosto) ? $field->centrocostos->centrocosto : '';
+            })
+            ->addColumn('responsable',function($field){
+                return isset($field->personal->FullName) ? $field->personal->FullName : '';
             })
             ->rawColumns(['edit','foto'])
             ->make(true);

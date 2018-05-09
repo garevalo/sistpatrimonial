@@ -18,9 +18,11 @@ class CreateArticulosTable extends Migration
             $table->integer('cantidad');
             $table->string('umedida');
             $table->string('descripcion');
-            $table->string('idpedido');
+            $table->integer('idpedido')->unsigned();
             $table->string('estado_articulo');
             $table->timestamps();
+
+            $table->foreign('idpedido')->references('idpedido')->on('pedidos')->onDelete('cascade');
         });
     }
 
