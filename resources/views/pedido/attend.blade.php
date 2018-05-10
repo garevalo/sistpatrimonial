@@ -19,8 +19,8 @@
 
                     {{ Form::selectfield('responsable','Entregar a',$personales,'Seleccione Personal',$table->PersonalResponsable->idpersonal,['disabled'=>'disabled']) }}
 
-                    {{ Form::selectfield('estado','Estado',$centrocostos,'Seleccione Centro Costo',$table->centroCostoSolicitante->codcentrocosto) }}
-                    {{Form::textfield('fecha_entrega','Fecha de Entrega','',["data-inputmask"=>"alias: dd/mm/yyyy", "data-mask"=>"" ])}}
+                    {{ Form::selectfield('estado','Estado',$estados,'Seleccione Estados',$table->estado_pedido) }}
+                    {{Form::textfield('fecha_entrega','Fecha de Entrega','',["data-inputmask" => "'alias': 'dd/mm/yyyy'" ,"data-mask"=>"" ])}} 
                     {{Form::textfield('descripcion','Descripción')}}
                 </div>
 
@@ -36,7 +36,8 @@
                                 <thead>
                                     <th width="10%">Cantidad</th>
                                     <th width="10%">Unidad</th>
-                                    <th width="80%">Articulos Solicitados</th>
+                                    <th width="65%">Articulos Solicitados</th>
+                                    <th width="65%">Estado</th>
                                 </thead>
                                 <tbody>
                                 	@foreach($table->articulo as $articulo)
@@ -44,6 +45,13 @@
                                         <td><input type="number" name="cantidad[]" required=""  class="form-control input-sm" value="{{$articulo->cantidad}}" disabled></td> 
                                         <td> <input type="text" name="umedida[]" value="Unidad" required="" class="form-control input-sm" value="{{$articulo->umedida}}" disabled> </td>
                                         <td> <input type="text" name="descripcion[]" required="" class="form-control input-sm" value="{{$articulo->descripcion}}" disabled> </td>
+                                        <td> 
+                                        	<select name="estado_articulo" class="form-control input-sm">
+                                        		<option value="1">Solicitado</option>
+                                        		<option value="2">Entregado</option>
+                                        		<option value="3">No Entregado</option>
+                                        	</select>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -69,6 +77,18 @@
 @section('javascript')
 
 @parent
+
+<!-- InputMask -->
+<script src="{{asset('plugins/input-mask/jquery.inputmask.js')}}"></script>
+<script src="{{asset('plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
+<script src="{{asset('plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
+<script>
+    $(function () {
+        
+        $("[data-mask]").inputmask();
+    });
+</script>
+
 <script type="text/javascript">
     $(function(){
             $("body").on("click",".eliminar",function(){
@@ -87,14 +107,4 @@
             });
 </script>
 
-    <script>
-        $(function () {
-            //Datemask dd/mm/yyyy
-            $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-            //Datemask2 mm/dd/yyyy
-            $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
-            //Money Euro
-            $("[data-mask]").inputmask();
-        });
-    </script>
 @endsection

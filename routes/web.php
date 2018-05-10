@@ -77,6 +77,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('centrocosto','CentroCostoController');
 
      //Pedido
+    Route::post('pedido/atencion/{id}','PedidoController@atencionStore')->name('atencion.store');
     Route::get('pedido/atencion/{id?}','PedidoController@atencion')->name('atencion');
     Route::get('pedido/alldata','PedidoController@alldata')->name('getpedidos');
     Route::resource('pedido','PedidoController');

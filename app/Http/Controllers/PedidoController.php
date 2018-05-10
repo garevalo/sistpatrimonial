@@ -54,8 +54,6 @@ class PedidoController extends Controller
     public function store(PedidoRequest $request)
     {
 
-
-
         $idpedido = Pedido::insertGetId([
             
             'cc_solicitante'=> $request->cc_solicitante,
@@ -148,11 +146,15 @@ class PedidoController extends Controller
 
         $modulo = self::MODULO;
         $titulomod = self::TITLEMOD;
-
+        $estados = [1=>'Solicitado',2=>'Completo'];
         $table = Pedido::with('centroCostoSolicitante','CentroCostoDestino','PersonalResponsable','articulo')->FindOrFail($id);
 
-        return view(self::MODULO.'.attend',compact('titulomod','modulo','table','centrocostos','personales'));
+        return view(self::MODULO.'.attend',compact('titulomod','modulo','table','centrocostos','personales','estados'));
+    }
 
+
+    public function atencionStore(PedidoRequest $request,$id){
+        dump($request->all());
     }
 
     public function alldata(){

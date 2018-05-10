@@ -81,6 +81,20 @@
                 </ul>
             </li>
 
+            <li class="treeview @if(in_array(request()->getRequestUri(),['/rol','/usuario'])) active @endif ">
+                <a href="#">
+                    <i class="fa fa-file-pdf-o"></i>
+                    <span>Reportes</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="@if(request()->getRequestUri()=='/rol') active @endif"><a href="/rol"><i class="fa fa-file-pdf-o"></i> Indicador 1</a></li>
+                    <li class="@if(request()->getRequestUri()=='/usuario') active @endif"><a href="/usuario"><i class="fa fa-file-pdf-o"></i> Usuario</a></li>
+                </ul>
+            </li>
+
         </ul>
     </section>
     <!-- /.sidebar -->
