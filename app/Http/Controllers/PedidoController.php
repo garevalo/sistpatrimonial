@@ -60,7 +60,8 @@ class PedidoController extends Controller
             'cc_solicitante'=> $request->cc_solicitante,
             'cc_destino'    => $request->cc_destino,
             'responsable'    => $request->responsable,
-            'estado_pedido'  => 1
+            'estado_pedido'  => 1,
+            'created_at'    => Carbon::now()
         ]);
 
         if($idpedido){
@@ -89,12 +90,10 @@ class PedidoController extends Controller
     {
         
         $estados        =   array(1=>'Activo',2=>'Inactivo');
-
-        $pedido = Pedido::with('centroCostoSolicitante','CentroCostoDestino','PersonalResponsable','articulo')->FindOrFail($id);
-
-       // dd($pedido);
-
-        return view(self::MODULO.'.show',compact('pedido'));  
+        $estadoarticulo =   [1=> 'Solicitado',2 =>'Entregado',3 =>'No Entregado'];
+        $pedido         =   Pedido::with('centroCostoSolicitante','CentroCostoDestino','PersonalResponsable','articulo')->FindOrFail($id);
+     
+        return view(self::MODULO.'.show',compact('pedido','estadoarticulo'));  
     }
 
     /**
@@ -105,14 +104,16 @@ class PedidoController extends Controller
      */
     public function edit($id)
     {
-        $table = Pedido::FindOrFail($id);
-        $modulo = self::MODULO;
-        $titulomod = self::TITLEMOD;
-
         $centrocostos = CentroCosto::all()->pluck('centrocosto','codcentrocosto');
         $personales = Personal::all()->pluck('FullName','idpersonal');
 
-        return view(self::MODULO.".edit",compact('table','modulo','titulomod','centrocostos','personales'));
+        $modulo = self::MODULO;
+        $titulomod = self::TITLEMOD;
+        $estados = [1=>'Solicitado',2=>'Completo'];
+        $estadoarticulo = [1=> 'Solicitado',2 =>'Entregado',3 =>'No Entregado'];
+        $table = Pedido::with('centroCostoSolicitante','CentroCostoDestino','PersonalResponsable','articulo')->FindOrFail($id);
+
+        return view(self::MODULO.'.edit',compact('titulomod','modulo','table','centrocostos','personales','estados','estadoarticulo'));
     }
 
     /**
@@ -124,8 +125,9 @@ class PedidoController extends Controller
      */
     public function update(PedidoRequest $request, $id)
     {
-        GrupoGenerico::FindOrFail($id)->update($request->all());
-        return redirect()->route(self::REDIRECT);
+        /*GrupoGenerico::FindOrFail($id)->update($request->all());
+        return redirect()->route(self::REDIRECT);*/
+        dd($request->all());
     }
 
     /**

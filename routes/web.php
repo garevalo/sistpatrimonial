@@ -93,6 +93,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('usuario/alldata','UsuarioController@getalldata')->name('getalldatausuario');
     Route::resource('usuario','UsuarioController');
 
+    //Reportes
+    Route::post('reporte/nivelcumplimiento','ReporteController@nivelCumplimientoPdf');
+    Route::get('reporte/nivelcumplimiento','ReporteController@nivelcumplimiento');
+    Route::resource('reporte','ReporteController');
 
     Route::get('/home', 'HomeController@index')->name('home');
 

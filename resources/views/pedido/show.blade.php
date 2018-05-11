@@ -18,10 +18,10 @@
                   <b>Solicitante</b> <p class="pull-right">{{$pedido->centroCostoSolicitante->codcentrocosto .' - '. $pedido->centroCostoSolicitante->centrocosto}}</p>
                 </li>
                 <li class="list-group-item">
-                  <b>Destino</b> <a class="pull-right">{{ $pedido->CentroCostoDestino->codcentrocosto .' - '.$pedido->CentroCostoDestino->centrocosto }}</a>
+                  <b>Destino</b> <p class="pull-right">{{ $pedido->CentroCostoDestino->codcentrocosto .' - '.$pedido->CentroCostoDestino->centrocosto }}</p>
                 </li>
                 <li class="list-group-item">
-                  <b>Responsable</b> <a class="pull-right">{{$pedido->PersonalResponsable->FullName}}</a>
+                  <b>Responsable</b> <p class="pull-right">{{$pedido->PersonalResponsable->FullName}}</p>
                 </li>
                 <li class="list-group-item">
                   <b>Estado</b> <p class="pull-right"> 
@@ -55,7 +55,7 @@
             <tr>
               <th></th>
               <th>Cantidad</th>
-              <th>Unidad</th>
+              <th>Medida</th>
               <th>Descripcion</th>
               <th></th>
               
@@ -66,9 +66,9 @@
             	<tr>
             		<td></td>
             		<td>{{ $articulo->cantidad}}</td>
-            		<td>{{ $articulo->unidad}}</td>
+            		<td>{{ $articulo->umedida}}</td>
             		<td>{{ $articulo->descripcion}}</td>
-            		<td>{{ $articulo->estado_articulo}}</td>
+            		<td>{{ $estadoarticulo[$articulo->estado_articulo]}}</td>
             	</tr>
             	@endforeach
             
