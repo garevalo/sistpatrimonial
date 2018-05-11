@@ -104,7 +104,7 @@
 					<td colspan="2">Total de bienes</td>
 					<td>{{ $pet }}</td>
 					<td>{{ $pst }}</td>
-					<td colspan="2" style="text-align: center;"> {{ round( ($pet / $pst) * 100 , 2) }} %</td>
+					<td colspan="2" style="text-align: center;">   @if($pst>0) {{   round( ($pet / $pst) * 100 , 2) }} @endif  %</td>
 				</tr>
 			</tbody>
 
