@@ -90,7 +90,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="@if(request()->getRequestUri()=='/rol') active @endif"><a href="/rol"><i class="fa fa-file-pdf-o"></i> Indicador 1</a></li>
+                    <li class="@if(request()->getRequestUri()=='/rol') active @endif"><a href="/rol"><i class="fa fa-file-pdf-o"></i> Nivel de Cumplimiento</a></li>
                     <li class="@if(request()->getRequestUri()=='/usuario') active @endif"><a href="/usuario"><i class="fa fa-file-pdf-o"></i> Usuario</a></li>
                 </ul>
             </li>

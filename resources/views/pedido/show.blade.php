@@ -7,7 +7,7 @@
 
 <section class="invoice">
 
-        	<div class="col-sm-6 invoice-col">
+        	<div class="col-sm-10 invoice-col">
 
 
         	<div class="box-body box-profile">
@@ -15,7 +15,7 @@
               <h3 class="profile-username">Detalles del Pedido</h3>
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <b>Solicitante</b> <a class="pull-right">{{$pedido->centroCostoSolicitante->codcentrocosto .' - '. $pedido->centroCostoSolicitante->centrocosto}}</a>
+                  <b>Solicitante</b> <p class="pull-right">{{$pedido->centroCostoSolicitante->codcentrocosto .' - '. $pedido->centroCostoSolicitante->centrocosto}}</p>
                 </li>
                 <li class="list-group-item">
                   <b>Destino</b> <a class="pull-right">{{ $pedido->CentroCostoDestino->codcentrocosto .' - '.$pedido->CentroCostoDestino->centrocosto }}</a>
@@ -24,10 +24,19 @@
                   <b>Responsable</b> <a class="pull-right">{{$pedido->PersonalResponsable->FullName}}</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Estado</b> <a class="pull-right"> @if($pedido->estado_pedido==1) Solicitado @else Atendido @endif</a>
+                  <b>Estado</b> <p class="pull-right"> 
+                    @if($pedido->estado_pedido==1) 
+                    <label class="label label-warning">Solicitado</label> 
+                    @else 
+                    <label class="label label-success">Atendido </label>
+                    @endif
+                    </p>
                 </li>
                 <li class="list-group-item">
-                  <b>Descripción</b> <a class="pull-right"></a>
+                  <b>Descripción</b> <p class="pull-right">
+                    {{$pedido->descripcion}}
+                  </p>
+
                 </li>
               </ul>
         </div>

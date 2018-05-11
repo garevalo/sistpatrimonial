@@ -3,12 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Pedido extends Model
 {
-    protected $fillable = ['cc_solicitante','cc_destino','responsable','lugar','estado_pedido','fecha_entrega'];
+    protected $fillable = ['cc_solicitante','cc_destino','responsable','lugar','estado_pedido','fecha_entrega','descripcion'];
     protected $primaryKey = 'idpedido';
 
+    protected $dates = ['fecha_entrega'];
 
     public function centroCostoSolicitante()
     {
@@ -29,4 +31,7 @@ class Pedido extends Model
     {
         return $this->hasMany('App\Articulo','idpedido','idpedido');
     }
+
+
+
 }

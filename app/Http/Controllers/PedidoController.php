@@ -7,6 +7,7 @@ use App\Articulo;
 use App\CentroCosto;
 use App\Personal;
 use Datatables;
+use Carbon\Carbon;
 use App\Http\Requests\PedidoRequest;
 
 class PedidoController extends Controller
@@ -147,14 +148,29 @@ class PedidoController extends Controller
         $modulo = self::MODULO;
         $titulomod = self::TITLEMOD;
         $estados = [1=>'Solicitado',2=>'Completo'];
+        $estadoarticulo = [1=> 'Solicitado',2 =>'Entregado',3 =>'No Entregado'];
         $table = Pedido::with('centroCostoSolicitante','CentroCostoDestino','PersonalResponsable','articulo')->FindOrFail($id);
 
-        return view(self::MODULO.'.attend',compact('titulomod','modulo','table','centrocostos','personales','estados'));
+        return view(self::MODULO.'.attend',compact('titulomod','modulo','table','centrocostos','personales','estados','estadoarticulo'));
     }
 
 
     public function atencionStore(PedidoRequest $request,$id){
-        dump($request->all());
+
+        Pedido::FindOrFail($id)->update([
+            'estado_pedido' => $request->estado,
+            'descripcion'   => $request->descripcion,
+            'fecha_entrega' => Carbon::createFromFormat('d/m/Y', $request->fecha_entrega)  
+        ]);
+
+
+        foreach ($request->idarticulo as $key => $idarticulo) {
+            Articulo::FindOrFail($idarticulo)->update([
+                'estado_articulo' => $request->estado_articulo[$key] 
+            ]);
+        }
+
+        return redirect()->route(self::REDIRECT);
     }
 
     public function alldata(){
