@@ -24,8 +24,7 @@ class ReporteController extends Controller
     public function nivelCumplimientoPdf(Request $request){
 
 
-
-        $pedidos = DB::select(DB::raw('SELECT count(date(created_at)) cantidad,date(created_at) fecha FROM pedidos 
+        $pedidos = DB::select(DB::raw('SELECT count(date(created_at)) cantidad,date(created_at) fecha,'test'  FROM pedidos 
                                         where date(created_at) is not null and
                                         date(created_at) between "'.Carbon::createFromFormat('d/m/Y', $request->desde).'" and "'.Carbon::createFromFormat('d/m/Y', $request->hasta).'"
                                         group by date(created_at)'));
@@ -35,7 +34,11 @@ class ReporteController extends Controller
                                         date(fecha_entrega) between "'.Carbon::createFromFormat('d/m/Y', $request->desde).'" and "'.Carbon::createFromFormat('d/m/Y', $request->hasta).'"
                                         group by date(fecha_entrega)'));
 
-        //dd($pedidosentregados);
+        dump($pedidos); 
+        dump($pedidosentregados);
+
+        dd( array_merge_recursive ( (array) $pedidos , (array) $pedidosentregados));
+
         $data = array(
             'desde' => $request->desde,
             'hasta' => $request->hasta

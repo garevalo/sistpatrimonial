@@ -21,7 +21,7 @@
 
                     {{ Form::selectfield('estado','Estado',$estados,'Seleccione Estados',$table->estado_pedido) }}
                     
-                    {{Form::textfield('fecha_entrega','Fecha de Entrega',$table->FechaEntrega,["data-inputmask" => "'alias': 'dd/mm/yyyy'" ,"data-mask"=>"" ])}} 
+                    {{Form::textfield('fecha_entrega','Fecha de Entrega',isset($table->fecha_entrega)? $table->fecha_entrega->format('d/m/Y'):'',["data-inputmask" => "'alias': 'dd/mm/yyyy'" ,"data-mask"=>"" ])}} 
 
                     {{Form::textfield('descripcion','Descripción',$table->descripcion)}}
                 </div>
