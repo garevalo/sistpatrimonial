@@ -10,8 +10,8 @@
 
 @section('menu-h1')
     <h1>
-        <i class="fa fa-cogs"></i> Lista de {{ucwords($titulomod)}} &nbsp;&nbsp;
-        <a href="{{route($modulo.'.create')}}" class="btn btn-sm btn-success" title="nuevo">
+        <i class="fa fa-users"></i>  {{ucwords($titulomod)}} &nbsp;&nbsp;
+        <a href="{{route( $modulo.'.create')}}" class="btn btn-sm btn-success" title="nuevo">
             <i class="fa fa-plus-circle"></i> Nuevo {{ucwords($titulomod)}}
         </a>
 
@@ -23,19 +23,19 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">{{ucwords($titulomod)}}</h3>
+                <h3 class="box-title">{{ucwords($modulo)}}</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <table id="table" class="table table-bordered table-hover table-condensed">
+                <table id="table" class="table table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th>Código</th>
-                        <th>Centro de Costo</th>
-                        <th>Local</th>
-                        <th>Personal</th>
-                        <th>Editar</th>
-
+                        <th></th>
+                        <th>C. Centro Costo</th>
+                        <th>Centro Costo</th>
+                        <th>Desde</th>
+                        <th>Hasta</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody></tbody>
@@ -73,12 +73,13 @@
         var table = $('#table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{{route('getcentrocostos')}}',
+            ajax: '{{route('getinventarios')}}',
             columns: [
-                {data: 'codcentrocosto', name: 'codcentrocosto'},
-                {data: 'centrocosto', name: 'centrocosto'},
-                {data: 'local', name: 'local'},
+                {data: 'idinventario', name: 'idinventario'},
+                {data: 'centro_costo', name: 'centro_costo'},
                 {data: 'personal', name: 'personal'},
+                {data: 'fechadesde', name: 'fechadesd'},
+                {data: 'fechahasta', name: 'fechahasta'},
                 {
                     data: 'edit',
                     name: 'edit',

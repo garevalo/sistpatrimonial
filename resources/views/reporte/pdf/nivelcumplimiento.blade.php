@@ -60,7 +60,7 @@
 		<tr style="
     text-align: center;
 ">
-<td colspan="2"></td><td colspan="2">Datos Recolectados</td>
+<td colspan="2"></td><td colspan="2">Pre Test</td>
 <td colspan="2"></td></tr>
 		<tr style="text-align: center;">
 			<td rospan="2" style="width: 1%;">Item</td>

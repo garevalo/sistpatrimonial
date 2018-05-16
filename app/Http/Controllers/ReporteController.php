@@ -34,17 +34,14 @@ class ReporteController extends Controller
                                         date(fecha_entrega) between "'.Carbon::createFromFormat('d/m/Y', $request->desde).'" and "'.Carbon::createFromFormat('d/m/Y', $request->hasta).'"
                                         group by date(fecha_entrega)'));
 
-        dump($pedidos); 
+        /*dump($pedidos); 
         dump($pedidosentregados);
-
-        dd( array_merge_recursive ( (array) $pedidos , (array) $pedidosentregados));
+        dd( array_merge_recursive ( (array) $pedidos , (array) $pedidosentregados));*/
 
         $data = array(
             'desde' => $request->desde,
             'hasta' => $request->hasta
         );
-
-
 
         $pdf = PDF::loadView('reporte.pdf.nivelcumplimiento',compact('pedidos','pedidosentregados','data'));
         return $pdf->stream('Reporte.pdf');

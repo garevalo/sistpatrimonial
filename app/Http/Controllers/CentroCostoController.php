@@ -121,12 +121,6 @@ class CentroCostoController extends Controller
             ->addColumn('edit',function($table){
                 return '<a href="'.route('centrocosto.edit',$table->id).'" class="btn btn-primary btn-sm">Editar</a>' ;
             })
-            ->addColumn('gerencia',function($field){
-                return (isset($field->gerencia->gerencia)) ? $field->gerencia->gerencia : '' ;
-            })
-            ->addColumn('subgerencia',function($field){
-                return (isset($field->subgerencia->subgerencia)) ? $field->subgerencia->subgerencia : '' ;
-            })
             ->addColumn('local',function($field){
                 return (isset($field->local->local)) ? $field->local->local : '' ;
             })

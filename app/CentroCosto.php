@@ -8,7 +8,7 @@ class CentroCosto extends Model
 {
 	protected $table = 'centro_costos';
     protected $primaryKey = "id";
-    protected $fillable = ['codcentrocosto','centrocosto','idgerencia','idsubgerencia','idlocal','idpersonal'];
+    protected $fillable = ['codcentrocosto','centrocosto','idlocal','idpersonal'];
     
     public function getFullCentroCostoAttribute()
     {

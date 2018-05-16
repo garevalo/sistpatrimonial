@@ -13,10 +13,6 @@
         {!! Form::model($table, ['action' => 'CentroCostoController@store']) !!}
             <div class="box-body">
 
-                {{ Form::selectfield('idgerencia','Gerencia',$gerencias,'Seleccione Gerencias') }}
-
-                {{ Form::selectfield('idsubgerencia','Sub Gerencia',$subgerencias,'Seleccione Subgerencias') }}
-
                 {{ Form::selectfield('idlocal','Local',$locales,'Seleccione Locales') }}
 
                 {{ Form::selectfield('idpersonal','Personal',$personales,'Seleccione Personal') }}

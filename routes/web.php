@@ -76,6 +76,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('centrocosto/alldata','CentroCostoController@alldata')->name('getcentrocostos');
     Route::resource('centrocosto','CentroCostoController');
 
+    //Inventario
+    Route::get('inventario/alldata','InventarioController@alldata')->name('getinventarios');
+    Route::resource('inventario','InventarioController');
+
      //Pedido
     Route::post('pedido/atencion/{id}','PedidoController@atencionStore')->name('atencion.store');
     Route::get('pedido/atencion/{id?}','PedidoController@atencion')->name('atencion');

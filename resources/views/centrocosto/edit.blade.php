@@ -14,10 +14,6 @@
         {!! Form::model($table, ['action' => ['CentroCostoController@update',$table->id],'method'=>'put'] ) !!}
             <div class="box-body">
 
-               {{ Form::selectfield('idgerencia','Gerencia',$gerencias,'Seleccione Gerencias',$table->idgerencia) }}
-
-                {{ Form::selectfield('idsubgerencia','Sub Gerencia',$subgerencias,'Seleccione Subgerencias',$table->idsubgerencia) }}
-
                 {{ Form::selectfield('idlocal','Local',$locales,'Seleccione Locales',$table->idlocal) }}
 
                 {{ Form::selectfield('idpersonal','Personal',$personales,'Seleccione Personal',$table->idpersonal) }}
