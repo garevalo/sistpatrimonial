@@ -35,6 +35,7 @@
                         <th>Centro Costo</th>
                         <th>Desde</th>
                         <th>Hasta</th>
+                        <th>Estado</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -80,6 +81,7 @@
                 {data: 'personal', name: 'personal'},
                 {data: 'fechadesde', name: 'fechadesd'},
                 {data: 'fechahasta', name: 'fechahasta'},
+                {data: 'estado', name: 'estado'},
                 {
                     data: 'edit',
                     name: 'edit',

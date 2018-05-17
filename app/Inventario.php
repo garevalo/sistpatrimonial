@@ -31,6 +31,10 @@ class Inventario extends Model
         $this->attributes['fecha_hasta'] = Carbon::createFromFormat('d/m/Y', $value);
     }
 
+    public function getEstadoAttribute()
+    {
+        return ($this->attributes['estado'] == 1 )? 'En Curso': 'Cerrado';
+    }
    
 
 }

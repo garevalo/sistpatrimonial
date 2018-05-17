@@ -21,7 +21,7 @@
         <ul class="sidebar-menu">
             <li class="header">MENU</li>
             <li></li>
-            <li class="treeview @if(in_array(request()->getRequestUri(),['/bien','/catalogo','/grupogenerico','/clasegenerico','/centrocosto'])) active @endif ">
+            <li class="treeview @if(in_array(request()->getRequestUri(),['/inventario','/bien','/catalogo','/grupogenerico','/clasegenerico','/centrocosto'])) active @endif ">
                 <a href="/hardware">
                     <i class="fa fa-archive"></i> <span>Almacén</span>
                     <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
@@ -34,6 +34,7 @@
 
                     <li class="@if(request()->getRequestUri()=='/clasegenerico') active @endif"><a href="/clasegenerico"><i class="fa fa-circle-o text-aqua"></i> Clase Generico</a></li>
                     <li class="@if(request()->getRequestUri()=='/centrocosto') active @endif"><a href="/centrocosto"><i class="fa fa-circle-o text-aqua"></i> Centro Costos</a></li>
+                     <li class="@if(request()->getRequestUri()=='/inventario') active @endif"><a href="/inventario"><i class="fa fa-circle-o text-aqua"></i> Inventario</a></li>
                 </ul>
             </li>
             <li class="treeview @if(in_array(request()->getRequestUri(),['/cargo','/gerencia','/subgerencia','/marca','/modelo','/adquisicion','/personal','/color','/proveedor','/local'])) active @endif ">
