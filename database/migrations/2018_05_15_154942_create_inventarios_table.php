@@ -19,7 +19,7 @@ class CreateInventariosTable extends Migration
             $table->string('centrocosto');
             $table->date('fecha_desde');
             $table->date('fecha_hasta');
-            $table->integer('estado');
+            $table->integer('estado')->nullable();
             $table->timestamps();
         });
     }

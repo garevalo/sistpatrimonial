@@ -20,6 +20,7 @@
                 {{Form::textfield('fecha_hasta','Fecha hasta','',["data-inputmask" => "'alias': 'dd/mm/yyyy'" ,"data-mask"=>"" ])}}
 
                 {{ Form::selectfield('centrocosto','Centro de Costo',$centrocostos,'Seleccione Centro Costo','') }} 
+                <input type="hidden" name="estado" value="1">
             </div>  
             <div class="box-footer">
                 <button class="btn btn-sm btn-primary" type="submit">Guardar</button>

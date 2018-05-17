@@ -8,7 +8,7 @@ use Carbon\Carbon;
 class Inventario extends Model
 {
 	protected $primaryKey 	= 'idinventario';
-	protected $fillable 	= ['idinventario','idpersonal','centrocosto','fecha_desde','fecha_hasta'];
+	protected $fillable 	= ['idinventario','idpersonal','centrocosto','estado','fecha_desde','fecha_hasta'];
 	protected $dates 		= ['fecha_desde','fecha_hasta'];
 
 	public function CentroCosto()
