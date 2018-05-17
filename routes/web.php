@@ -77,6 +77,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('centrocosto','CentroCostoController');
 
     //Inventario
+    Route::post('inventario/fisico/{id}','InventarioController@inventarioFisico')->name('inventario.fisico');
     Route::get('inventario/alldata','InventarioController@alldata')->name('getinventarios');
     Route::resource('inventario','InventarioController');
 

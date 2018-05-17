@@ -35,4 +35,9 @@ class CentroCosto extends Model
 	    return $this->belongsTo('App\Personal', 'idpersonal','idpersonal');
 	}
 
+	public function bien()
+    {
+        return $this->hasMany('App\Bien','centrocosto','codcentrocosto');
+    }
+
 }

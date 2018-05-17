@@ -35,6 +35,11 @@ class Inventario extends Model
     {
         return ($this->attributes['estado'] == 1 )? 'En Curso': 'Cerrado';
     }
+
+    public function Conteo(){
+
+        return $this->hasMany('App\ConteoInventario','idinventario','idinventario');
+    }
    
 
 }

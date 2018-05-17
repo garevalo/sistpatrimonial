@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Inventario;
 use App\Personal;
 use App\CentroCosto;
+use App\biens;
+use App\ConteoInventario;
 use Carbon\Carbon;
 use Datatables;
 
@@ -69,11 +71,14 @@ class InventarioController extends Controller
      */
     public function show($id)
     {
-        $table      = Inventario::FindOrFail($id);
+        $table  = Inventario::FindOrFail($id);
+        $situacion = [1=>'Conciliado',2 => 'Faltante',3=>'Sobrante'];
+        $centrocosto = CentroCosto::with('bien')->where('codcentrocosto', $table->centrocosto)->first();
+        //dd($centrocosto);
         $modulo     = self::MODULO;
         $titulomod  = self::TITLEMOD;
 
-        return view(self::MODULO.".edit",compact('table','modulo','titulomod'));
+        return view(self::MODULO.".show",compact('table','modulo','titulomod','centrocosto','situacion'));
     }
 
     /**
@@ -115,11 +120,39 @@ class InventarioController extends Controller
         //
     }
 
+    public function inventarioFisico(Request $request, $id){
+
+        
+        foreach ($request->idbien as $key => $value) {
+            # code...
+        }
+        ConteoInventario::create([
+
+        ]);
+
+        /*
+        array:6 [▼
+          "_token" => "d5QkkXcerBxwoWIzwG0JZnxT7g8tYeE3VC1b1awr"
+          "idinventario" => "1"
+          "idpersonal" => "2"
+          "centrocosto" => "10001"
+          "idbien" => array:2 [▼
+            0 => "2"
+            1 => "3"
+          ]
+          "situacion" => array:2 [▼
+            0 => "2"
+            1 => "3"
+          ]
+        ]
+                */
+    }
+
     public function alldata(){
 
         return Datatables::of(Inventario::with('CentroCosto','Personal')->get())
             ->addColumn('edit',function($table){
-                return '<a href="'.route('inventario.edit',$table->idinventario).'" class="btn btn-primary btn-sm">Editar</a>' ;
+                return '<a href="'.route('inventario.show',$table->idinventario).'" class="btn btn-primary btn-sm">Inventario Físico</a>' ;
             })
             ->addColumn('centro_costo',function($table){
                 return $table->CentroCosto->centrocosto;
