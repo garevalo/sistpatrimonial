@@ -73,12 +73,16 @@ class InventarioController extends Controller
     {
         $table  = Inventario::FindOrFail($id);
         $situacion = [1=>'Conciliado',2 => 'Faltante',3=>'Sobrante'];
+        
+        $bienes = ConteoInventario::where('idinventario',$id)->get();        
         $centrocosto = CentroCosto::with('bien')->where('codcentrocosto', $table->centrocosto)->first();
-        //dd($centrocosto);
+        
+                
+
         $modulo     = self::MODULO;
         $titulomod  = self::TITLEMOD;
 
-        return view(self::MODULO.".show",compact('table','modulo','titulomod','centrocosto','situacion'));
+        return view(self::MODULO.".show",compact('table','modulo','titulomod','centrocosto','situacion','bienes'));
     }
 
     /**
@@ -122,30 +126,30 @@ class InventarioController extends Controller
 
     public function inventarioFisico(Request $request, $id){
 
-        
+        //dd($request->all());
         foreach ($request->idbien as $key => $value) {
-            # code...
+
+
+            $ConteoInventario = ConteoInventario::updateOrCreate(
+                [
+                    'idinventario'  => $request->idinventario, 
+                    'codcatalogo'   => $request->codcatalogo[$key],
+                    'codinventario' => $request->codinventario[$key],
+                    'idbien'        => $value 
+                ],
+                [
+                    'idinventario'  => $request->idinventario, 
+                    'codcatalogo'   => $request->codcatalogo[$key],
+                    'codinventario' => $request->codinventario[$key],
+                    'codpatrimonial'=> $request->codpatrimonial[$key],
+                    'idbien'        => $value,
+                    'situacion'     => $request->situacion[$key],
+                    'fecha_conteo'  => Carbon::now()
+                ]
+            );
+            
         }
-        ConteoInventario::create([
-
-        ]);
-
-        /*
-        array:6 [▼
-          "_token" => "d5QkkXcerBxwoWIzwG0JZnxT7g8tYeE3VC1b1awr"
-          "idinventario" => "1"
-          "idpersonal" => "2"
-          "centrocosto" => "10001"
-          "idbien" => array:2 [▼
-            0 => "2"
-            1 => "3"
-          ]
-          "situacion" => array:2 [▼
-            0 => "2"
-            1 => "3"
-          ]
-        ]
-                */
+        return redirect()->route(self::REDIRECT);
     }
 
     public function alldata(){

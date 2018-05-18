@@ -99,6 +99,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('usuario','UsuarioController');
 
     //Reportes
+    Route::post('reporte/nivelexactitud','ReporteController@nivelExactitudPdf');
+    Route::get('reporte/nivelexactitud','ReporteController@nivelexactitud');
+
     Route::post('reporte/nivelcumplimiento','ReporteController@nivelCumplimientoPdf');
     Route::get('reporte/nivelcumplimiento','ReporteController@nivelcumplimiento');
     Route::resource('reporte','ReporteController');

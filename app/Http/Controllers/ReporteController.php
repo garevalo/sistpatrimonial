@@ -24,7 +24,7 @@ class ReporteController extends Controller
     public function nivelCumplimientoPdf(Request $request){
 
 
-        $pedidos = DB::select(DB::raw('SELECT count(date(created_at)) cantidad,date(created_at) fecha,'test'  FROM pedidos 
+        $pedidos = DB::select(DB::raw('SELECT count(date(created_at)) cantidad,date(created_at) fecha  FROM pedidos 
                                         where date(created_at) is not null and
                                         date(created_at) between "'.Carbon::createFromFormat('d/m/Y', $request->desde).'" and "'.Carbon::createFromFormat('d/m/Y', $request->hasta).'"
                                         group by date(created_at)'));
@@ -46,6 +46,42 @@ class ReporteController extends Controller
         $pdf = PDF::loadView('reporte.pdf.nivelcumplimiento',compact('pedidos','pedidosentregados','data'));
         return $pdf->stream('Reporte.pdf');
         //return view('reporte.pdf.nivelcumplimiento',$data);
+    }
+
+
+
+    public function nivelexactitud()
+    {
+        return view('reporte.nivelexactitud');
+    }
+
+
+
+    public function nivelExactitudPdf(Request $request){
+
+
+        $pedidos = DB::select(DB::raw('SELECT count(date(created_at)) cantidad,date(created_at) fecha  FROM pedidos 
+                                        where date(created_at) is not null and
+                                        date(created_at) between "'.Carbon::createFromFormat('d/m/Y', $request->desde).'" and "'.Carbon::createFromFormat('d/m/Y', $request->hasta).'"
+                                        group by date(created_at)'));
+
+        $pedidosentregados = DB::select(DB::raw('SELECT count(date(fecha_entrega)) cantidad,date(fecha_entrega) fecha FROM pedidos 
+                                        where date(fecha_entrega) is not null and estado_pedido=2 and
+                                        date(fecha_entrega) between "'.Carbon::createFromFormat('d/m/Y', $request->desde).'" and "'.Carbon::createFromFormat('d/m/Y', $request->hasta).'"
+                                        group by date(fecha_entrega)'));
+
+        /*dump($pedidos); 
+        dump($pedidosentregados);
+        dd( array_merge_recursive ( (array) $pedidos , (array) $pedidosentregados));*/
+
+        $data = array(
+            'desde' => $request->desde,
+            'hasta' => $request->hasta
+        );
+
+        $pdf = PDF::loadView('reporte.pdf.nivelexactitud',compact('pedidos','pedidosentregados','data'));
+        return $pdf->stream('Reporte.pdf');
+        //return view('reporte.pdf.nivelexactitud',$data);
     }
 
     /**

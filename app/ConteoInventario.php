@@ -7,7 +7,7 @@ use Carbon\Carbon;
 
 class ConteoInventario extends Model
 {
-    protected $fillable 	= 	['idconteo','codcatalogo','codinventario','codpatrimonial','fecha_conteo','situacion','idinventario'];
+    protected $fillable 	= 	['idconteo','idbien','codcatalogo','codinventario','codpatrimonial','fecha_conteo','situacion','idinventario'];
     protected $primaryKey 	= 	'idconteo'; 
     protected $dates 		= 	['fecha_conteo'];
 
@@ -16,15 +16,12 @@ class ConteoInventario extends Model
        return $this->belongsTo('App\Inventario', 'idinventario', 'idinventario');
     } 
 
-	public function setFechaConteoAttribute($value)
+    /*
+    public function setFechaConteoAttribute($value)
     {
         $this->attributes['fecha_conteo'] = Carbon::createFromFormat('d/m/Y', $value);
     }
-
-    public function setFechaHastaAttribute($value)
-    {
-        $this->attributes['fecha_hasta'] = Carbon::createFromFormat('d/m/Y', $value);
-    }
+    */
 
     public function getEstadoAttribute()
     {
