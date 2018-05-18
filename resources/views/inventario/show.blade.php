@@ -22,20 +22,40 @@
             			<th>C. Patrimonial</th>
             			<th>Situación</th>
             		</thead>
-            		@foreach($centrocosto->bien as $bien)
-            		<tr>
-            			<td>
-                            <input type="hidden" name="idbien[]" value="{{$bien->idbien}}">
-                            <input type="hidden" name="codcatalogo[]" value="{{$bien->codcatalogo}}">
-                            <input type="hidden" name="codinventario[]" value="{{$bien->codinventario}}">
-                            <input type="hidden" name="codpatrimonial[]" value="{{$bien->codpatrimonial}}"> 
-                            {{ $bien->codcatalogo}} 
-                        </td>
-            			<td>{{ $bien->codinventario}}</td>
-            			<td>{{ $bien->codpatrimonial}}</td>
-            			<td>{{ Form::select('situacion[]',$situacion,'',['placeholder'=> 'Seleccione Situación','class'=>'form-control input-sm']) }}</td>
-            		</tr>
-            		@endforeach
+
+                    @if(count($bienes)>0)
+                        @foreach($bienes as $bien)
+                        <tr>
+                            <td>
+                                <input type="hidden" name="idbien[]" value="{{$bien->idbien}}">
+                                <input type="hidden" name="codcatalogo[]" value="{{$bien->codcatalogo}}">
+                                <input type="hidden" name="codinventario[]" value="{{$bien->codinventario}}">
+                                <input type="hidden" name="codpatrimonial[]" value="{{$bien->codpatrimonial}}"> 
+                                {{ $bien->codcatalogo}} 
+                            </td>
+                            <td>{{ $bien->codinventario}}</td>
+                            <td>{{ $bien->codpatrimonial}}</td>
+                            <td>{{ Form::select('situacion[]',$situacion,$bien->situacion,['placeholder'=> 'Seleccione Situación','class'=>'form-control input-sm']) }}</td>
+                        </tr>
+                        @endforeach
+                    @else
+                        @foreach($centrocosto->bien as $bien)
+                        <tr>
+                            <td>
+                                <input type="hidden" name="idbien[]" value="{{$bien->idbien}}">
+                                <input type="hidden" name="codcatalogo[]" value="{{$bien->codcatalogo}}">
+                                <input type="hidden" name="codinventario[]" value="{{$bien->codinventario}}">
+                                <input type="hidden" name="codpatrimonial[]" value="{{$bien->codpatrimonial}}"> 
+                                {{ $bien->codcatalogo}} 
+                            </td>
+                            <td>{{ $bien->codinventario}}</td>
+                            <td>{{ $bien->codpatrimonial}}</td>
+                            <td>{{ Form::select('situacion[]',$situacion,'',['placeholder'=> 'Seleccione Situación','class'=>'form-control input-sm']) }}</td>
+                        </tr>
+                        @endforeach
+                    @endif
+
+            		
             	</table>
               
             </div>  
