@@ -72,12 +72,13 @@ class InventarioController extends Controller
     public function show($id)
     {
         $table  = Inventario::FindOrFail($id);
-        $situacion = [1=>'Conciliado',2 => 'Faltante',3=>'Sobrante'];
+        $situacion = [1=>'Conciliado',2 => 'Faltante'];
         
-        $bienes = ConteoInventario::where('idinventario',$id)->get();        
-        $centrocosto = CentroCosto::with('bien')->where('codcentrocosto', $table->centrocosto)->first();
+        $bienes = ConteoInventario::with('bien','catalogo')->where('idinventario',$id)->get();        
+        $centrocosto = CentroCosto::with('bien.catalogo')->where('codcentrocosto', $table->centrocosto)->first();
         
-                
+        //dump($bienes);
+        //dd($centrocosto);
 
         $modulo     = self::MODULO;
         $titulomod  = self::TITLEMOD;
@@ -163,9 +164,6 @@ class InventarioController extends Controller
             })
             ->addColumn('personal',function($table){
                 return $table->Personal->FullName;
-            })
-            ->addColumn('fechahasta',function($table){
-                return $table->fecha_hasta->format('d/m/Y');
             })
             ->addColumn('fechadesde',function($table){
                 return $table->fecha_desde->format('d/m/Y');

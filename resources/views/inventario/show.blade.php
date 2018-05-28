@@ -17,6 +17,7 @@
             <div class="box-body">            	
             	<table class="table table-condensed table-striped">
             		<thead>
+                        <th>Bien</th>
             			<th>C. Catálogo</th>
             			<th>C. Inventario</th>
             			<th>C. Patrimonial</th>
@@ -26,6 +27,7 @@
                     @if(count($bienes)>0)
                         @foreach($bienes as $bien)
                         <tr>
+                            <td>{{$bien->catalogo->denom_catalogo}}</td>
                             <td>
                                 <input type="hidden" name="idbien[]" value="{{$bien->idbien}}">
                                 <input type="hidden" name="codcatalogo[]" value="{{$bien->codcatalogo}}">
@@ -41,6 +43,7 @@
                     @else
                         @foreach($centrocosto->bien as $bien)
                         <tr>
+                            <td>{{ $bien->catalogo->denom_catalogo  }}</td>
                             <td>
                                 <input type="hidden" name="idbien[]" value="{{$bien->idbien}}">
                                 <input type="hidden" name="codcatalogo[]" value="{{$bien->codcatalogo}}">

@@ -11,9 +11,17 @@ class ConteoInventario extends Model
     protected $primaryKey 	= 	'idconteo'; 
     protected $dates 		= 	['fecha_conteo'];
 
-     public function Inventario()
+    public function Inventario()
     {
-       return $this->belongsTo('App\Inventario', 'idinventario', 'idinventario');
+        return $this->belongsTo('App\Inventario', 'idinventario', 'idinventario');
+    }
+
+    public function catalogo(){
+        return $this->belongsTo('App\Catalogo', 'codcatalogo', 'codcatalogo');   
+    }
+
+    public function bien(){
+        return $this->belongsTo('App\Bien', 'idbien', 'idbien');   
     } 
 
     /*
@@ -30,7 +38,7 @@ class ConteoInventario extends Model
     	}elseif($this->attributes['situacion'] == 2){
     		return 'Faltante';
     	}else {
-    		return 'Sobrante';
+    		return '';
     	}
     }
 }

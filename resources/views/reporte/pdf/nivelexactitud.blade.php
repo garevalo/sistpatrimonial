@@ -5,7 +5,6 @@
     }
 </style>
 
-
 <table width="100%" border="1" cellspacing="0" cellpadding="0" style="border-collapse: collapse;" class="table">
 	
 	<tbody>
@@ -69,42 +68,31 @@
 			<td>Unidad Almacenada (UA)</td>	
 			<td colspan="2">Nivel de Cumplimiento de Entrega</td>
 		</tr>
-				@php
-					$ps = '';
-					$pe = '';
-					$pst = 0;
-					$pet = 0;
+				@php 
+					$talmacenadas = 0; $treferencia = 0;
 				@endphp
-				@foreach($pedidos as $key=> $item)
+
+				@foreach($conteo as $key=> $item)
+				@php 
+
+				$talmacenadas = $talmacenadas + $item->almacenada;
+				$treferencia  = $treferencia + $item->referencia;
+				@endphp
+
 				<tr style="text-align: center;">
 					<td>{{$key + 1 }}</td>
-					<td>{{$item->fecha}} 
-						@php 
-							$ps = $item->cantidad; $pst = $pst + $item->cantidad; 
-						@endphp 
-					</td>
-					
-					<td>  
-						@foreach($pedidosentregados as $pe)
-							@if($pe->fecha == $item->fecha)
-								{{ $pe->cantidad }}
-								@php $pe = $pe->cantidad; $pet = $pet + $pe; @endphp
-							@else
-								0 
-								@php $pe = 0; $pet = $pet + 0; @endphp	
-							@endif
-						@endforeach
-					</td>
-					<td>{{$item->cantidad}}</td>
-					<td colspan="2"> {{ ($pe / $ps) * 100 }}  </td>
+					<td>{{$item->fecha}}</td>
+					<td>{{$item->referencia}}</td>
+					<td>{{$item->almacenada}}</td>
+					<td colspan="2"> @if($item->almacenada > 0 ) {{ round(($item->referencia / $item->almacenada) * 100 , 2)  }} @else 0 @endif </td>
 				</tr>
 				@endforeach
 
 				<tr style="text-align: center;">
 					<td colspan="2">Total de bienes</td>
-					<td>{{ $pet }}</td>
-					<td>{{ $pst }}</td>
-					<td colspan="2" style="text-align: center;">   @if($pst>0) {{   round( ($pet / $pst) * 100 , 2) }} @endif  %</td>
+					<td>{{ $treferencia }}</td>
+					<td>{{ $talmacenadas }}</td>
+					<td colspan="2" style="text-align: center;">@if($talmacenadas > 0 ) {{ round(($treferencia / $talmacenadas ) * 100 , 2)  }} @else 0 @endif % </td>
 				</tr>
 			</tbody>
 

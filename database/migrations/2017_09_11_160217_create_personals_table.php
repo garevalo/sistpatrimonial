@@ -23,7 +23,7 @@ class CreatePersonalsTable extends Migration
             $table->integer('idcargo_personal')->unsigned();
             $table->foreign('idcargo_personal')->references('idcargo')->on('cargos');
 
-            $table->integer('idgerencia_personal')->unsigned();
+            $table->integer('idgerencia_personal')->unsigned()->nullable();
             $table->foreign('idgerencia_personal')->references('idgerencia')->on('gerencias');
 
             $table->integer('idsubgerencia_personal')->unsigned()->nullable();

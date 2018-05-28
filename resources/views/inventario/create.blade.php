@@ -15,9 +15,9 @@
 
                 {{ Form::selectfield('idpersonal','Usuario a programar inventario',$personals,'Seleccione Usuario') }}
 
-                {{Form::textfield('fecha_desde','Fecha desde','',["data-inputmask" => "'alias': 'dd/mm/yyyy'" ,"data-mask"=>"" ])}} 
+                {{Form::textfield('fecha_desde','Fecha','',["data-inputmask" => "'alias': 'dd/mm/yyyy'" ,"data-mask"=>"" ])}} 
 
-                {{Form::textfield('fecha_hasta','Fecha hasta','',["data-inputmask" => "'alias': 'dd/mm/yyyy'" ,"data-mask"=>"" ])}}
+                {{-- Form::textfield('fecha_hasta','Fecha hasta','',["data-inputmask" => "'alias': 'dd/mm/yyyy'" ,"data-mask"=>"" ]) --}}
 
                 {{ Form::selectfield('centrocosto','Centro de Costo',$centrocostos,'Seleccione Centro Costo','') }} 
                 <input type="hidden" name="estado" value="1">

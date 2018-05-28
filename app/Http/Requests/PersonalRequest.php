@@ -28,7 +28,7 @@ class PersonalRequest extends FormRequest
             'apellido_paterno' => 'required|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u',
             'apellido_materno' => 'required|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u',
             'idcargo_personal' => 'required|integer',
-            'idgerencia_personal' => 'required|integer',
+            //'idgerencia_personal' => 'required|integer',
             //'idsubgerencia_personal' => 'integer'
         );
 
