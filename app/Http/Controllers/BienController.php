@@ -218,7 +218,7 @@ class BienController extends Controller
         return Datatables::of(Bien::with('marca','modelo','color','adquisicion','centrocostos','personal','catalogo')->get())
             ->addColumn('edit',function($bien){
                 return '<a href="'.route('bien.edit',$bien->idbien).'" class="btn btn-primary btn-xs">Editar</a>
-                        <a href="'.route('bien.movimiento',$bien->idbien).'" class="btn btn-success btn-xs">Movimiento</a>
+                        <a href="'.route('bien.movimiento',$bien->idbien).'" class="btn btn-success btn-xs">Transferir</a>
                         <a href="'.route('bien.show',$bien->idbien).'" class="btn btn-info btn-xs">Ver</a>' ;
             })
             ->addColumn('foto',function($bien){
@@ -253,5 +253,23 @@ class BienController extends Controller
             ->rawColumns(['edit','foto'])
             ->make(true);
 
+    }
+
+    public function items(Request $request,$id=null){
+
+        $term       =   $request->term ? : ''; 
+        $catalogo   =   Bien::where('denom_catalogo', 'like', $term.'%')->get();
+        $result     =   array();
+
+        foreach ($catalogo as $key => $value) {
+            if( $id==$value->codcatalogo ){
+                $result[]  = array('id' => $value->codcatalogo, 'text' => $value->denom_catalogo,'term' => $value->denom_catalogo , 'codcatalogo' => $value->codcatalogo,"selected"=> true);  
+            }else{
+                $result[]  = array('id' => $value->codcatalogo, 'text' => $value->denom_catalogo,'term' => $value->denom_catalogo , 'codcatalogo' => $value->codcatalogo);  
+            }
+            
+        }
+
+        return response()->json(['results' => $result ]) ;
     }
 }
