@@ -46,8 +46,6 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="@if(request()->getRequestUri()=='/gerencia') active @endif"><a href="/gerencia"><i class="fa fa-circle-o text-aqua"></i> Gerencias</a></li>
-                    <li class="@if(request()->getRequestUri()=='/subgerencia') active @endif"><a href="/subgerencia"><i class="fa fa-circle-o text-aqua"></i> Subgerencia</a></li>
                     <li class="@if(request()->getRequestUri()=='/marca') active @endif"><a href="/marca"><i class="fa fa-circle-o text-aqua"></i> Marca</a></li>
                     <li class="@if(request()->getRequestUri()=='/modelo') active @endif"><a href="/modelo"><i class="fa fa-circle-o text-aqua"></i> Modelo</a></li>
                     <li class="@if(request()->getRequestUri()=='/color') active @endif"><a href="/color"><i class="fa fa-circle-o text-aqua"></i> Color</a></li>
