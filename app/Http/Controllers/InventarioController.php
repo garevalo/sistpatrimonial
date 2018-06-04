@@ -49,7 +49,7 @@ class InventarioController extends Controller
         $personals = User::all()
                         ->where('estado',1)
                         ->where('idrol',2)
-                        ->pluck('FullUser','id'); 
+                        ->pluck('FullUser','id');
 
         $centrocostos = CentroCosto::all()->pluck('centrocosto','codcentrocosto');
 
@@ -81,10 +81,10 @@ class InventarioController extends Controller
     {
         $table  = Inventario::FindOrFail($id);
         $situacion = [1=>'Conciliado',2 => 'Faltante'];
-        
-        $bienes = ConteoInventario::with('bien','catalogo')->where('idinventario',$id)->get();        
+
+        $bienes = ConteoInventario::with('bien','catalogo')->where('idinventario',$id)->get();
         $centrocosto = CentroCosto::with('bien.catalogo')->where('codcentrocosto', $table->centrocosto)->first();
-        
+
         $modulo     = self::MODULO;
         $titulomod  = self::TITLEMOD;
 
@@ -101,10 +101,10 @@ class InventarioController extends Controller
     {
         $modulo = self::MODULO;
         $titulomod = self::TITLEMOD;
-        $estados = array(1=>'En Curso',2=>'Cerrado');   
+        $estados = array(1=>'En Curso',2=>'Cerrado');
         $table = Inventario::FindOrFail($id);
 
-        $personals = User::all()->where('estado',1)->where('idrol',2)->pluck('FullUser','id'); 
+        $personals = User::all()->where('estado',1)->where('idrol',2)->pluck('FullUser','id');
 
         $centrocostos = CentroCosto::all()->pluck('centrocosto','codcentrocosto');
 
@@ -144,13 +144,13 @@ class InventarioController extends Controller
 
             $ConteoInventario = ConteoInventario::updateOrCreate(
                 [
-                    'idinventario'  => $request->idinventario, 
+                    'idinventario'  => $request->idinventario,
                     'codcatalogo'   => $request->codcatalogo[$key],
                     'codinventario' => $request->codinventario[$key],
-                    'idbien'        => $value 
+                    'idbien'        => $value
                 ],
                 [
-                    'idinventario'  => $request->idinventario, 
+                    'idinventario'  => $request->idinventario,
                     'codcatalogo'   => $request->codcatalogo[$key],
                     'codinventario' => $request->codinventario[$key],
                     'codpatrimonial'=> $request->codpatrimonial[$key],
@@ -159,7 +159,7 @@ class InventarioController extends Controller
                     'fecha_conteo'  => Carbon::now()
                 ]
             );
-            
+
         }
         return redirect()->route(self::REDIRECT);
     }
@@ -168,9 +168,9 @@ class InventarioController extends Controller
 
         if(Auth::user()->idrol==2)
             $query = Inventario::with('CentroCosto','User')->where('idpersonal',Auth::user()->id)->get();
-        else    
+        else
             $query = Inventario::with('CentroCosto','User')->get();
-        
+
         return Datatables::of($query)
             ->addColumn('edit',function($table){
                 $invfisico = '<a href="'.route('inventario.show',$table->idinventario).'" class="btn btn-primary btn-xs">Inventario Físico</a>';
@@ -183,7 +183,7 @@ class InventarioController extends Controller
                 return $table->CentroCosto->centrocosto;
             })
             ->addColumn('user',function($table){
-                return $table->User->FullUser;
+               return ($table->User) ? $table->User->email :  '';
             })
             ->addColumn('fechadesde',function($table){
                 return $table->fecha_desde->format('d/m/Y');
