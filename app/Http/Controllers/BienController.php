@@ -258,7 +258,8 @@ class BienController extends Controller
     public function items(Request $request,$id=null){
 
         $term       =   $request->term ? : ''; 
-        $catalogo   =   Bien::where('denom_catalogo', 'like', $term.'%')->get();
+        $catalogo   =   Bien->catalogo::where('denom_catalogo', 'like', $term.'%')->get();
+        return $catalogo;
         $result     =   array();
 
         foreach ($catalogo as $key => $value) {

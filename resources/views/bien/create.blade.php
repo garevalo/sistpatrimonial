@@ -223,7 +223,7 @@
             language: "es",
             minimumInputLength: 2,
             ajax: {
-                url:  "{{route('catalogoitems')}}",
+                url:  "{{route('bienitems')}}",
                 delay: 250,
                 dataType: 'json',
                 data: function(params) {
@@ -246,10 +246,8 @@
         });
 
         function formatRepo (repo) {
-          //if (repo.loading) {
             $("#codpatrimonial").val(repo.id);
             return repo.text;
-          //}
         }
 
     </script>

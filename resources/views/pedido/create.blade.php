@@ -74,13 +74,52 @@
             $("body").on("click","#agregar",function(){
                      $("#articulos tbody").append('<tr><td><input type="text" name="cantidad[]" required=""  class="form-control input-sm"></td>'+ 
                                         '<td> <input type="text" name="umedida[]" value="Unidad" required="" class="form-control input-sm"> </td>'+
-                                        '<td> <input type="text" name="descripcion[]" required="" class="form-control input-sm"> </td>'+
+                                        '<td> <input type="text" name="descripcion[]" required="" class="form-control input-sm descripcion"> </td>'+
                                         '<td><button type="button" class="btn btn-xs btn-danger eliminar"><i class="fa fa-trash"></i> Eliminar</button></td>'+
                                     '</tr>');
                 });
                 
                 
             });
+</script>
+
+<script src="{{asset('plugins/select2//select2.full.min.js')}}"></script>
+
+<script>
+    
+    $(".descripcion").select2({
+        language: "es",
+        minimumInputLength: 2,
+        ajax: {
+            url:  "{{route('bienitems')}}",
+            delay: 250,
+            dataType: 'json',
+            data: function(params) {
+                return {
+                    term: params.term
+                }
+            },
+            results: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: item.text,
+                            id: item.id
+                        }
+                    })
+                };
+            }
+        },
+        templateResult: formatRepo,
+    });
+
+    function formatRepo (repo) {
+      //if (repo.loading) {
+        $("#codpatrimonial").val(repo.id);
+        return repo.text;
+      //}
+    }
+
 </script>
 
 @endsection

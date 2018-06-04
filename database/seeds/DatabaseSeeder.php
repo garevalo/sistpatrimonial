@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         	UsersTableSeeder::class,
             ColorTableSeeder::class,
             CargosTableSeeder::class,
+            RolesTableSeeder::class,
         ]);
     }
 }
