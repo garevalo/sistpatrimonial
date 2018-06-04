@@ -31,8 +31,8 @@
                     <thead>
                     <tr>
                         <th></th>
-                        <th>C. Centro Costo</th>
                         <th>Centro Costo</th>
+                        <th>Usuario</th>
                         <th>Fecha</th>
                         <th>Estado</th>
                         <th></th>
@@ -66,7 +66,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js"></script>
     <!-- page script -->
-
+    <script src="{{asset('plugins/bootbox.min.js')}}"></script>
     <script>
         //var template = Handlebars.compile($("#details-template").html());
 
@@ -77,9 +77,9 @@
             columns: [
                 {data: 'idinventario', name: 'idinventario'},
                 {data: 'centro_costo', name: 'centro_costo'},
-                {data: 'personal', name: 'personal'},
+                {data: 'user', name: 'user'},
                 {data: 'fechadesde', name: 'fechadesd'},
-                {data: 'estado', name: 'estado'},
+                {data: 'estadoFormat', name: 'estadoFormat'},
                 {
                     data: 'edit',
                     name: 'edit',
@@ -92,6 +92,14 @@
                 "url": "{{asset("plugins/datatables/Spanish.json")}}"
             }
         });
+
+        function borrar(){
+            if(confirm('Desea eliminar este inventario?')){
+                return true;
+            }else{
+                return false;
+            }
+        }
     </script>
 
 @endsection

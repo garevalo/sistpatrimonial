@@ -31,4 +31,9 @@ class User extends Authenticatable
     {
        return $this->belongsTo('App\Rol', 'idrol', 'idrol');
     }
+
+    public function getFullUserAttribute()
+    {
+        return ucfirst($this->name) . ' ' . ucfirst($this->apellidos).' | '. ucfirst($this->usuario);
+    }
 }

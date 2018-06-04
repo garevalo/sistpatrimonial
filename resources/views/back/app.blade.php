@@ -44,8 +44,7 @@
             <section class="content-header">
                 @section('menu-h1')
                     <h1>
-                        Sistema de control de Inventario
-                        {{-- <small>Control panel</small> --}}
+                       <small>Sistema web de control de bienes patrimoniales</small>
                     </h1>
                 @show
 

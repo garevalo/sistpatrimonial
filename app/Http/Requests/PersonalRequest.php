@@ -34,9 +34,9 @@ class PersonalRequest extends FormRequest
 
         if($this->request->has('_method')){
 
-            $validation['dni'] = 'required|integer|digits:8|unique:personals,dni,'.$this->route('personal').',idpersonal';
+            $validation['dni'] = 'required|numeric|digits:8|unique:personals,dni,'.$this->route('personal').',idpersonal';
         }else{
-            $validation['dni'] ='required|integer|digits:8|unique:personals,dni';
+            $validation['dni'] ='required|numeric|digits:8|unique:personals,dni';
         }
 
         return $validation;

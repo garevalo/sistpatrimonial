@@ -16,9 +16,9 @@ class Inventario extends Model
        return $this->belongsTo('App\CentroCosto', 'centrocosto', 'codcentrocosto');
     } 
 
-    public function Personal()
+    public function User()
     {
-       return $this->belongsTo('App\Personal', 'idpersonal', 'idpersonal');
+       return $this->belongsTo('App\User', 'idpersonal', 'id');
     } 
 
 	public function setFechaDesdeAttribute($value)
@@ -31,7 +31,7 @@ class Inventario extends Model
         $this->attributes['fecha_hasta'] = Carbon::createFromFormat('d/m/Y', $value);
     }
 
-    public function getEstadoAttribute()
+    public function getEstadoFormatAttribute()
     {
         return ($this->attributes['estado'] == 1 )? 'En Curso': 'Cerrado';
     }

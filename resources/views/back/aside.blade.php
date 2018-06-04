@@ -1,3 +1,4 @@
+@if(Auth::check())
 <!-- Left side column. contains the logo and sidebar -->
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
@@ -21,12 +22,14 @@
         <ul class="sidebar-menu">
             <li class="header">MENU</li>
             <li></li>
+            @if( Auth::user()->idrol == 1 or Auth::user()->idrol == 2 )
             <li class="treeview @if(in_array(request()->getRequestUri(),['/inventario','/bien','/catalogo','/grupogenerico','/clasegenerico','/centrocosto'])) active @endif ">
                 <a href="/hardware">
                     <i class="fa fa-archive"></i> <span>Almacén</span>
                     <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                 </a>
                 <ul class="treeview-menu">
+                    @if( Auth::user()->idrol == 1 )
                     <li class="@if(request()->getRequestUri()=='/bien') active @endif"><a href="/bien"><i class="fa fa-circle-o text-aqua"></i> Bienes</a></li>
                     <li class="@if(request()->getRequestUri()=='/catalogo') active @endif"><a href="/catalogo"><i class="fa fa-circle-o text-aqua"></i> Catálogo</a></li>
 
@@ -34,9 +37,15 @@
 
                     <li class="@if(request()->getRequestUri()=='/clasegenerico') active @endif"><a href="/clasegenerico"><i class="fa fa-circle-o text-aqua"></i> Clase Generico</a></li>
                     <li class="@if(request()->getRequestUri()=='/centrocosto') active @endif"><a href="/centrocosto"><i class="fa fa-circle-o text-aqua"></i> Centro Costos</a></li>
+                    @endif
+                    @if( Auth::user()->idrol == 1 or Auth::user()->idrol == 2 ) 
                      <li class="@if(request()->getRequestUri()=='/inventario') active @endif"><a href="/inventario"><i class="fa fa-circle-o text-aqua"></i> Inventario</a></li>
+                     @endif
                 </ul>
             </li>
+            @endif
+
+            @if( Auth::user()->idrol == 1 )
             <li class="treeview @if(in_array(request()->getRequestUri(),['/cargo','/gerencia','/subgerencia','/marca','/modelo','/adquisicion','/personal','/color','/proveedor','/local'])) active @endif ">
                 <a href="#">
                     <i class="fa fa-pencil-square-o"></i>
@@ -58,14 +67,16 @@
                     <li class="@if(request()->getRequestUri()=='/local') active @endif"><a href="/local"><i class="fa fa-circle-o text-aqua"></i> Local</a></li>
                 </ul>
             </li>
-
+            @endif
+            @if( Auth::user()->idrol == 1 )
             <li class="">
                 <a href="/pedido">
                     <i class="fa fa-exchange"></i>
                     <span>Solicitar Equipo</span>
                 </a>
             </li>
-            
+            @endif
+            @if( Auth::user()->idrol == 1 )
             <li class="treeview @if(in_array(request()->getRequestUri(),['/rol','/usuario'])) active @endif ">
                 <a href="#">
                     <i class="fa fa-user-plus"></i>
@@ -79,7 +90,9 @@
                     <li class="@if(request()->getRequestUri()=='/usuario') active @endif"><a href="/usuario"><i class="fa fa-user text-aqua"></i> Usuario</a></li>
                 </ul>
             </li>
+            @endif
 
+            @if( Auth::user()->idrol == 1 )
             <li class="treeview @if(in_array(request()->getRequestUri(),['/rol','/usuario'])) active @endif ">
                 <a href="#">
                     <i class="fa fa-file-pdf-o"></i>
@@ -94,9 +107,11 @@
 
                     <li class="@if(request()->getRequestUri()=='/pedido') active @endif"><a href="/reporte/nivelexactitud"><i class="fa fa-file-pdf-o"></i> Nivel de Exactitud</a></li>
                 </ul>
-            </li>
+            </li> 
+            @endif
 
         </ul>
     </section>
     <!-- /.sidebar -->
 </aside>
+@endif
