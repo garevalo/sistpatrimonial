@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Inventario;
 use App\Personal;
 use App\CentroCosto;
 use App\biens;
 use App\ConteoInventario;
+use App\User;
+use DB;
 use Carbon\Carbon;
 use Datatables;
 
@@ -40,12 +43,17 @@ class InventarioController extends Controller
     {
         $modulo = self::MODULO;
         $titulomod = self::TITLEMOD;
+        $estados = array(1=>'En Curso',2=>'Cerrado');
         $table = new Inventario;
 
-        $personals = Personal::all()->pluck('FullName','idpersonal'); 
+        $personals = User::all()
+                        ->where('estado',1)
+                        ->where('idrol',2)
+                        ->pluck('FullUser','id'); 
+
         $centrocostos = CentroCosto::all()->pluck('centrocosto','codcentrocosto');
 
-        return view(self::MODULO.'.create',compact('modulo','table','titulomod','personals','centrocostos'));
+        return view(self::MODULO.'.create',compact('modulo','table','titulomod','personals','centrocostos','estados'));
     }
 
     /**
@@ -77,9 +85,6 @@ class InventarioController extends Controller
         $bienes = ConteoInventario::with('bien','catalogo')->where('idinventario',$id)->get();        
         $centrocosto = CentroCosto::with('bien.catalogo')->where('codcentrocosto', $table->centrocosto)->first();
         
-        //dump($bienes);
-        //dd($centrocosto);
-
         $modulo     = self::MODULO;
         $titulomod  = self::TITLEMOD;
 
@@ -94,11 +99,16 @@ class InventarioController extends Controller
      */
     public function edit($id)
     {
-        $table = Inventario::FindOrFail($id);
         $modulo = self::MODULO;
         $titulomod = self::TITLEMOD;
+        $estados = array(1=>'En Curso',2=>'Cerrado');   
+        $table = Inventario::FindOrFail($id);
 
-        return view(self::MODULO.".edit",compact('table','modulo','titulomod'));
+        $personals = User::all()->where('estado',1)->where('idrol',2)->pluck('FullUser','id'); 
+
+        $centrocostos = CentroCosto::all()->pluck('centrocosto','codcentrocosto');
+
+        return view(self::MODULO.'.edit',compact('modulo','table','titulomod','personals','centrocostos','estados'));
     }
 
     /**
@@ -122,7 +132,8 @@ class InventarioController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Inventario::destroy($id);
+        return redirect()->route(self::REDIRECT);
     }
 
     public function inventarioFisico(Request $request, $id){
@@ -155,18 +166,30 @@ class InventarioController extends Controller
 
     public function alldata(){
 
-        return Datatables::of(Inventario::with('CentroCosto','Personal')->get())
+        if(Auth::user()->idrol==2)
+            $query = Inventario::with('CentroCosto','User')->where('idpersonal',Auth::user()->id)->get();
+        else    
+            $query = Inventario::with('CentroCosto','User')->get();
+        
+        return Datatables::of($query)
             ->addColumn('edit',function($table){
-                return '<a href="'.route('inventario.show',$table->idinventario).'" class="btn btn-primary btn-sm">Inventario Físico</a>' ;
+                $invfisico = '<a href="'.route('inventario.show',$table->idinventario).'" class="btn btn-primary btn-xs">Inventario Físico</a>';
+                $edit   = '<a href="'.route('inventario.edit',$table->idinventario).'" class="btn btn-info btn-xs">Editar</a>';
+                $delete = '<a href="'.route('inventario.destroy',$table->idinventario).'" class="btn btn-danger btn-xs" onclick="borrar()">Eliminar</a>';
+                return  $invfisico.' '.$edit.' '.$delete;
+
             })
             ->addColumn('centro_costo',function($table){
                 return $table->CentroCosto->centrocosto;
             })
-            ->addColumn('personal',function($table){
-                return $table->Personal->FullName;
+            ->addColumn('user',function($table){
+                return $table->User->FullUser;
             })
             ->addColumn('fechadesde',function($table){
                 return $table->fecha_desde->format('d/m/Y');
+            })
+            ->addColumn('estadoFormat',function($table){
+                return ($table->estado==1)? 'En Curso' : 'Cerrado';
             })
             ->rawColumns(['edit'])
             ->make(true);
