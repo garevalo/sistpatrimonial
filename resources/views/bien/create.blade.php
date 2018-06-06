@@ -223,7 +223,7 @@
             language: "es",
             minimumInputLength: 2,
             ajax: {
-                url:  "{{route('bienitems')}}",
+                url:  "{{route('catalogoitems')}}",
                 delay: 250,
                 dataType: 'json',
                 data: function(params) {

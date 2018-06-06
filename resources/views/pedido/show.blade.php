@@ -54,8 +54,6 @@
             <thead>
             <tr>
               <th></th>
-              <th>Cantidad</th>
-              <th>Medida</th>
               <th>Descripcion</th>
               <th></th>
               
@@ -65,9 +63,7 @@
             	@foreach($pedido->articulo as $articulo)
             	<tr>
             		<td></td>
-            		<td>{{ $articulo->cantidad}}</td>
-            		<td>{{ $articulo->umedida}}</td>
-            		<td>{{ $articulo->descripcion}}</td>
+            		<td>{{ $articulo->bien->catalogo->denom_catalogo}}</td>
             		<td>{{ $estadoarticulo[$articulo->estado_articulo]}}</td>
             	</tr>
             	@endforeach

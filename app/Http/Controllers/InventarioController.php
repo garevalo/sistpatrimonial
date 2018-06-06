@@ -84,7 +84,7 @@ class InventarioController extends Controller
 
         $bienes = ConteoInventario::with('bien','catalogo')->where('idinventario',$id)->get();
         $centrocosto = CentroCosto::with('bien.catalogo')->where('codcentrocosto', $table->centrocosto)->first();
-
+        //dd($centrocosto);
         $modulo     = self::MODULO;
         $titulomod  = self::TITLEMOD;
 

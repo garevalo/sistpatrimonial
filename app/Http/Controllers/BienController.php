@@ -255,20 +255,34 @@ class BienController extends Controller
 
     }
 
+    
     public function items(Request $request,$id=null){
 
         $term       =   $request->term ? : ''; 
-        $catalogo   =   Bien->catalogo::where('denom_catalogo', 'like', $term.'%')->get();
-        return $catalogo;
+
+        $catalogo   =   Bien::orWhereHas('catalogo',function($query) use ($term){
+            $query->where('denom_catalogo', 'like', $term.'%');
+        })->with('catalogo','color','modelo','marca')->get();
+        
         $result     =   array();
 
         foreach ($catalogo as $key => $value) {
             if( $id==$value->codcatalogo ){
-                $result[]  = array('id' => $value->codcatalogo, 'text' => $value->denom_catalogo,'term' => $value->denom_catalogo , 'codcatalogo' => $value->codcatalogo,"selected"=> true);  
+                $result[]  = array(
+                    'id'            => $value->idbien, 
+                    'text'          => $value->catalogo->denom_catalogo.' | Marca: '. $value->marca->marca .' | Modelo: '. $value->modelo->modelo .' | Color: '. $value->color->color,
+                    'term'          => $value->catalogo->denom_catalogo.'|'. $value->marca->marca , 
+                    'codcatalogo'   => $value->codcatalogo,
+                    "selected"      => true
+                );  
             }else{
-                $result[]  = array('id' => $value->codcatalogo, 'text' => $value->denom_catalogo,'term' => $value->denom_catalogo , 'codcatalogo' => $value->codcatalogo);  
-            }
-            
+                $result[]  = array(
+                    'id' => $value->idbien, 
+                    'text'          => $value->catalogo->denom_catalogo.' | Marca: '. $value->marca->marca .' | Modelo: '. $value->modelo->modelo .' | Color: '. $value->color->color,
+                    'term' => $value->catalogo->denom_catalogo.'|'. $value->marca->marca , 
+                    'codcatalogo' => $value->codcatalogo
+                );  
+            }   
         }
 
         return response()->json(['results' => $result ]) ;

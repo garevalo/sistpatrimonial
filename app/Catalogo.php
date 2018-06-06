@@ -18,4 +18,9 @@ class Catalogo extends Model
     {
        return $this->belongsTo('App\ClaseGenerico', 'cod_clase_generico', 'cod_clase_generico');
     }
+
+    public function bien()
+    {
+        return $this->hasMany('App\Bien', 'codcatalogo','codcatalogo');
+    }
 }

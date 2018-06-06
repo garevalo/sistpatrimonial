@@ -36,17 +36,14 @@
                         <div class="box-body no-padding">
                             <table id="articulos" class="table table-condensed table-striped table-responsive">
                                 <thead>
-                                    <th width="10%">Cantidad</th>
-                                    <th width="10%">Unidad</th>
                                     <th width="65%">Articulos Solicitados</th>
                                     <th width="65%">Estado</th>
                                 </thead>
                                 <tbody>
                                 	@foreach($table->articulo as $articulo)
                                     <tr> 
-                                        <td><input type="number" name="cantidad[]" required=""  class="form-control input-sm" value="{{$articulo->cantidad}}" disabled></td> 
-                                        <td> <input type="text" name="umedida[]" value="Unidad" required="" class="form-control input-sm" value="{{$articulo->umedida}}" disabled> </td>
-                                        <td> <input type="text" name="descripcion[]" required="" class="form-control input-sm" value="{{$articulo->descripcion}}" disabled> </td>
+                                      
+                                        <td> <input type="text" name="idbien[]" required="" class="form-control input-sm" value="{{$articulo->bien->catalogo->denom_catalogo}}" disabled> </td>
                                         <td>
                                             {{ Form::select('estado_articulo[]', $estadoarticulo , $articulo->estado_articulo, ['class'=> 'form-control input-sm']) }}
                                             <input type="hidden" name="idarticulo[]" value="{{ $articulo->idarticulos}}">

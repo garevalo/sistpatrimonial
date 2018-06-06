@@ -31,16 +31,12 @@
                         <div class="box-body no-padding">
                             <table id="articulos" class="table table-condensed table-striped table-responsive">
                                 <thead>
-                                    <th width="10%">Cantidad</th>
-                                    <th width="10%">Unidad</th>
                                     <th width="65%">Articulos Solicitados</th>
                                 </thead>
                                 <tbody>
                                     @foreach($table->articulo as $articulo)
                                     <tr> 
-                                        <td><input type="number" name="cantidad[]" required=""  class="form-control input-sm" value="{{$articulo->cantidad}}" ></td> 
-                                        <td> <input type="text" name="umedida[]" value="Unidad" required="" class="form-control input-sm" value="{{$articulo->umedida}}" > </td>
-                                        <td> <input type="text" name="descripcion[]" required="" class="form-control input-sm" value="{{$articulo->descripcion}}" > </td>
+                                        <td> <select type="text" name="descripcion[]" required="" class="form-control input-sm descripcion" ></select> </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -79,21 +75,77 @@
 </script>
 
 <script type="text/javascript">
+<script type="text/javascript">
     $(function(){
             $("body").on("click",".eliminar",function(){
                      $(this).parents("tr").remove();
                 });
 
             $("body").on("click","#agregar",function(){
-                     $("#articulos tbody").append('<tr><td><input type="text" name="cantidad[]" required=""  class="form-control input-sm"></td>'+ 
-                                        '<td> <input type="text" name="umedida[]" value="Unidad" required="" class="form-control input-sm"> </td>'+
-                                        '<td> <input type="text" name="descripcion[]" required="" class="form-control input-sm"> </td>'+
+                     $("#articulos tbody").append('<tr>'+
+                                        '<td> <select class="form-control input-sm descripcion" name="descripcion[]"  required > </select></td>'+
                                         '<td><button type="button" class="btn btn-xs btn-danger eliminar"><i class="fa fa-trash"></i> Eliminar</button></td>'+
                                     '</tr>');
+
+
+                     $('.descripcion').select2({
+                        language: "es",
+                        minimumInputLength: 2,
+                        ajax: {
+                            url:  "{{route('bienitems')}}",
+                            delay: 250,
+                            dataType: 'json',
+                            data: function(params) {
+                                return {
+                                    term: params.term
+                                }
+                            },
+                            results: function (data) {
+                                return {
+                                    results: $.map(data, function (item) {
+                                        return {
+                                            text: item.text,
+                                            id: item.id
+                                        }
+                                    })
+                                };
+                            }
+                        }
+                    });
+
                 });
-                
-                
-            });
+                               
+    });
+</script>
+
+<script src="{{asset('plugins/select2//select2.full.min.js')}}"></script>
+
+<script>
+    
+    $(".descripcion").select2({
+        language: "es",
+        minimumInputLength: 2,
+        ajax: {
+            url:  "{{route('bienitems')}}",
+            delay: 250,
+            dataType: 'json',
+            data: function(params) {
+                return {
+                    term: params.term
+                }
+            },
+            results: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: item.text,
+                            id: item.id
+                        }
+                    })
+                };
+            }
+        }
+    });
 </script>
 
 @endsection
