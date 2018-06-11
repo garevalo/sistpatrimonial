@@ -46,7 +46,7 @@
             @endif
 
             @if( Auth::user()->idrol == 1 )
-            <li class="treeview @if(in_array(request()->getRequestUri(),['/cargo','/gerencia','/subgerencia','/marca','/modelo','/adquisicion','/personal','/color','/proveedor','/local'])) active @endif ">
+            <li class="treeview @if(in_array(request()->getRequestUri(),['/cargo','/gerencia','/subgerencia','/marca','/modelo','/adquisicion','/personal','/color','/proveedor','/local','/oficina'])) active @endif ">
                 <a href="#">
                     <i class="fa fa-pencil-square-o"></i>
                     <span>Módulo Mantenimientos</span>
@@ -65,6 +65,7 @@
                     <li class="@if(request()->getRequestUri()=='/proveedor') active @endif"><a href="/proveedor"><i class="fa fa-circle-o text-aqua"></i> Proveedor</a></li>
 
                     <li class="@if(request()->getRequestUri()=='/local') active @endif"><a href="/local"><i class="fa fa-circle-o text-aqua"></i> Local</a></li>
+                    <li class="@if(request()->getRequestUri()=='/oficina') active @endif"><a href="/oficina"><i class="fa fa-circle-o text-aqua"></i> Oficina</a></li>
                 </ul>
             </li>
             @endif

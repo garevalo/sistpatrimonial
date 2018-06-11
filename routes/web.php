@@ -73,6 +73,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('local/alldata','LocalController@alldata')->name('getlocales');
     Route::resource('local','LocalController');
 
+    //Oficina
+    Route::get('data/{model?}/{by?}/{id?}/{with?}','OficinaController@getItemBy')->name('getdata');
+    Route::get('oficina/alldata','OficinaController@alldata')->name('getoficinas');
+    Route::resource('oficina','OficinaController');
+
      //Centro Costo
     Route::get('centrocosto/alldata','CentroCostoController@alldata')->name('getcentrocostos');
     Route::resource('centrocosto','CentroCostoController');

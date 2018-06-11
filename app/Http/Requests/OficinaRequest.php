@@ -13,7 +13,7 @@ class OficinaRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,16 @@ class OficinaRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        if($this->request->has('_method')){
+            return [
+                'oficina'=>'required|min:1|regex:/^[a-z A-Z 0-9 áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:oficinas,oficina,'.$this->route('oficina').',idoficina',
+                'idlocal'    =>'required|integer',
+            ];
+        } else {
+            return [
+                'oficina'=>'required|min:1|regex:/^[a-z A-Z 0-9 áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:oficinas,oficina',
+                'idlocal'    =>'required|integer',
+            ];
+        }
     }
 }

@@ -16,6 +16,7 @@ class CreateOficinasTable extends Migration
         Schema::create('oficinas', function (Blueprint $table) {
             $table->increments('idoficina');
             $table->string('oficina',50);
+            $table->integer('idlocal')->nullable();
             $table->timestamps();
         });
     }

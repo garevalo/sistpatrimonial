@@ -2,10 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Oficina;
+use App\Local;
+use Datatables;
+use App\Http\Requests\OficinaRequest;
 
 class OficinaController extends Controller
 {
+
+    const REDIRECT = "oficina.index";
+    const MODULO   = "oficina";
+    const TITLEMOD = 'oficina';
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +21,9 @@ class OficinaController extends Controller
      */
     public function index()
     {
-        //
+        $modulo = self::MODULO;
+        $titulomod = self::TITLEMOD;
+        return view(self::MODULO.'.index',compact('modulo','titulomod'));
     }
 
     /**
@@ -23,7 +33,12 @@ class OficinaController extends Controller
      */
     public function create()
     {
-        //
+        $modulo = self::MODULO;
+        $titulomod = self::TITLEMOD;
+        $table = new Oficina;
+        $locales = Local::all()->pluck('local','idlocal');
+
+        return view(self::MODULO.'.create',compact('modulo','table','titulomod','locales'));
     }
 
     /**
@@ -32,9 +47,10 @@ class OficinaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OficinaRequest $request)
     {
-        //
+        Oficina::create($request->all());
+        return redirect()->route(self::REDIRECT);
     }
 
     /**
@@ -56,7 +72,13 @@ class OficinaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $table = Oficina::FindOrFail($id);
+        $modulo = self::MODULO;
+        $titulomod = self::TITLEMOD;
+
+        $locales = Local::all()->pluck('local','idlocal');
+
+        return view(self::MODULO.".edit",compact('table','modulo','titulomod','locales'));
     }
 
     /**
@@ -66,9 +88,10 @@ class OficinaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(OficinaRequest $request, $id)
     {
-        //
+        Oficina::FindOrFail($id)->update($request->all());
+        return redirect()->route(self::REDIRECT);
     }
 
     /**
@@ -80,5 +103,32 @@ class OficinaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function alldata(){
+
+        return Datatables::of(Oficina::with('local')->get())
+            ->addColumn('edit',function($table){
+                return '<a href="'.route('oficina.edit',$table->idoficina).'" class="btn btn-primary btn-xs">Editar</a>' ;
+            })
+            ->addColumn('local',function($table){
+                return $table->local->local;
+            })
+            ->rawColumns(['edit'])
+            ->make(true);
+
+    }
+
+    public function getItemBy($model='Oficina',$by=null,$id=null,$with=null){
+
+        $model = app( str_replace(" ","","App\ ").$model);
+        
+        if(!empty($with)){
+            $result = $model::with($with)->where($by,$id)->get();
+        }else{
+            $result = $model::where($by,$id)->get();    
+        }
+        
+        return response()->json($result);
     }
 }

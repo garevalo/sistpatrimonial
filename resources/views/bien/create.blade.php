@@ -100,16 +100,19 @@
                             {!! $errors->first('numserie','<span class="help-block">:message</span>') !!}
                         </div>
                         
-                        
+                        {{ Form::selectfield('idproveedor','Proveedor',$proveedores,'Seleccione proveedor') }}
 
                     </div>
                     
                     <div class="col-md-6 col-xs-12">
 
+                        {{ Form::selectfield('idlocal','Local',$locales,'Seleccione local') }}
+                        {{ Form::selectfield('idoficina','Oficina',$oficinas,'Seleccione oficina') }}
+
                         <div class="form-group-sm {{ $errors->has('centrocosto') ? ' has-error' : '' }}">
                             <label>Centro de Costo:</label>
                             <select name="centrocosto" id="centrocosto" class="form-control select2">
-                                <option value="">Seleccione Personal</option>
+                                <option value="">Seleccione Centro Costo</option>
                                 @foreach($centrocostos as $centrocosto)
                                 <option value="{{$centrocosto->codcentrocosto}}" @if($centrocosto->codcentrocosto == old('centrocosto') ) selected @endif >{{$centrocosto->FullCentroCosto}}</option>
                                 @endforeach()
@@ -248,6 +251,77 @@
         function formatRepo (repo) {
             $("#codpatrimonial").val(repo.id);
             return repo.text;
+        }
+
+        cascade('idlocal','idoficina','/data/Oficina/idlocal/','idoficina','oficina',);
+        cascade('idlocal','centrocosto','/data/CentroCosto/idlocal/','codcentrocosto','centrocosto');
+        cascade('centrocosto','idpersonal','/data/CentroCosto/codcentrocosto/','idpersonal','nombres','personal');
+
+
+        function cascade(parent,children,urlajax,id,column,withjoin=''){
+            $('#' + parent).on('change',function(){
+                var idvar = $(this).val();
+                var namefield =  $("#"+children).attr('name').replace('id','');
+                if(idvar){
+
+                    if(withjoin===''){
+
+                        $.ajax({
+                            type:'GET',
+                            url:urlajax+idvar,
+                            success:function(data){
+                                
+                                    if(data.length>0){
+                                        $('#'+children).html('<option value="">Seleccione '+ namefield +'</option>');
+                                        $('#'+children).removeAttr('disabled');
+                                        $.each(data,function(v,item){
+                                            var options = "<option ";
+                                            $.each(item,function(i,val){
+                                                if(i===id){ options += "value='" + val + "'>"; }
+                                                if(i===column){ options +=  val; }
+                                           });
+                                            options += '</option>';
+                                           
+                                           $('#'+children).append(options);
+                                           console.log(options);
+                                        });
+                                    }else{
+                                        $('#'+children).html('<option value="">Seleccione '+ namefield +' </option>');
+                                        $('#'+children).attr('disabled','disabled');
+                                        console.log("no data");
+                                    }
+                            }
+                        }); 
+
+                    } else {
+
+                         $.ajax({
+                            type:'GET',
+                            url:urlajax+idvar+'/'+withjoin,
+                            success:function(data){
+
+                                    if(data.length>0){
+                                        $('#'+children).html('<option value="">Seleccione '+ namefield +'</option>');
+                                        $('#'+children).removeAttr('disabled');
+                                        $.each(data,function(v,item){
+                                            //console.log(item.personal); 
+                                            var options = "<option value='"+item.personal.idpersonal+"' >"+ item.personal.nombres +' '+item.personal.apellido_paterno+' '+ item.personal.apellido_materno+"</option>";
+                                           
+                                           $('#'+children).append(options);
+                                           console.log(options);
+                                        });
+                                    }else{
+                                        $('#'+children).html('<option value="">Seleccione '+ namefield +' </option>');
+                                        $('#'+children).attr('disabled','disabled');
+                                        console.log("no data");
+                                    }
+                            }
+                        }); 
+
+                    }
+
+                }
+            });
         }
 
     </script>

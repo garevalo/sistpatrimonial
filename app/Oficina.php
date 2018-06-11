@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Oficina extends Model
 {
-    $fillable = ['idoficina','oficina'];
-    $primaryKey = 'idoficina';
+    protected $fillable = ['idoficina','oficina','idlocal'];
+    protected $primaryKey = 'idoficina';
+
+
+    public function local(){
+    	return $this->belongsTo('App\Local', 'idlocal', 'idlocal');
+    }
 }

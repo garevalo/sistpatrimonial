@@ -11,8 +11,10 @@
                 <h3 class="box-title">Editar Bien</h3>
             </div>
 
-            <form method="POST" action="{{route('bien.store')}}"  enctype="multipart/form-data">
+            <form method="POST" action="{{route('bien.update',$bien->idbien)}}"  enctype="multipart/form-data">
                 {{csrf_field()}}
+
+                {!! method_field('PUT') !!}
                 <div class="box-body">
                     <div class="col-md-6 col-xs-12">
                         @if ($errors->any())
@@ -32,59 +34,17 @@
                             {!! $errors->first('codcatalogo','<span class="help-block">:message</span>') !!}
                         </div>
 
-                        <div class="form-group-sm {{ $errors->has('codinventario') ? ' has-error' : 'has-info' }}">
-                            <label>Código Inventario:</label>
+                        {{ Form::textfield('codinventario','Código Inventario:',$bien->codinventario) }}
+                        
+                        {{ Form::textfield('codpatrimonial','Código Patrimonial:',$bien->codpatrimonial) }}
+                        
+                        {{ Form::textfield('ordencompra','Orden de Compra:',$bien->ordencompra) }}
 
-                            <input type="text" class="form-control" name="codinventario" id="codinventario" value="{{ $bien->codinventario }}" required  >
-                            {!! $errors->first('codinventario','<span class="help-block">:message</span>') !!}
-                        </div>
+                        {{ Form::selectfield('idmarca','Marca',$marcas,'Seleccione marca',$bien->idmarca) }}
 
-                        <div class="form-group-sm {{ $errors->has('codpatrimonial') ? ' has-error' : '' }}">
-                            <label>Código Patrimonial:</label>
-
-                            <input type="text" class="form-control" name="codpatrimonial" id="codpatrimonial" value="{{old('codpatrimonial')}}">
-                            {!! $errors->first('codpatrimonial','<span class="help-block">:message</span>') !!}
-                        </div>
-
-                        <div class="form-group-sm {{ $errors->has('ordencompra') ? ' has-error' : '' }}">
-                            <label>Orden de Compra:</label>
-
-                            <input type="text" class="form-control" name="ordencompra" id="ordencompra" value="{{old('ordencompra')}}" required>
-                            {!! $errors->first('ordencompra','<span class="help-block">:message</span>') !!}
-                        </div>
-
-                        <div class="form-group-sm {{ $errors->has('idmarca') ? ' has-error' : '' }}">
-                            <label>Marca:</label>
-                            <select class="form-control" name="idmarca" id="idmarca" value="{{old('idmarca')}}" required>
-                                <option>Seleccione Marca</option>
-                                @foreach($marcas as $marca)
-                                <option value="{{$marca->idmarca}}" @if($marca->idmarca == old('idmarca') ) selected @endif >{{$marca->marca}}</option>
-                                @endforeach()
-                            </select>
-                            {!! $errors->first('idmarca','<span class="help-block">:message</span>') !!}
-                        </div>
-
-                        <div class="form-group-sm {{ $errors->has('idmodelo') ? ' has-error' : '' }}">
-                            <label>Modelo:</label>
-                            <select class="form-control" name="idmodelo" id="idmodelo" value="{{old('idmodelo')}}" required>
-                                <option value="">Seleccione Modelo</option>
-                                @foreach($modelos as $modelo)
-                                <option value="{{$modelo->idmodelo}}" @if($modelo->idmodelo == old('idmodelo') ) selected @endif >{{$modelo->modelo}}</option>
-                                @endforeach()
-                            </select>
-                            {!! $errors->first('idmodelo','<span class="help-block">:message</span>') !!}
-                        </div>
-
-                        <div class="form-group-sm {{ $errors->has('idcolor') ? ' has-error' : '' }}">
-                            <label>Color:</label>
-                            <select class="form-control" name="idcolor" id="idcolor" value="{{old('idcolor')}}" required>
-                                <option value="">Seleccione Color</option>
-                                @foreach($colores as $color)
-                                <option value="{{$color->idcolor}}" @if($color->idcolor == old('idcolor') ) selected @endif >{{$color->color}}</option>
-                                @endforeach()
-                            </select>
-                            {!! $errors->first('color','<span class="help-block">:message</span>') !!}
-                        </div>
+                        {{ Form::selectfield('idmodelo','Modelo',$modelos,'Seleccione modelo',$bien->idmodelo) }}
+                        
+                        {{ Form::selectfield('idcolor','Color',$colores,'Seleccione color',$bien->idcolor) }}
 
                         <div class="form-group-sm {{ $errors->has('imagen') ? ' has-error' : '' }}">
                             <label>Imagen:</label>
@@ -93,42 +53,19 @@
                             {!! $errors->first('imagen','<span class="help-block">:message</span>') !!}
                         </div>  
 
-                        <div class="form-group-sm {{ $errors->has('numserie') ? ' has-error' : '' }}">
-                            <label>Número Serie:</label>
-
-                            <input type="text" class="form-control" name="numserie" id="numserie" value="{{old('numserie')}}">
-                            {!! $errors->first('numserie','<span class="help-block">:message</span>') !!}
-                        </div>
-                        
-                        
+                        {{ Form::textfield('numserie','Número de serie:',$bien->numserie) }}
+        
+                        {{ Form::selectfield('idproveedor','Proveedor',$proveedores,'Seleccione proveedor',$bien->idproveedor) }}
 
                     </div>
                     
                     <div class="col-md-6 col-xs-12">
+                        {{ Form::selectfield('idlocal','Local',$locales,'Seleccione local',$bien->idlocal) }}
+                        {{ Form::selectfield('idoficina','Oficina',$oficinas,'Seleccione oficina',$bien->idoficina) }}
 
-                        <div class="form-group-sm {{ $errors->has('centrocosto') ? ' has-error' : '' }}">
-                            <label>Centro de Costo:</label>
-                            <select name="centrocosto" id="centrocosto" class="form-control select2">
-                                <option value="">Seleccione Personal</option>
-                                @foreach($centrocostos as $centrocosto)
-                                <option value="{{$centrocosto->codcentrocosto}}" @if($centrocosto->codcentrocosto == old('centrocosto') ) selected @endif >{{$centrocosto->FullCentroCosto}}</option>
-                                @endforeach()
-                            </select>
-                            {!! $errors->first('centrocosto','<span class="help-block">:message</span>') !!}
+                        {{ Form::selectfield('centrocosto','Centro Costo',$centrocostos,'Seleccione',$bien->centrocosto) }}
 
-                        </div>
-
-                        <div class="form-group-sm {{ $errors->has('idpersonal') ? ' has-error' : '' }}">
-                            <label>Personal:</label>
-
-                            <select name="idpersonal" id="idpersonal" class="form-control select2">
-                                <option value="">Seleccione Personal</option>
-                                @foreach($personals as $personal)
-                                <option value="{{$personal->idpersonal}}" @if($personal->idpersonal == old('idpersonal') ) selected @endif >{{$personal->FullName}}</option>
-                                @endforeach()
-                            </select>
-                            {!! $errors->first('idpersonal','<span class="help-block">:message</span>') !!}
-                        </div>
+                        {{ Form::selectfield('idpersonal','Personal',$personals,'Seleccione',$bien->idpersonal) }}
 
                         <div class="form-group-sm {{ $errors->has('idestado') ? ' has-error' : '' }}">
                             <label>Estado:</label>
@@ -143,37 +80,16 @@
                             {!! $errors->first('idestado','<span class="help-block">:message</span>') !!}
                         </div>
 
-                        <div class="form-group-sm {{ $errors->has('valor') ? ' has-error' : '' }}">
-                            <label>Valor:</label>
+                        
+                        {{ Form::textfield('valor','Valor:',$bien->valor) }}
 
-                            <input type="text" class="form-control" name="valor" id="valor" value="{{old('valor')}}" required>
-                            {!! $errors->first('valor','<span class="help-block">:message</span>') !!}
-                        </div>
+                        {{ Form::selectfield('idadquisicion','Modo de Adquisición',$adquisiciones,'Seleccione',$bien->idadquisicion) }}
+         
+                        {{ Form::textfield('fecha_adquisicion','Fecha de Adquisición:',$bien->fecha_adquisicion->format('d/m/Y') ,["data-mask"=>"","data-inputmask" => "'alias': 'dd/mm/yyyy'"]) }}
 
-                        <div class="form-group-sm {{ $errors->has('idadquisicion') ? ' has-error' : '' }}">
-                            <label>Modo de Adquisición:</label>
-                            <select class="form-control" name="idadquisicion" id="idadquisicion" required>
-                                <option value="">Seleccione Adquisición</option>
-                                @foreach($adquisiciones as $adquisicion)
-                                <option value="{{$adquisicion->idadquisicion}}">{{$adquisicion->adquisicion}}</option>
-                                @endforeach()
-                            </select>
-                            {!! $errors->first('idadquisicion','<span class="help-block">:message</span>') !!}
-                        </div>
-
-                        <div class="form-group-sm {{ $errors->has('fecha_adquisicion') ? ' has-error' : '' }}">
-                            <label>Fecha de Adquisición:</label>
-                            <div class="input-group">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="fecha_adquisicion" id="fecha_adquisicion">
-                            </div>
-                            {!! $errors->first('fecha_adquisicion','<span class="help-block">:message</span>') !!}
-                        </div>
                         <div class="form-group-sm {{ $errors->has('descripcion') ? ' has-error' : '' }}">
                             <label>Descripción:</label>
-                            <textarea name="descripcion" id="descripcion" cols="30" rows="10" class="form-control" required >{{old('descripcion')}}</textarea>
+                            <textarea name="descripcion" id="descripcion" cols="30" rows="10" class="form-control" required >{{ $bien->descripcion }}</textarea>
                             {!! $errors->first('descripcion','<span class="help-block">:message</span>') !!}
                         </div>
 
@@ -247,9 +163,81 @@
 
         function formatRepo (repo) {
           //if (repo.loading) {
-            $("#codinventario").val(repo.id);
+            $("#codpatrimonial").val(repo.id);
             return repo.text;
           //}
+        }
+
+
+        cascade('idlocal','idoficina','/data/Oficina/idlocal/','idoficina','oficina',);
+        cascade('idlocal','centrocosto','/data/CentroCosto/idlocal/','codcentrocosto','centrocosto');
+        cascade('centrocosto','idpersonal','/data/CentroCosto/codcentrocosto/','idpersonal','nombres','personal');
+
+
+        function cascade(parent,children,urlajax,id,column,withjoin=''){
+            $('#' + parent).on('change',function(){
+                var idvar = $(this).val();
+                var namefield =  $("#"+children).attr('name').replace('id','');
+                if(idvar){
+
+                    if(withjoin===''){
+
+                        $.ajax({
+                            type:'GET',
+                            url:urlajax+idvar,
+                            success:function(data){
+                                
+                                    if(data.length>0){
+                                        $('#'+children).html('<option value="">Seleccione '+ namefield +'</option>');
+                                        $('#'+children).removeAttr('disabled');
+                                        $.each(data,function(v,item){
+                                            var options = "<option ";
+                                            $.each(item,function(i,val){
+                                                if(i===id){ options += "value='" + val + "'>"; }
+                                                if(i===column){ options +=  val; }
+                                           });
+                                            options += '</option>';
+                                           
+                                           $('#'+children).append(options);
+                                           console.log(options);
+                                        });
+                                    }else{
+                                        $('#'+children).html('<option value="">Seleccione '+ namefield +' </option>');
+                                        $('#'+children).attr('disabled','disabled');
+                                        console.log("no data");
+                                    }
+                            }
+                        }); 
+
+                    } else {
+
+                         $.ajax({
+                            type:'GET',
+                            url:urlajax+idvar+'/'+withjoin,
+                            success:function(data){
+
+                                    if(data.length>0){
+                                        $('#'+children).html('<option value="">Seleccione '+ namefield +'</option>');
+                                        $('#'+children).removeAttr('disabled');
+                                        $.each(data,function(v,item){
+                                            //console.log(item.personal); 
+                                            var options = "<option value='"+item.personal.idpersonal+"' >"+ item.personal.nombres +' '+item.personal.apellido_paterno+' '+ item.personal.apellido_materno+"</option>";
+                                           
+                                           $('#'+children).append(options);
+                                           console.log(options);
+                                        });
+                                    }else{
+                                        $('#'+children).html('<option value="">Seleccione '+ namefield +' </option>');
+                                        $('#'+children).attr('disabled','disabled');
+                                        console.log("no data");
+                                    }
+                            }
+                        }); 
+
+                    }
+
+                }
+            });
         }
 
     </script>

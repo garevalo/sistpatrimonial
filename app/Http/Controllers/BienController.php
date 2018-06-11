@@ -14,6 +14,9 @@ use App\Personal;
 use App\CentroCosto;
 use App\Movimiento;
 use App\Catalogo;
+use App\Proveedor;
+use App\Local;
+use App\Oficina;
 use Carbon\Carbon;
 
 
@@ -52,8 +55,11 @@ class BienController extends Controller
         $personals      =   Personal::all();
         $centrocostos   =   CentroCosto::all();
         $estados        =   array(1=>'Activo',2=>'Inactivo');
+        $proveedores    =   Proveedor::all()->pluck('razon_social','idproveedor');
+        $locales        =   Local::all()->pluck('local','idlocal');
+        $oficinas       =   Oficina::all()->pluck('oficina','idoficina');
 
-        return view('bien.create',compact('colores','adquisiciones','marcas','modelos','personals','centrocostos','estados'));
+        return view('bien.create',compact('colores','adquisiciones','marcas','modelos','personals','centrocostos','estados','proveedores','locales','oficinas'));
     }
 
     /**
@@ -87,7 +93,10 @@ class BienController extends Controller
                 'valor'             => $request->valor,
                 'idadquisicion'     => $request->idadquisicion,
                 'fecha_adquisicion' => Carbon::createFromFormat('d/m/Y', $request->fecha_adquisicion),
-                'descripcion'       => $request->descripcion
+                'descripcion'       => $request->descripcion,
+                'idproveedor'       => $request->idproveedor,
+                'idlocal'           => $request->idlocal,
+                'idoficina'         => $request->idoficina
             ]);
 
             if($bien){
@@ -98,7 +107,9 @@ class BienController extends Controller
                     'centrocosto'       => $request->centrocosto,
                     'idpersonal'        => $request->idpersonal,
                     'idestado'          => $request->idestado,
-                    'fecha_movimiento'  => Carbon::createFromFormat('d/m/Y', $request->fecha_adquisicion)
+                    'fecha_movimiento'  => Carbon::createFromFormat('d/m/Y', $request->fecha_adquisicion),
+                    'idlocal'           => $request->idlocal,
+                    'idoficina'         => $request->idoficina
                 ]);
             }
 
@@ -138,17 +149,21 @@ class BienController extends Controller
      */
     public function edit($id)
     {
-        $colores        =   Color::all();
-        $adquisiciones  =   Adquisicion::all();
-        $marcas         =   Marca::all();
-        $modelos        =   Modelo::all();
-        $personals      =   Personal::all();
-        $centrocostos   =   CentroCosto::all();
+        $colores        =   Color::all()->pluck('color','idcolor');
+        $adquisiciones  =   Adquisicion::all()->pluck('adquisicion','idadquisicion');
+        $marcas         =   Marca::all()->pluck('marca','idmarca');
+        $modelos        =   Modelo::all()->pluck('modelo','idmodelo');
+        $personals      =   Personal::all()->pluck('FullName','idpersonal');
+        $centrocostos   =   CentroCosto::all()->pluck('centrocosto','codcentrocosto');
         $estados        =   array(1=>'Activo',2=>'Inactivo');
+
+        $proveedores    =   Proveedor::all()->pluck('razon_social','idproveedor');
+        $locales        =   Local::all()->pluck('local','idlocal');
+        $oficinas       =   Oficina::all()->pluck('oficina','idoficina');
 
         $bien    = Bien::FindOrFail($id);
 
-        return view('bien.edit',compact('colores','adquisiciones','marcas','modelos','personals','centrocostos','estados','bien'));
+        return view('bien.edit',compact('colores','adquisiciones','marcas','modelos','personals','centrocostos','estados','bien','proveedores','locales','oficinas'));
     }
 
     /**
@@ -158,9 +173,62 @@ class BienController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BienRequest $request, $id)
     {
-        //
+
+        if($request->imagen){
+             $path = $request->file('imagen')->storeAs(
+                'public/fotos', $request->codpatrimonial.'.'.$request->imagen->extension()
+            );
+
+            $bien = Bien::FindOrFail($id)->update([
+                'codcatalogo'       => $request->codcatalogo,
+                'codinventario'     => $request->codinventario,
+                'codpatrimonial'    => $request->codpatrimonial,
+                'ordencompra'       => $request->ordencompra,
+                'idmarca'           => $request->idmarca,
+                'idmodelo'          => $request->idmodelo,
+                'idcolor'           => $request->idcolor,
+                'imagen'            => asset(Storage::url($path)),
+                'numserie'          => $request->numserie,
+                'centrocosto'       => $request->centrocosto,
+                'idpersonal'        => $request->idpersonal,
+                'idestado'          => $request->idestado,
+                'valor'             => $request->valor,
+                'idadquisicion'     => $request->idadquisicion,
+                'fecha_adquisicion' => Carbon::createFromFormat('d/m/Y', $request->fecha_adquisicion),
+                'descripcion'       => $request->descripcion,
+                'idproveedor'       => $request->idproveedor,
+                'idlocal'           => $request->idlocal,
+                'idoficina'         => $request->idoficina
+            ]);
+        } else{
+
+            $bien = Bien::FindOrFail($id)->update([
+                'codcatalogo'       => $request->codcatalogo,
+                'codinventario'     => $request->codinventario,
+                'codpatrimonial'    => $request->codpatrimonial,
+                'ordencompra'       => $request->ordencompra,
+                'idmarca'           => $request->idmarca,
+                'idmodelo'          => $request->idmodelo,
+                'idcolor'           => $request->idcolor,
+                'numserie'          => $request->numserie,
+                'centrocosto'       => $request->centrocosto,
+                'idpersonal'        => $request->idpersonal,
+                'idestado'          => $request->idestado,
+                'valor'             => $request->valor,
+                'idadquisicion'     => $request->idadquisicion,
+                'fecha_adquisicion' => Carbon::createFromFormat('d/m/Y', $request->fecha_adquisicion),
+                'descripcion'       => $request->descripcion,
+                'idproveedor'       => $request->idproveedor,
+                'idlocal'           => $request->idlocal,
+                'idoficina'         => $request->idoficina
+            ]);
+        }
+
+
+
+        return redirect()->route(self::MODULO.'.index');
     }
 
 

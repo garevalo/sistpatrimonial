@@ -38,7 +38,9 @@ class BienRequest extends FormRequest
             'idestado' => 'required|integer',
             'valor' => 'required',
             'idadquisicion' => 'required|integer',
-
+            'idproveedor'   => 'required',
+            'idlocal'       => 'required',
+            'idoficina'     => 'required',
             'fecha_adquisicion' => 'required|date_format:d/m/Y',
             'descripcion' => 'required',
         ];

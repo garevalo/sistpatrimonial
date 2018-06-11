@@ -53,7 +53,7 @@
                         </select>
                         {!! $errors->first('idcargo_personal','<span class="help-block">:message</span>') !!}
                     </div>
-
+                    {{-- 
                     <div class="form-group-sm {{ $errors->has('idgerencia_personal') ? 'has-error' : '' }}">
                         <label>Gerencia:</label>
                         <select class="form-control" name="idgerencia_personal" id="idgerencia_personal">
@@ -75,7 +75,7 @@
                         </select>
                         {!! $errors->first('idsubgerencia_personal','<span class="help-block">:message</span>') !!}
                     </div>
-
+                    --}}
                 </div>
 
 
