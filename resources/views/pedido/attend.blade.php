@@ -15,7 +15,7 @@
                 <div class="col-xs-12">
                     {{ Form::selectfield('cc_solicitante','Dependencia Solicitante',$centrocostos,'Seleccione Centro Costo',$table->centroCostoSolicitante->codcentrocosto,['disabled'=>'disabled']) }}
 
-                    {{ Form::selectfield('cc_destino','Con Destino a',$oficinas,'Seleccione Oficina',$table->CentroCostoDestino->idoficina,['disabled'=>'disabled']) }}
+                    {{ Form::selectfield('cc_destino','Con Destino a',$oficinas,'Seleccione Oficina',(isset($table->CentroCostoDestino->idoficina) ? $table->CentroCostoDestino->idoficina : ''),[''=>'']) }}
 
                     {{ Form::selectfield('responsable','Entregar a',$personales,'Seleccione Personal',$table->PersonalResponsable->idpersonal,['disabled'=>'disabled']) }}
 

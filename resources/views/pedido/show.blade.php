@@ -18,7 +18,7 @@
                   <b>Solicitante</b> <p class="pull-right">{{$pedido->centroCostoSolicitante->codcentrocosto .' - '. $pedido->centroCostoSolicitante->centrocosto}}</p>
                 </li>
                 <li class="list-group-item">
-                  <b>Destino</b> <p class="pull-right">{{ $pedido->CentroCostoDestino->codcentrocosto .' - '.$pedido->CentroCostoDestino->centrocosto }}</p>
+                  <b>Destino</b> <p class="pull-right">{{ $pedido->CentroCostoDestino->oficina }}</p>
                 </li>
                 <li class="list-group-item">
                   <b>Responsable</b> <p class="pull-right">{{$pedido->PersonalResponsable->FullName}}</p>

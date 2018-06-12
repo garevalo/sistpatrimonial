@@ -188,7 +188,7 @@ class PedidoController extends Controller
             })
 
             ->addColumn('destino',function($field){
-                return $field->CentroCostoDestino->oficina;
+                return (isset($field->CentroCostoDestino->oficina))? $field->CentroCostoDestino->oficina : '';
             })
 
             ->addColumn('responsable',function($field){
