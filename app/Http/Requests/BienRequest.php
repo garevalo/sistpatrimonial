@@ -24,9 +24,9 @@ class BienRequest extends FormRequest
     public function rules()
     {
         return [
-            'codcatalogo'    => 'required',
+            'codcatalogo'    => 'required|max:8',
             'codinventario' => 'required|max:12',
-            'codpatrimonial' => 'required',
+            'codpatrimonial' => 'required|max:12',
             'ordencompra' => 'required',
             'idmarca' => 'required|integer',
             'idmodelo' => 'required|integer',
@@ -38,11 +38,11 @@ class BienRequest extends FormRequest
             'idestado' => 'required|integer',
             'valor' => 'required',
             'idadquisicion' => 'required|integer',
-            'idproveedor'   => 'required',
-            'idlocal'       => 'required',
-            'idoficina'     => 'required',
+            'idproveedor'   => 'required|integer',
+            'idlocal'       => 'required|integer',
+            'idoficina'     => 'required|integer',
             'fecha_adquisicion' => 'required|date_format:d/m/Y',
-            'descripcion' => 'required',
+            'descripcion' => 'required|max:250',
         ];
     }
 }

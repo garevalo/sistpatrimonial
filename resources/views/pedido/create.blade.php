@@ -16,7 +16,7 @@
                 <div class="col-xs-12">
                     {{ Form::selectfield('cc_solicitante','Dependencia Solicitante',$centrocostos,'Seleccione Centro Costo') }}
 
-                    {{ Form::selectfield('cc_destino','Con Destino a',$centrocostos,'Seleccione Centro Costo') }}
+                    {{ Form::selectfield('cc_destino','Con Destino a (Oficina)',$oficinas,'Seleccione Oficina') }}
 
                     {{ Form::selectfield('responsable','Entregar a',$personales,'Seleccione Personal') }}
                 </div>

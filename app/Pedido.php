@@ -19,7 +19,7 @@ class Pedido extends Model
 
     public function CentroCostoDestino()
     {
-       return $this->belongsTo('App\CentroCosto', 'cc_destino', 'codcentrocosto');
+       return $this->belongsTo('App\Oficina', 'cc_destino', 'idoficina');
     } 
 
     public function PersonalResponsable()

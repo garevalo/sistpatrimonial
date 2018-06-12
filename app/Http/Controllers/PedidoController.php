@@ -6,6 +6,8 @@ use App\Pedido;
 use App\Articulo;
 use App\CentroCosto;
 use App\Personal;
+use App\Local;
+use App\Oficina;
 use Datatables;
 use Carbon\Carbon;
 use App\Http\Requests\PedidoRequest;
@@ -42,8 +44,10 @@ class PedidoController extends Controller
 
         $centrocostos = CentroCosto::all()->pluck('centrocosto','codcentrocosto');
         $personales = Personal::all()->pluck('FullName','idpersonal');
+        $locales = Local::all()->pluck('local','idlocal');
+        $oficinas = Oficina::all()->pluck('oficina','idoficina');
 
-        return view(self::MODULO.'.create',compact('modulo','table','titulomod','centrocostos','personales'));
+        return view(self::MODULO.'.create',compact('modulo','table','titulomod','centrocostos','personales','locales','oficinas'));
     }
 
     /**
@@ -146,14 +150,14 @@ class PedidoController extends Controller
 
         $centrocostos = CentroCosto::all()->pluck('centrocosto','codcentrocosto');
         $personales = Personal::all()->pluck('FullName','idpersonal');
-
+        $oficinas = Oficina::all()->pluck('oficina','idoficina');
         $modulo = self::MODULO;
         $titulomod = self::TITLEMOD;
         $estados = [1=>'Solicitado',2=>'Completo'];
         $estadoarticulo = [1=> 'Solicitado',2 =>'Entregado',3 =>'No Entregado'];
         $table = Pedido::with('centroCostoSolicitante','CentroCostoDestino','PersonalResponsable','articulo.bien.catalogo')->FindOrFail($id);
 
-        return view(self::MODULO.'.attend',compact('titulomod','modulo','table','centrocostos','personales','estados','estadoarticulo'));
+        return view(self::MODULO.'.attend',compact('titulomod','modulo','table','centrocostos','personales','estados','estadoarticulo','oficinas'));
     }
 
 
@@ -184,7 +188,7 @@ class PedidoController extends Controller
             })
 
             ->addColumn('destino',function($field){
-                return  $field->CentroCostoDestino->codcentrocosto .' - '. $field->CentroCostoDestino->centrocosto;
+                return $field->CentroCostoDestino->oficina;
             })
 
             ->addColumn('responsable',function($field){

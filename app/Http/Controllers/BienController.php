@@ -49,7 +49,7 @@ class BienController extends Controller
     public function create()
     {
         $colores        =   Color::all();
-        $adquisiciones  =   Adquisicion::all();
+        $adquisiciones  =   Adquisicion::all()->pluck('adquisicion','idadquisicion');
         $marcas         =   Marca::all();
         $modelos        =   Modelo::all();
         $personals      =   Personal::all();
@@ -98,7 +98,7 @@ class BienController extends Controller
                 'idlocal'           => $request->idlocal,
                 'idoficina'         => $request->idoficina
             ]);
-
+            /*
             if($bien){
                 Movimiento::create([
                     'idbien'            => $bien,
@@ -111,7 +111,7 @@ class BienController extends Controller
                     'idlocal'           => $request->idlocal,
                     'idoficina'         => $request->idoficina
                 ]);
-            }
+            }*/
 
         //});
 

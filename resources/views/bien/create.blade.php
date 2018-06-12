@@ -153,16 +153,7 @@
                             {!! $errors->first('valor','<span class="help-block">:message</span>') !!}
                         </div>
 
-                        <div class="form-group-sm {{ $errors->has('idadquisicion') ? ' has-error' : '' }}">
-                            <label>Modo de Adquisición:</label>
-                            <select class="form-control" name="idadquisicion" id="idadquisicion" required>
-                                <option value="">Seleccione Adquisición</option>
-                                @foreach($adquisiciones as $adquisicion)
-                                <option value="{{$adquisicion->idadquisicion}}">{{$adquisicion->adquisicion}}</option>
-                                @endforeach()
-                            </select>
-                            {!! $errors->first('idadquisicion','<span class="help-block">:message</span>') !!}
-                        </div>
+                        {{ Form::selectfield('idadquisicion','Modo de Adquisición',$adquisiciones,'Seleccione') }}
 
                         <div class="form-group-sm {{ $errors->has('fecha_adquisicion') ? ' has-error' : '' }}">
                             <label>Fecha de Adquisición:</label>
