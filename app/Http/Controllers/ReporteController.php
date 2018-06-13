@@ -26,29 +26,24 @@ class ReporteController extends Controller
 
     public function nivelCumplimientoPdf(Request $request){
 
-
-        $pedidos = DB::select(DB::raw('SELECT count(date(created_at)) cantidad,date(created_at) fecha  FROM pedidos 
-                                        where date(created_at) is not null and
-                                        date(created_at) between "'.Carbon::createFromFormat('d/m/Y', $request->desde).'" and "'.Carbon::createFromFormat('d/m/Y', $request->hasta).'"
-                                        group by date(created_at)'));
-
-        $pedidosentregados = DB::select(DB::raw('SELECT count(date(fecha_entrega)) cantidad,date(fecha_entrega) fecha FROM pedidos 
-                                        where date(fecha_entrega) is not null and estado_pedido=2 and
-                                        date(fecha_entrega) between "'.Carbon::createFromFormat('d/m/Y', $request->desde).'" and "'.Carbon::createFromFormat('d/m/Y', $request->hasta).'"
-                                        group by date(fecha_entrega)'));
-
-        /*dump($pedidos); 
-        dump($pedidosentregados);
-        dd( array_merge_recursive ( (array) $pedidos , (array) $pedidosentregados));*/
+        $pedidos = DB::select(DB::raw("SELECT 
+                                        date_format(i.created_at,'%d/%m/%Y') fecha,
+                                        count((select idbien from articulos ci where i.idbien =  ci.idbien limit 1 )) solicitados,
+                                        count((select idbien from articulos ci where i.idbien =  ci.idbien and ci.estado_articulo=2 limit 1 )) entregados
+                                    from articulos i
+                                    where i.created_at between date('".Carbon::createFromFormat('d/m/Y', $request->desde)."') and date('".Carbon::createFromFormat('d/m/Y', $request->hasta)."')
+                                    group by i.created_at"));
+        
+        dd($pedidos);
 
         $data = array(
             'desde' => $request->desde,
             'hasta' => $request->hasta
         );
 
-        $pdf = PDF::loadView('reporte.pdf.nivelcumplimiento',compact('pedidos','pedidosentregados','data'));
+        $pdf = PDF::loadView('reporte.pdf.nivelcumplimiento',compact('pedidos','data'));
         return $pdf->stream('Reporte.pdf');
-        //return view('reporte.pdf.nivelcumplimiento',$data);
+
     }
 
 
