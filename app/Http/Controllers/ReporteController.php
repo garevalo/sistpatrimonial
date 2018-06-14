@@ -34,7 +34,7 @@ class ReporteController extends Controller
                                     where i.created_at between date('".Carbon::createFromFormat('d/m/Y', $request->desde)."') and date('".Carbon::createFromFormat('d/m/Y', $request->hasta)."')
                                     group by i.created_at"));
         
-        dd($pedidos);
+       // dd($pedidos);
 
         $data = array(
             'desde' => $request->desde,

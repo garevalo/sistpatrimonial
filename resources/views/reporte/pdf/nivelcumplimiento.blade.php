@@ -69,42 +69,30 @@
 			<td>Pedidos Solicitados (PS)</td>	
 			<td colspan="2">Nivel de Cumplimiento de Entrega</td>
 		</tr>
-				@php
-					$ps = '';
-					$pe = '';
-					$pst = 0;
-					$pet = 0;
+				@php 
+					$tentregados = 0; $tsolicitados = 0;
 				@endphp
 				@foreach($pedidos as $key=> $item)
+
+				@php 
+				$tentregados   = $tentregados + $item->entregados;
+				$tsolicitados  = $tsolicitados + $item->solicitados;
+				@endphp
+
 				<tr style="text-align: center;">
 					<td>{{$key + 1 }}</td>
-					<td>{{$item->fecha}} 
-						@php 
-							$ps = $item->cantidad; $pst = $pst + $item->cantidad; 
-						@endphp 
-					</td>
-					
-					<td>  
-						@foreach($pedidosentregados as $pe)
-							@if($pe->fecha == $item->fecha)
-								{{ $pe->cantidad }}
-								@php $pe = $pe->cantidad; $pet = $pet + $pe; @endphp
-							@else
-								0 
-								@php $pe = 0; $pet = $pet + 0; @endphp	
-							@endif
-						@endforeach
-					</td>
-					<td>{{$item->cantidad}}</td>
-					<td colspan="2"> {{ ($pe / $ps) * 100 }}  </td>
+					<td>{{$item->fecha}}</td>
+					<td>{{ $item->entregados }}</td>
+					<td>{{$item->solicitados}}</td>
+					<td colspan="2"> @if($item->solicitados > 0 ) {{ round(($item->entregados / $item->solicitados) * 100 , 2)  }} @else 0 @endif </td>
 				</tr>
 				@endforeach
 
 				<tr style="text-align: center;">
 					<td colspan="2">Total de bienes</td>
-					<td>{{ $pet }}</td>
-					<td>{{ $pst }}</td>
-					<td colspan="2" style="text-align: center;">   @if($pst>0) {{   round( ($pet / $pst) * 100 , 2) }} @endif  %</td>
+					<td>{{ $tentregados }}</td>
+					<td>{{ $tsolicitados }}</td>
+					<td colspan="2"> @if($tsolicitados > 0 ) {{ round(($tentregados / $tsolicitados) * 100 , 2)  }} @else 0 @endif %</td>
 				</tr>
 			</tbody>
 
