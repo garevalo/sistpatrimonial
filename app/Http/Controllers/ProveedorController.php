@@ -99,14 +99,22 @@ class ProveedorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        print($id);
     }
 
     public function alldata(){
-
+        
+        
         return Datatables::of(Proveedor::all())
             ->addColumn('edit',function($table){
-                return '<a href="'.route('proveedor.edit',$table->idproveedor).'" class="btn btn-primary btn-sm">Editar</a>' ;
+                $csrf    = csrf_token();
+                $delete = '<form method="post" action="'.route(self::MODULO.'.destroy',$table->idproveedor).'">
+                    <input type="hidden" name="_token" value="'.$csrf.'">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="submit" value="Eliminar" class="btn btn-danger btn-xs" onclick="borrar()" >
+                </form>';
+
+                return '<a href="'.route('proveedor.edit',$table->idproveedor).'" class="btn btn-primary btn-xs">Editar</a>'. ' '.$delete  ;
             })
             ->rawColumns(['edit'])
             ->make(true);

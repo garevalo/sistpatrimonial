@@ -17,9 +17,9 @@
 
                 {{ Form::textfield('razon_social','Razón Social',$table->razon_social) }}
 
-                {{ Form::textfield('telefono','Teléfono',$table->telefono) }}
-
                 {{ Form::textfield('ruc','RUC',$table->ruc) }}
+                
+                {{ Form::textfield('telefono','Teléfono',$table->telefono) }}
 
                 {{ Form::textfield('direccion','Dirección',$table->direccion) }}
                

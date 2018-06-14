@@ -97,10 +97,7 @@
 <!-- Bootstrap 3.3.6 -->
 <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
 {{--
-<!-- Morris.js charts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-<script src="{{asset('plugins/morris/morris.min.js')}}"></script>
---}}
+
 <!-- Sparkline -->
 <script src="{{asset('plugins/sparkline/jquery.sparkline.min.js')}}"></script>
 <!-- jvectormap -->
@@ -113,8 +110,7 @@
 <script src="{{asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
 <!-- datepicker -->
 <script src="{{asset('plugins/datepicker/bootstrap-datepicker.js')}}"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src="{{asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')}}"></script>
+
 <!-- Slimscroll -->
 <script src="{{asset('plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
 <!-- FastClick -->

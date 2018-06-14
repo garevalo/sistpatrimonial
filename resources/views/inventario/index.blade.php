@@ -94,11 +94,11 @@
         });
 
         function borrar(){
-            if(confirm('Desea eliminar este inventario?')){
-                return true;
-            }else{
-                return false;
-            }
+            bootbox.confirm({ 
+              size: "small",
+              message: "¿Está seguro de eliminar este registro?", 
+              callback: function(result){ /* result is a boolean; true = OK, false = Cancel*/ }
+            })
         }
     </script>
 

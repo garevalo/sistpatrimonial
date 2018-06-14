@@ -32,8 +32,8 @@
                     <tr>
                         <th>Código</th>
                         <th>Proveedor</th>
-                        <th>Ruc</th>
                         <th>Teléfono</th>
+                        <th>Ruc</th>
                         <th>Editar</th>
 
                     </tr>
@@ -65,6 +65,7 @@
     <script src="dist/js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js"></script>
+    <script src="plugins/bootbox.min.js"></script>
     <!-- page script -->
 
     <script>
@@ -91,6 +92,29 @@
                 "url": "{{asset("plugins/datatables/Spanish.json")}}"
             }
         });
+
+        function borrar(){
+            /*bootbox.confirm({ 
+              size: "small",
+              message: "¿Está seguro de eliminar este registro?", 
+              callback: function(result){ 
+                if(result){
+                    return true;
+                }
+                else{
+                    false;
+                }
+              }
+            })*/
+            
+            bootbox.confirm("Are you sure?", function(result) {
+                if (result) {
+                    console.log("User confirmed dialog");
+                } else {
+                    console.log("User declined dialog");
+                }
+            });
+        }
     </script>
 
 @endsection

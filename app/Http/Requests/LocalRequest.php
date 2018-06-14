@@ -24,7 +24,18 @@ class LocalRequest extends FormRequest
     public function rules()
     {
         return [
-            'local'=>'required|min:1|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:locals,local,'.$this->route('local').',idlocal'
+            'local'=>'required|min:1|unique:locals,local,'.$this->route('local').',idlocal'
         ];
+
+
+        if($this->request->has('_method')){
+            $validation = array('local'=>'required|min:1|unique:locals,local,'.$this->route('local').',idlocal');
+        }else{
+            $validation = array(
+                'local'=>'required|min:1|unique:locals,local'
+            );
+        }
+
+        return $validation;
     }
 }
