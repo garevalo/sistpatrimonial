@@ -96,6 +96,7 @@ class PedidoController extends Controller
         $estados        =   array(1=>'Activo',2=>'Inactivo');
         $estadoarticulo =   [1=> 'Solicitado',2 =>'Entregado',3 =>'No Entregado'];
         $pedido         =   Pedido::with('centroCostoSolicitante','CentroCostoDestino','PersonalResponsable','articulo.bien.catalogo')->FindOrFail($id);
+        
         //dd($pedido);
         return view(self::MODULO.'.show',compact('pedido','estadoarticulo'));  
     }
@@ -115,9 +116,10 @@ class PedidoController extends Controller
         $titulomod = self::TITLEMOD;
         $estados = [1=>'Solicitado',2=>'Completo'];
         $estadoarticulo = [1=> 'Solicitado',2 =>'Entregado',3 =>'No Entregado'];
-        $table = Pedido::with('centroCostoSolicitante','CentroCostoDestino','PersonalResponsable','articulo')->FindOrFail($id);
-
-        return view(self::MODULO.'.edit',compact('titulomod','modulo','table','centrocostos','personales','estados','estadoarticulo'));
+        $oficinas = Oficina::all()->pluck('oficina','idoficina');
+        $table = Pedido::with('centroCostoSolicitante','CentroCostoDestino','PersonalResponsable','articulo.bien.catalogo')->FindOrFail($id);
+        //dd($table);
+        return view(self::MODULO.'.edit',compact('titulomod','modulo','table','centrocostos','personales','estados','estadoarticulo','oficinas'));
     }
 
     /**
@@ -131,7 +133,24 @@ class PedidoController extends Controller
     {
         /*GrupoGenerico::FindOrFail($id)->update($request->all());
         return redirect()->route(self::REDIRECT);*/
-        dd($request->all());
+       // dd($request->all());
+
+        Pedido::FindOrFail($id)->update([
+            
+            'cc_solicitante'=> $request->cc_solicitante,
+            'cc_destino'    => $request->cc_destino,
+            'responsable'    => $request->responsable
+        ]);
+
+
+        foreach ($request->descripcion as $key => $value) {
+            Articulo::FindOrFail($key)->update([
+                "idbien"       => $value,
+            ]);
+        }
+        
+
+        return redirect()->route(self::REDIRECT);
     }
 
     /**
@@ -210,7 +229,8 @@ class PedidoController extends Controller
                     <a href="'.route('atencion',$field->idpedido).'" class="btn btn-success btn-xs">Atender </a>
                     ' ;*/
 
-                return '<a href="'.route(self::MODULO.'.show',$field->idpedido).'" class="btn btn-info btn-xs">Ver</a>
+                return '<a href="'.route(self::MODULO.'.edit',$field->idpedido).'" class="btn btn-primary btn-xs">Editar</a>
+                    <a href="'.route(self::MODULO.'.show',$field->idpedido).'" class="btn btn-info btn-xs">Ver</a>
                     <a href="'.route('atencion',$field->idpedido).'" class="btn btn-success btn-xs">Atender </a>' ;                    
             })
             ->rawColumns(['edit'])

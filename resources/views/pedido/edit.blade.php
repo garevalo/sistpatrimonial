@@ -10,12 +10,12 @@
         <div class="box-header">
             <h3 class="box-title">Atender {{ucwords($titulomod)}}</h3>
         </div>
-        {!! Form::model($table, ['route' => ['pedido.update',$table->idpedido]] ) !!}
+        {!! Form::model($table, ['action' => ['PedidoController@update',$table->idpedido],'method'=>'put'] ) !!}
             <div class="box-body">
                 <div class="col-xs-12">
                     {{ Form::selectfield('cc_solicitante','Dependencia Solicitante',$centrocostos,'Seleccione Centro Costo',$table->centroCostoSolicitante->codcentrocosto,[]) }}
 
-                    {{ Form::selectfield('cc_destino','Con Destino a',$centrocostos,'Seleccione Centro Costo',$table->CentroCostoDestino->codcentrocosto,[]) }}
+                    {{ Form::selectfield('cc_destino','Con Destino a (Oficina)',$oficinas,'Seleccione Oficina',isset($table->CentroCostoDestino->idoficina)? $table->CentroCostoDestino->idoficina : '',[] ) }}
 
                     {{ Form::selectfield('responsable','Entregar a',$personales,'Seleccione Personal',$table->PersonalResponsable->idpersonal,[]) }}
 
@@ -36,7 +36,9 @@
                                 <tbody>
                                     @foreach($table->articulo as $articulo)
                                     <tr> 
-                                        <td> <select type="text" name="descripcion[]" required="" class="form-control input-sm descripcion" ></select> </td>
+                                        <td><select type="text" name="descripcion[{{$articulo->idarticulos}}]" required="" class="form-control input-sm descripcion" id="bien{{$articulo->bien->catalogo->codcatalogo}}" >
+                                            <option value="{{$articulo->bien->idbien}}">{{$articulo->bien->catalogo->denom_catalogo}}</option>
+                                        </select> </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -48,7 +50,7 @@
                
             </div>  
             <div class="box-footer">
-                <button class="btn btn-sm btn-primary" type="button">Editar</button>
+                <button class="btn btn-sm btn-primary" type="submit">Editar</button>
             </div>
         {!! Form::close() !!}  
     </div>
@@ -67,6 +69,7 @@
 <script src="{{asset('plugins/input-mask/jquery.inputmask.js')}}"></script>
 <script src="{{asset('plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
 <script src="{{asset('plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
+<script src="{{asset('plugins/select2//select2.full.min.js')}}"></script>
 <script>
     $(function () {
         
@@ -74,59 +77,20 @@
     });
 </script>
 
-<script type="text/javascript">
-<script type="text/javascript">
-    $(function(){
-            $("body").on("click",".eliminar",function(){
-                     $(this).parents("tr").remove();
-                });
-
-            $("body").on("click","#agregar",function(){
-                     $("#articulos tbody").append('<tr>'+
-                                        '<td> <select class="form-control input-sm descripcion" name="descripcion[]"  required > </select></td>'+
-                                        '<td><button type="button" class="btn btn-xs btn-danger eliminar"><i class="fa fa-trash"></i> Eliminar</button></td>'+
-                                    '</tr>');
-
-
-                     $('.descripcion').select2({
-                        language: "es",
-                        minimumInputLength: 2,
-                        ajax: {
-                            url:  "{{route('bienitems')}}",
-                            delay: 250,
-                            dataType: 'json',
-                            data: function(params) {
-                                return {
-                                    term: params.term
-                                }
-                            },
-                            results: function (data) {
-                                return {
-                                    results: $.map(data, function (item) {
-                                        return {
-                                            text: item.text,
-                                            id: item.id
-                                        }
-                                    })
-                                };
-                            }
-                        }
-                    });
-
-                });
-                               
-    });
-</script>
-
-<script src="{{asset('plugins/select2//select2.full.min.js')}}"></script>
-
 <script>
     
-    $(".descripcion").select2({
+@foreach($table->articulo as $articulo)
+seleccion('{{ route('bienitems',['id'=>$articulo->bien->catalogo->codcatalogo]) }}', '{{ $articulo->bien->catalogo->codcatalogo }}' );
+@endforeach
+
+
+
+function seleccion(route,id){
+     $("#bien"+id).select2({
         language: "es",
         minimumInputLength: 2,
         ajax: {
-            url:  "{{route('bienitems')}}",
+            url:  route,
             delay: 250,
             dataType: 'json',
             data: function(params) {
@@ -145,7 +109,11 @@
                 };
             }
         }
-    });
+    });       
+}
+
+
+    
 </script>
 
 @endsection

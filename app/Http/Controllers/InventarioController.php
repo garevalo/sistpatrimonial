@@ -175,8 +175,8 @@ class InventarioController extends Controller
             ->addColumn('edit',function($table){
                 $invfisico = '<a href="'.route('inventario.show',$table->idinventario).'" class="btn btn-primary btn-xs">Inventario Físico</a>';
                 $edit   = '<a href="'.route('inventario.edit',$table->idinventario).'" class="btn btn-info btn-xs">Editar</a>';
-                $delete = '<a href="'.route('inventario.destroy',$table->idinventario).'" class="btn btn-danger btn-xs" onclick="borrar()">Eliminar</a>';
-                return  $invfisico.' '.$edit.' '.$delete;
+                //$delete = '<a href="'.route('inventario.destroy',$table->idinventario).'" class="btn btn-danger btn-xs" onclick="borrar()">Eliminar</a>';
+                return  $invfisico.' '.$edit;
 
             })
             ->addColumn('centro_costo',function($table){

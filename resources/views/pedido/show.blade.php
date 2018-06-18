@@ -55,7 +55,8 @@
             <tr>
               <th></th>
               <th>Descripcion</th>
-              <th></th>
+              <th>Cod. Patrimonial</th>
+              <th>Estado</th>
               
             </tr>
             </thead>
@@ -64,7 +65,8 @@
             	<tr>
             		<td></td>
             		<td>{{ $articulo->bien->catalogo->denom_catalogo}}</td>
-            		<td>{{ $estadoarticulo[$articulo->estado_articulo]}}</td>
+                <td>{{ $articulo->bien->codpatrimonial }}</td>
+            		<td>{!! ($articulo->estado_articulo==2)? '<label class="label label-success">'.$estadoarticulo[$articulo->estado_articulo].'</label>': '<label class="label label-warning">'.$estadoarticulo[$articulo->estado_articulo].'</label>'  !!}</td>
             	</tr>
             	@endforeach
             

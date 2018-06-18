@@ -44,7 +44,7 @@
             <section class="content-header">
                 @section('menu-h1')
                     <h1>
-                       <small>Sistema web de control de bienes patrimoniales</small>
+                       <small>Sistema web de control de bienes patrimoniales</small> <a class="btn btn-xs btn-primary" href="{!! URL::previous() !!}"><i class="fa fa-back"></i>Atrás</a>
                     </h1>
                 @show
 
@@ -96,7 +96,7 @@
 </script>
 <!-- Bootstrap 3.3.6 -->
 <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
-{{--
+
 
 <!-- Sparkline -->
 <script src="{{asset('plugins/sparkline/jquery.sparkline.min.js')}}"></script>
@@ -117,9 +117,9 @@
 <script src="{{asset('plugins/fastclick/fastclick.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('dist/js/app.min.js')}}"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<!-- AdminLTE dashboard demo (This is only for demo purposes)
 
-{{-- <script src="{{asset('dist/js/pages/dashboard.js')}}"></script> --}}
+<script src="{{asset('dist/js/pages/dashboard.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('dist/js/demo.js')}}"></script>
 @show

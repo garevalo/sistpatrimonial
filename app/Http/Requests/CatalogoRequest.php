@@ -27,8 +27,8 @@ class CatalogoRequest extends FormRequest
         if($this->request->has('_method')){
 
             $validation = array(
-                'codcatalogo' => 'required|size:8|unique:catalogos,codcatalogo,'.$this->route('catalogo').',idcatalogo',
-                'denom_catalogo' => 'required|min:2|unique:catalogos,denom_catalogo,'.$this->route('catalogo').',idcatalogo',
+                'codcatalogo' => 'required|size:8|unique:catalogos,codcatalogo,'.$this->route('catalogo').',codcatalogo',
+                'denom_catalogo' => 'required|min:2|unique:catalogos,denom_catalogo,'.$this->route('catalogo').',denom_catalogo',
                 'idestado' => 'required|integer',
                 'cod_grupo_generico' => 'required',
                 'cod_clase_generico' => 'required'

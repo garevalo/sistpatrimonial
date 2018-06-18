@@ -355,4 +355,45 @@ class BienController extends Controller
 
         return response()->json(['results' => $result ]) ;
     }
+
+    public function transferencia(){
+
+        $personals      =   Personal::all();
+        $centrocostos   =   CentroCosto::all();
+        $catalogos       =   Catalogo::all();
+
+        $estados        =   array(1=>'Activo',2=>'Inactivo');
+
+        $bienes    = Bien::with('marca','modelo','color','adquisicion','centrocostos','personal','movimientos','catalogo')->get();
+
+        return view('bien.transferencia',compact('personals','centrocostos','estados','catalogos','bienes'));
+
+    }
+
+    public function transferenciabycc($centrocosto){
+
+
+
+    }
+
+    public function transferenciaStore(Request $request, $id){
+
+        DB::transaction(function () use ($request,$id) {
+            Bien::FindOrFail($id)->update([
+                'centrocosto'=> $request->centrocosto,
+                'idpersonal' => $request->idpersonal
+            ]);
+
+            Movimiento::create([
+                'idbien' => $id,
+                'centrocosto' => $request->centrocosto,
+                'idpersonal'  => $request->idpersonal,
+                'fecha_movimiento'  => Carbon::now()
+            ]);
+        });
+
+        
+
+        return redirect()->route(self::REDIRECT);
+    }
 }
