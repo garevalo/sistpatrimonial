@@ -136,7 +136,9 @@ class BienController extends Controller
 
         $estados        =   array(1=>'Activo',2=>'Inactivo');
 
-        $bien    = Bien::with('marca','modelo','color','adquisicion','centrocostos','personal','movimientos')->FindOrFail($id);
+        $bien    = Bien::with('marca','modelo','color','adquisicion','centrocostos','personal','movimientos.personal','movimientos.centrocosto_destino','movimientos.personal_origen','movimientos.centrocosto_origen','local')->FindOrFail($id);
+
+        //dd($bien);
 
         return view('bien.view',compact('colores','adquisiciones','marcas','modelos','personals','centrocostos','estados','bien'));
     }
@@ -376,24 +378,30 @@ class BienController extends Controller
 
     }
 
-    public function transferenciaStore(Request $request, $id){
+    public function transferenciaStore(Request $request){
 
-        DB::transaction(function () use ($request,$id) {
-            Bien::FindOrFail($id)->update([
-                'centrocosto'=> $request->centrocosto,
-                'idpersonal' => $request->idpersonal
-            ]);
+        DB::transaction(function () use ($request) {
+            
 
-            Movimiento::create([
-                'idbien' => $id,
-                'centrocosto' => $request->centrocosto,
-                'idpersonal'  => $request->idpersonal,
-                'fecha_movimiento'  => Carbon::now()
-            ]);
+            foreach ($request->bien as $key => $bien) {
+                Bien::FindOrFail($key)->update([
+                    'centrocosto'=> $request->centrocostodestino,
+                    'idpersonal' => $request->idpersonaldestino
+                ]); 
+
+                Movimiento::create([
+                    'idbien'            => $key,
+                    'centrocosto'       => $request->centrocostodestino,
+                    'idpersonal'        => $request->idpersonaldestino,
+                    'desde_centrocosto' => $request->centrocosto,
+                    'desde_personal'    => $request->idpersonal,
+                    'fecha_movimiento'  => Carbon::now()
+                ]);
+            }
+            
         });
 
-        
-
         return redirect()->route(self::REDIRECT);
+        //dd($request->all());
     }
 }

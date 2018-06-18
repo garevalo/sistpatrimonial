@@ -52,4 +52,14 @@ class Bien extends Model
     {
         return $this->hasMany('App\Movimiento','idbien','idbien');
     }
+
+    public function local()
+    {
+        return $this->belongsTo('App\Local','idlocal','idlocal');
+    }
+
+    public function proveedor()
+    {
+        return $this->belongsTo('App\Proveedor','idproveedor','idproveedor');
+    }
 }

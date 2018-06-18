@@ -35,23 +35,23 @@
 	          <strong>modelo:</strong>
 	          {{$bien->modelo->modelo}}
 	          <br>
-	          <strong>Cod. Patrimonial:</strong>
-	          {{$bien->codpatrimonial}}
+	          <strong>Color:</strong>
+	          {{$bien->color->color}}
 
 	          <br>
-	          <strong>Orden Compra:</strong>
-	          {{$bien->ordencompra}}
+	          <strong>Marca:</strong>
+	          {{$bien->marca->marca}}
 	        </div>
 	        <!-- /.col -->
 	        <div class="col-sm-4 invoice-col">
-	          <strong>Cod. Catálogo:</strong>
-	          {{$bien->codcatalogo}}
+	          <strong>Num. Serie:</strong>
+	          {{$bien->numserie}}
 	          <br>
-	          <strong>Cod. Inventario:</strong>
-	          {{$bien->codinventario}}
+	          <strong>Proveedor:</strong>
+	          {{$bien->proveedor->razon_social}}
 	          <br>
-	          <strong>Cod. Patrimonial:</strong>
-	          {{$bien->codpatrimonial}}
+	          <strong>Local:</strong>
+	          {{$bien->local->local}}
 
 	          <br>
 	          <strong>Orden Compra:</strong>
@@ -78,16 +78,22 @@
           <table class="table table-striped">
             <thead>
             <tr>
-              <th>Centro costo</th>
-              <th>Personal</th>
+              <th class="text text-primary">Centro costo (Origen)</th>
+              <th class="text text-primary">Personal (Origen)</th>
+              <th class="text text-warning">Centro costo (Destino)</th>
+              <th class="text text-warning">Personal (Destino)</th>
               <th>Fecha Movimiento</th>
             </tr>
             </thead>
             <tbody>
             @foreach($bien->movimientos as $movimiento)
             <tr>
-            	<td>{{$movimiento->centrocosto}}</td>
-            	<td>{{$movimiento->idpersonal}}</td>
+            	<td>{{$movimiento->desde_centrocosto }}</td>
+            	<td>{{$movimiento->personal_origen->FullName}}</td>
+
+            	<td>{{$movimiento->centrocosto_destino->centrocosto}}</td>
+            	<td>{{$movimiento->personal->FullName}}</td>
+
             	<td>{{$movimiento->fecha_movimiento}}</td>
             </tr>
             @endforeach

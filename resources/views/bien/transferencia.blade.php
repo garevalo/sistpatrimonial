@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <form method="POST" action=""  enctype="multipart/form-data">
+    <form method="POST" action="{{ route('bien.transferenciastore') }}"  enctype="multipart/form-data">
         {{csrf_field()}}
 
         <div class="col-md-6 col-xs-12">
@@ -48,7 +48,7 @@
                 <div class="box-body">
                     <div class="form-group-sm {{ $errors->has('centrocosto') ? ' has-error' : '' }}">
                         <label>Centro de Costo:</label>
-                        <select name="centrocosto" id="centrocostodestino" class="form-control select2">
+                        <select name="centrocostodestino" id="centrocostodestino" class="form-control select2">
                             <option value="">Seleccione Personal</option>
                             @foreach($centrocostos as $centrocosto)
                             <option value="{{$centrocosto->codcentrocosto}}" @if($centrocosto->codcentrocosto == old('centrocosto') ) selected @endif >{{$centrocosto->FullCentroCosto}}</option>
@@ -60,7 +60,7 @@
                     <div class="form-group-sm {{ $errors->has('idpersonal') ? ' has-error' : '' }}">
                         <label>Personal:</label>
 
-                        <select name="idpersonal" id="idpersonaldestino" class="form-control select2">
+                        <select name="idpersonaldestino" id="idpersonaldestino" class="form-control select2">
                             <option value="">Seleccione Personal</option>
                             @foreach($personals as $personal)
                             <option value="{{$personal->idpersonal}}" @if($personal->idpersonal == old('idpersonal') ) selected @endif >{{$personal->FullName}}</option>
@@ -96,7 +96,7 @@
                     			<td>{{$bien->codpatrimonial}}</td>
                     			<td>{{$bien->color->color}}</td>
                     			<td>{{$bien->marca->marca}}</td>
-                    			<td><input type="checkbox" name="bien[]"></td>
+                    			<td><input type="checkbox" name="bien[{{$bien->idbien}}]" value="{{$bien->idbien}}" ></td>
                     		</tr>
                     		@endforeach
                     	</tbody>
@@ -184,8 +184,10 @@
                             type:'GET',
                             url:urlajax+idvar+'/'+withjoin,
                             success:function(data){
-
-                                    if(data.length>0){
+                                    
+                                    var datapersonal = data[0].personal;
+                                    //console.log(datapersonal);
+                                    if(datapersonal){
                                         $('#'+children).html('<option value="">Seleccione '+ namefield +'</option>');
                                         $('#'+children).removeAttr('disabled');
                                         $.each(data,function(v,item){

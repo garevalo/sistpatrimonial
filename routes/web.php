@@ -25,6 +25,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('sede','SedeController');
 
     //Bienes
+    Route::post('bien/transferencia','BienController@transferenciaStore')->name('bien.transferenciastore');
     Route::get('bien/transferencia','BienController@transferencia')->name('bien.transferencia');
     Route::get('bien/items/{id?}','BienController@items')->name('bienitems');
     Route::get('bien/alldata','BienController@dataTable')->name('getbienes');
