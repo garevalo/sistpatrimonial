@@ -23,26 +23,53 @@ class BienRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'codcatalogo'    => 'required|max:8',
-            'codinventario' => 'required|max:12',
-            'codpatrimonial' => 'required|max:12',
-            'ordencompra' => 'required',
-            'idmarca' => 'required|integer',
-            'idmodelo' => 'required|integer',
-            'idcolor' => 'required|integer',
-            'imagen' => 'required|mimes:jpeg,png,jpg|max:2048',
-            'numserie' => 'required',
-            'centrocosto' => 'required',
-            'idpersonal' => 'required|integer',
-            'idestado' => 'required|integer',
-            'valor' => 'required',
-            'idadquisicion' => 'required|integer',
-            'idproveedor'   => 'required|integer',
-            'idlocal'       => 'required|integer',
-            'idoficina'     => 'required|integer',
-            'fecha_adquisicion' => 'required|date_format:d/m/Y',
-            'descripcion' => 'required|max:250',
-        ];
+        if($this->request->has('_method')){
+            return [
+                'codcatalogo'    => 'required|max:8',
+                'codinventario' => 'required|max:12',
+                'codpatrimonial' => 'required|max:12|unique:biens,codpatrimonial,'.$this->route('bien').',id',
+                'ordencompra' => 'required',
+                'idmarca' => 'required|integer',
+                'idmodelo' => 'required|integer',
+                'idcolor' => 'required|integer',
+                'imagen' => 'required|mimes:jpeg,png,jpg|max:2048',
+                'numserie' => 'required',
+                'centrocosto' => 'required',
+                'idpersonal' => 'required|integer',
+                'idestado' => 'required|integer',
+                'valor' => 'required',
+                'idadquisicion' => 'required|integer',
+                'idproveedor'   => 'required|integer',
+                'idlocal'       => 'required|integer',
+                'idoficina'     => 'required|integer',
+                'fecha_adquisicion' => 'required|date_format:d/m/Y',
+                'descripcion' => 'required|max:250',
+            ];
+        } else{
+
+            return [
+                'codcatalogo'    => 'required|max:8',
+                'codinventario' => 'required|max:12',
+                'codpatrimonial' => 'required|max:12|unique:biens,codpatrimonial',
+                'ordencompra' => 'required',
+                'idmarca' => 'required|integer',
+                'idmodelo' => 'required|integer',
+                'idcolor' => 'required|integer',
+                'imagen' => 'required|mimes:jpeg,png,jpg|max:2048',
+                'numserie' => 'required',
+                'centrocosto' => 'required',
+                'idpersonal' => 'required|integer',
+                'idestado' => 'required|integer',
+                'valor' => 'required',
+                'idadquisicion' => 'required|integer',
+                'idproveedor'   => 'required|integer',
+                'idlocal'       => 'required|integer',
+                'idoficina'     => 'required|integer',
+                'fecha_adquisicion' => 'required|date_format:d/m/Y',
+                'descripcion' => 'required|max:250',
+            ];
+
+        }
+
     }
 }

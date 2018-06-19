@@ -31,6 +31,7 @@
                 <ul class="treeview-menu">
                     @if( Auth::user()->idrol == 1 )
                     <li class="@if(request()->getRequestUri()=='/bien') active @endif"><a href="/bien"><i class="fa fa-circle-o text-aqua"></i> Bienes</a></li>
+                    <li class="@if(request()->getRequestUri()=='/bien') active @endif"><a href="/bien/transferencia"><i class="fa fa-circle-o text-aqua"></i> Transferencia</a></li>
                     <li class="@if(request()->getRequestUri()=='/catalogo') active @endif"><a href="/catalogo"><i class="fa fa-circle-o text-aqua"></i> Catálogo</a></li>
 
                     <li class="@if(request()->getRequestUri()=='/grupogenerico') active @endif"><a href="/grupogenerico"><i class="fa fa-circle-o text-aqua"></i> Grupo Genérico</a></li>

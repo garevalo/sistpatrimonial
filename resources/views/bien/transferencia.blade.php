@@ -79,7 +79,7 @@
                   <h3 class="box-title">Bienes:</h3>
                 </div>
                 <div class="box-body">
-                    <table class="table table-condensed ">
+                    <table class="table table-condensed " id="table-transferencia">
                     	<thead>
                     		<th>Id</th>
                     		<th>Bien</th>
@@ -88,7 +88,7 @@
                     		<th>Marca</th>
                     		<td><input type="checkbox" name="bien[]" id="select_all"></td>
                     	</thead>
-                    	<tbody>
+                    	<tbody id="contenidotransferencia">
                     		@foreach($bienes as $bien)
                     		<tr>
                     			<td>{{$bien->idbien}}</td>
@@ -141,7 +141,9 @@
         });
 
         cascade('centrocosto','idpersonal','/data/CentroCosto/codcentrocosto/','idpersonal','nombres','personal');
-         cascade('centrocostodestino','idpersonaldestino','/data/CentroCosto/codcentrocosto/','idpersonal','nombres','personal');
+        cascade('centrocostodestino','idpersonaldestino','/data/CentroCosto/codcentrocosto/','idpersonal','nombres','personal');
+        tableajax('/data/Bien/centrocosto/','centrocosto','contenidotransferencia');
+
 
         function cascade(parent,children,urlajax,id,column,withjoin=''){
             $('#' + parent).on('change',function(){
@@ -209,6 +211,45 @@
 
                 }
             });
+        }
+
+        function tableajax(urlajax,parent,children){
+            $('#' + parent).on('change',function(){
+                var idvar = $(this).val();
+                
+                $.ajax({
+                    type:'GET',
+                    url:urlajax+idvar,
+                    timeout: 3000,
+                    beforeSend: function() {
+                        // setting a timeout
+                        $("#"+children).addClass('loading');
+                    },
+                    success:function(data){
+                            
+                        if(data.length>0){
+                            $('#'+children).html("");
+                            $.each(data,function(v,item){
+                                var options = "<tr>"+
+                                "<td>"+item.idbien+"</td>"+
+                                "<td>"+item.codcatalogo+"</td>"+
+                                "<td></td>"+
+                                "<td></td>"+
+                                "<td></td>"+
+                                "<td><input type='checkbox' name='bien["+item.idbien+"]' value='"+item.idbien+"' ></td></tr>";
+                          
+                                
+                                $('#'+children).append(options);
+                                //$( options ).appendTo( $( "#"+children ) );
+                            });
+                        }else{
+                            $('#'+children).html("");
+                            console.log("no data");
+                        }
+                    }
+                })
+            }); 
+
         }
 
     </script>
