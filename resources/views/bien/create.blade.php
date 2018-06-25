@@ -248,7 +248,7 @@
 
         function formatRepo (repo) {
             $("#codpatrimonial").val(repo.id);
-            $("#idbien").val("0001");
+            autoCompleteCod('/bien/getbiencod/',repo.id,"idbien");
             return repo.text;
         }
 
@@ -257,26 +257,16 @@
         cascade('centrocosto','idpersonal','/data/CentroCosto/codcentrocosto/','idpersonal','nombres','personal');
 
 
-        function autoCompleteCod(urlajax){
+        function autoCompleteCod(urlajax,cod,input){
             $.ajax({
                 type:'GET',
-                url:urlajax,
+                url:urlajax+cod,
                 success:function(data){
-
-                        if(data.length>0){
-                            $('#'+children).html('<option value="">Seleccione '+ namefield +'</option>');
-                            $('#'+children).removeAttr('disabled');
-                            $.each(data,function(v,item){
-                                //console.log(item.personal); 
-                                var options = "<option value='"+item.personal.idpersonal+"' >"+ item.personal.nombres +' '+item.personal.apellido_paterno+' '+ item.personal.apellido_materno+"</option>";
-                               
-                               $('#'+children).append(options);
-                               console.log(options);
-                            });
+                        console.log(data);
+                        if(data){
+                            $("#"+input).val(data.codpatrimonial);
                         }else{
-                            $('#'+children).html('<option value="">Seleccione '+ namefield +' </option>');
-                            $('#'+children).attr('disabled','disabled');
-                            console.log("no data");
+                            console.log("no data"+ data.codpatrimonial);
                         }
                 }
             });   
@@ -307,12 +297,12 @@
                                             options += '</option>';
                                            
                                            $('#'+children).append(options);
-                                           console.log(options);
+                                           //console.log(options);
                                         });
                                     }else{
                                         $('#'+children).html('<option value="">Seleccione '+ namefield +' </option>');
                                         $('#'+children).attr('disabled','disabled');
-                                        console.log("no data");
+                                        //console.log("no data");
                                     }
                             }
                         }); 
@@ -332,12 +322,12 @@
                                             var options = "<option value='"+item.personal.idpersonal+"' >"+ item.personal.nombres +' '+item.personal.apellido_paterno+' '+ item.personal.apellido_materno+"</option>";
                                            
                                            $('#'+children).append(options);
-                                           console.log(options);
+                                           //console.log(options);
                                         });
                                     }else{
                                         $('#'+children).html('<option value="">Seleccione '+ namefield +' </option>');
                                         $('#'+children).attr('disabled','disabled');
-                                        console.log("no data");
+                                        //console.log("no data");
                                     }
                             }
                         }); 

@@ -428,9 +428,9 @@ class BienController extends Controller
         return response()->json($result);
     }
 
-    public function getBienCod(){
-        $bien = Bien::first();
-        return $bien;
+    public function getBienCod($codpatrimonial){
+        $bien = Bien::select('codpatrimonial')->where("codcatalogo",$codpatrimonial)->latest('codpatrimonial')->first();
+        return response()->json($bien);
     }
 
     public function dataTransferenciaTable(){
