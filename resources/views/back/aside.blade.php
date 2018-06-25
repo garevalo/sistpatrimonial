@@ -23,7 +23,7 @@
             <li class="header">MENU</li>
             <li></li>
             @if( Auth::user()->idrol == 1 or Auth::user()->idrol == 2 )
-            <li class="treeview @if(in_array(request()->getRequestUri(),['/inventario','/bien','/catalogo','/grupogenerico','/clasegenerico','/centrocosto'])) active @endif ">
+            <li class="treeview @if(in_array(request()->getRequestUri(),['/inventario','/bien','/catalogo','/grupogenerico','/clasegenerico','/centrocosto','/transferencia'])) active @endif ">
                 <a href="/hardware">
                     <i class="fa fa-archive"></i> <span>Almacén</span>
                     <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
@@ -31,7 +31,7 @@
                 <ul class="treeview-menu">
                     @if( Auth::user()->idrol == 1 )
                     <li class="@if(request()->getRequestUri()=='/bien') active @endif"><a href="/bien"><i class="fa fa-circle-o text-aqua"></i> Bienes</a></li>
-                    <li class="@if(request()->getRequestUri()=='/bien') active @endif"><a href="/bien/transferencia"><i class="fa fa-circle-o text-aqua"></i> Transferencia</a></li>
+                    <li class="@if(request()->getRequestUri()=='/transferencia') active @endif"><a href="/transferencia"><i class="fa fa-circle-o text-aqua"></i> Transferencia</a></li>
                     <li class="@if(request()->getRequestUri()=='/catalogo') active @endif"><a href="/catalogo"><i class="fa fa-circle-o text-aqua"></i> Catálogo</a></li>
 
                     <li class="@if(request()->getRequestUri()=='/grupogenerico') active @endif"><a href="/grupogenerico"><i class="fa fa-circle-o text-aqua"></i> Grupo Genérico</a></li>

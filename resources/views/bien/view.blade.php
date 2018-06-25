@@ -88,8 +88,8 @@
             <tbody>
             @foreach($bien->movimientos as $movimiento)
             <tr>
-            	<td>{{$movimiento->desde_centrocosto }}</td>
-            	<td>{{$movimiento->personal_origen->FullName}}</td>
+            	<td>{{ (!empty($movimiento->desde_centrocosto->centrocosto))? $movimiento->desde_centrocosto->centrocosto : ''  }}</td>
+            	<td>{{ (!empty($movimiento->personal_origen->FullName))? $movimiento->personal_origen->FullName : '' }}</td>
 
             	<td>{{$movimiento->centrocosto_destino->centrocosto}}</td>
             	<td>{{$movimiento->personal->FullName}}</td>

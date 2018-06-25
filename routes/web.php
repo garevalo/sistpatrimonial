@@ -20,13 +20,19 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::resource('subgerencia','SubgerenciaController');
-    Route::resource('gerencia','GerenciaController');
+
     Route::resource('sede','SedeController');
 
     //Bienes
+    Route::get('bien/data/{model?}/{by?}/{id?}/{with?}','BienController@getItemBy')->name('getdatabien');
+
+    Route::get('transferencia/show/{idtransferencia?}','BienController@transferenciaShow')->name('showtransferencia');
+    Route::get('transferencia','BienController@transferenciaIndex')->name('indextransferencia');
+    Route::get('transferencia/alldata','BienController@dataTransferenciaTable')->name('gettransferencia');
+    
     Route::post('bien/transferencia','BienController@transferenciaStore')->name('bien.transferenciastore');
     Route::get('bien/transferencia','BienController@transferencia')->name('bien.transferencia');
+    
     Route::get('bien/items/{id?}','BienController@items')->name('bienitems');
     Route::get('bien/alldata','BienController@dataTable')->name('getbienes');
     Route::get('bien/movimiento/{id}','BienController@movimiento')->name('bien.movimiento');

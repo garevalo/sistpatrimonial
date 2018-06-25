@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFkToGerenciasTable extends Migration
+class AddIdtransferenciaMovimientos extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddFkToGerenciasTable extends Migration
      */
     public function up()
     {
-        Schema::table('gerencias', function (Blueprint $table) {
-            //$table->integer('idsede')->unsigned();
-            //$table->foreign('idsede')->references('idsede')->on('sedes');
+        Schema::table('movimientos', function (Blueprint $table) {
+            $table->integer('idtransferencia')->nullable();
         });
     }
 
@@ -26,8 +25,8 @@ class AddFkToGerenciasTable extends Migration
      */
     public function down()
     {
-        Schema::table('gerencias', function (Blueprint $table) {
-            //
+        Schema::table('movimientos', function (Blueprint $table) {
+            $table->dropColumn('idtransferencia');
         });
     }
 }

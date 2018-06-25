@@ -7,7 +7,7 @@
 
 <section class="invoice">
 
-        	<div class="col-sm-10 invoice-col">
+        	<div class="col-sm-12 invoice-col">
 
 
         	<div class="box-body box-profile">

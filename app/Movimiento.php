@@ -8,7 +8,7 @@ class Movimiento extends Model
 {
     protected $primaryKey = 'idmovimiento';
     
-    protected $fillable = ['idbien','codinventario','codpatrimonial','imagen','centrocosto','idpersonal','idestado','valor','fecha_movimiento','desde_centrocosto','desde_personal','desde_local','desde_oficina'];
+    protected $fillable = ['idbien','codinventario','codpatrimonial','imagen','centrocosto','idpersonal','idestado','valor','fecha_movimiento','desde_centrocosto','desde_personal','desde_local','desde_oficina','idtransferencia'];
 
     protected $dates = ['fecha_movimiento'];
 

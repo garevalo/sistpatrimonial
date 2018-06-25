@@ -86,7 +86,7 @@
                     		<th>Cod. Patrimonial</th>
                     		<th>Color</th>
                     		<th>Marca</th>
-                    		<td><input type="checkbox" name="bien[]" id="select_all"></td>
+                    		<td><input type="checkbox" id="select_all"></td>
                     	</thead>
                     	<tbody id="contenidotransferencia">
                     		@foreach($bienes as $bien)
@@ -142,7 +142,7 @@
 
         cascade('centrocosto','idpersonal','/data/CentroCosto/codcentrocosto/','idpersonal','nombres','personal');
         cascade('centrocostodestino','idpersonaldestino','/data/CentroCosto/codcentrocosto/','idpersonal','nombres','personal');
-        tableajax('/data/Bien/centrocosto/','centrocosto','contenidotransferencia');
+        tableajax('data/Bien/centrocosto/','centrocosto','contenidotransferencia','');
 
 
         function cascade(parent,children,urlajax,id,column,withjoin=''){
@@ -213,7 +213,7 @@
             });
         }
 
-        function tableajax(urlajax,parent,children){
+        function tableajax(urlajax,parent,children,withajax){
             $('#' + parent).on('change',function(){
                 var idvar = $(this).val();
                 
@@ -231,11 +231,11 @@
                             $('#'+children).html("");
                             $.each(data,function(v,item){
                                 var options = "<tr>"+
-                                "<td>"+item.idbien+"</td>"+
-                                "<td>"+item.codcatalogo+"</td>"+
-                                "<td></td>"+
-                                "<td></td>"+
-                                "<td></td>"+
+                                "<td>"+ (parseInt(v)+parseInt(1)) +"</td>"+
+                                "<td>"+item.catalogo.denom_catalogo+"</td>"+
+                                "<td>"+item.codpatrimonial+"</td>"+
+                                "<td>"+item.color.color+"</td>"+
+                                "<td>"+item.marca.marca+"</td>"+
                                 "<td><input type='checkbox' name='bien["+item.idbien+"]' value='"+item.idbien+"' ></td></tr>";
                           
                                 

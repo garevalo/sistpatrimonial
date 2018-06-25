@@ -44,7 +44,7 @@
             <section class="content-header">
                 @section('menu-h1')
                     <h1>
-                       <small>Sistema web de control de bienes patrimoniales</small> <a class="btn btn-xs btn-primary" href="{!! URL::previous() !!}"><i class="fa fa-back"></i>Atrás</a>
+                       <small>Sistema web de control de bienes patrimoniales</small> <a class="btn btn-xs btn-primary" href="{!! URL::previous() !!}"><i class="fa fa-arrow-circle-left"></i> Atrás</a>
                     </h1>
                 @show
 

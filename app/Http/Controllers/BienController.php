@@ -17,6 +17,7 @@ use App\Catalogo;
 use App\Proveedor;
 use App\Local;
 use App\Oficina;
+use App\Transferencia;
 use Carbon\Carbon;
 
 
@@ -163,7 +164,7 @@ class BienController extends Controller
         $locales        =   Local::all()->pluck('local','idlocal');
         $oficinas       =   Oficina::all()->pluck('oficina','idoficina');
 
-        $bien    = Bien::FindOrFail($id);
+        $bien    = Bien::with('catalogo')->FindOrFail($id);
 
         return view('bien.edit',compact('colores','adquisiciones','marcas','modelos','personals','centrocostos','estados','bien','proveedores','locales','oficinas'));
     }
@@ -282,9 +283,7 @@ class BienController extends Controller
     }
 
     public function dataTable(){
-
-
-
+        //dd(Bien::with('marca','modelo','color','adquisicion','centrocostos','personal','catalogo')->get());
         return Datatables::of(Bien::with('marca','modelo','color','adquisicion','centrocostos','personal','catalogo')->get())
             ->addColumn('edit',function($bien){
                 return '<a href="'.route('bien.edit',$bien->idbien).'" class="btn btn-primary btn-xs">Editar</a>
@@ -304,9 +303,8 @@ class BienController extends Controller
                 return $field->modelo->modelo;
             })
             ->addColumn('catalogo',function($field){
-                return $field->catalogo->denom_catalogo;
+                return isset($field->catalogo->denom_catalogo)? $field->catalogo->denom_catalogo : '';
             })
-
             ->addColumn('estado',function($field){
                 if($field->idestado==1){
                     return "Activo";
@@ -324,7 +322,6 @@ class BienController extends Controller
             ->make(true);
 
     }
-
     
     public function items(Request $request,$id=null){
 
@@ -358,6 +355,21 @@ class BienController extends Controller
         return response()->json(['results' => $result ]) ;
     }
 
+    public function transferenciaIndex(){
+
+        $bienes    = Bien::with('marca','modelo','color','adquisicion','centrocostos','personal','movimientos','catalogo')->get();
+
+        return view('bien.indextransferencia',compact('bienes')); 
+    }
+
+    public function transferenciaShow($idtransferencia){
+
+        $transferencia    = Transferencia::with('CentrocostoOrigen','PersonalOrigen','CentrocostoDestino','PersonalDestino','movimiento.bien.catalogo')->where('idtransferencia',$idtransferencia)->first();
+        
+        return view('bien.showtransferencia',compact('transferencia'));
+
+    }
+
     public function transferencia(){
 
         $personals      =   Personal::all();
@@ -372,16 +384,17 @@ class BienController extends Controller
 
     }
 
-    public function transferenciabycc($centrocosto){
-
-
-
-    }
 
     public function transferenciaStore(Request $request){
 
         DB::transaction(function () use ($request) {
             
+           $idtransferencia = Transferencia::insertGetId([
+                'cc_origen'           => $request->centrocosto,
+                'personal_origen'     => $request->idpersonal,
+                'cc_destino'          => $request->centrocostodestino,
+                'personal_destino'    => $request->idpersonaldestino
+            ]);
 
             foreach ($request->bien as $key => $bien) {
                 Bien::FindOrFail($key)->update([
@@ -395,13 +408,49 @@ class BienController extends Controller
                     'idpersonal'        => $request->idpersonaldestino,
                     'desde_centrocosto' => $request->centrocosto,
                     'desde_personal'    => $request->idpersonal,
-                    'fecha_movimiento'  => Carbon::now()
+                    'fecha_movimiento'  => Carbon::now(),
+                    'idtransferencia'   => $idtransferencia
                 ]);
             }
             
         });
 
-        return redirect()->route(self::REDIRECT);
-        //dd($request->all());
+        return redirect()->route('indextransferencia');
+    }
+
+    
+    public function getItemBy($model='Oficina',$by=null,$id=null){
+
+        $model = app( str_replace(" ","","App\ ").$model);
+        
+        
+        $result = $model::with('catalogo','color','marca')->where($by,$id)->get();
+          
+        
+        
+        return response()->json($result);
+    }
+
+    public function dataTransferenciaTable(){
+        //dd(Transferencia::with('CentrocostoOrigen','PersonalOrigen','CentrocostoDestino','PersonalDestino')->get());
+        return Datatables::of(Transferencia::with('CentrocostoOrigen','PersonalOrigen','CentrocostoDestino','PersonalDestino')->get())
+            ->addColumn('edit',function($field){
+                return '<a href="'.route('showtransferencia',$field->idtransferencia).'" class="btn btn-info btn-xs">Ver</a>' ;
+            })
+            ->addColumn('ccorigen',function($field){
+                return $field->CentrocostoOrigen->centrocosto;
+            })
+            ->addColumn('ccdestino',function($field){
+                return $field->CentrocostoDestino->centrocosto;
+            })
+            ->addColumn('personaldestino',function($field){
+                return $field->PersonalDestino->FullName;
+            })
+            ->addColumn('personalorigen',function($field){
+                return $field->PersonalOrigen->FullName;
+            })
+            ->rawColumns(['edit'])
+            ->make(true);
+
     }
 }

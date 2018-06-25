@@ -29,7 +29,7 @@
                         <div class="form-group-sm {{ $errors->has('codcatalogo') ? ' has-error' : '' }}">
                             <label>Bien:</label>
                             <select class="form-control bien" name="codcatalogo" id="catalogo" required autofocus>
-                                <option value=""></option>
+                                <option value="{{$bien->codcatalogo}}">{{ isset($bien->catalogo->denom_catalogo)?$bien->catalogo->denom_catalogo: ''}}</option>
                             </select>
                             {!! $errors->first('codcatalogo','<span class="help-block">:message</span>') !!}
                         </div>
