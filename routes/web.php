@@ -33,6 +33,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('bien/transferencia','BienController@transferenciaStore')->name('bien.transferenciastore');
     Route::get('bien/transferencia','BienController@transferencia')->name('bien.transferencia');
     
+    Route::get('bien/getbiencod','BienController@getBienCod')->name("getbiencod");
     Route::get('bien/items/{id?}','BienController@items')->name('bienitems');
     Route::get('bien/alldata','BienController@dataTable')->name('getbienes');
     Route::get('bien/movimiento/{id}','BienController@movimiento')->name('bien.movimiento');

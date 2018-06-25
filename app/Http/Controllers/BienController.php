@@ -422,13 +422,15 @@ class BienController extends Controller
     public function getItemBy($model='Oficina',$by=null,$id=null){
 
         $model = app( str_replace(" ","","App\ ").$model);
-        
-        
+         
         $result = $model::with('catalogo','color','marca')->where($by,$id)->get();
-          
-        
-        
+               
         return response()->json($result);
+    }
+
+    public function getBienCod(){
+        $bien = Bien::first();
+        return $bien;
     }
 
     public function dataTransferenciaTable(){

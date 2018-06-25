@@ -35,14 +35,21 @@
                         <div class="form-group-sm {{ $errors->has('codinventario') ? ' has-error' : 'has-info' }}">
                             <label>Código Inventario:</label>
 
-                            <input type="text" class="form-control" name="codinventario" id="codinventario" value="{{old('codinventario')}}" required  >
+                            <input type="text" class="form-control" name="codinventario" id="codinventario" value="{{old('codinventario')}}" required >
                             {!! $errors->first('codinventario','<span class="help-block">:message</span>') !!}
                         </div>
 
                         <div class="form-group-sm {{ $errors->has('codpatrimonial') ? ' has-error' : '' }}">
                             <label>Código Patrimonial:</label>
-
-                            <input type="text" class="form-control" name="codpatrimonial" id="codpatrimonial" value="{{old('codpatrimonial')}}">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="codpatrimonial" id="codpatrimonial" value="{{old('codpatrimonial')}}" >        
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="idbien" id="idbien" value="{{old('idbien')}}">        
+                                </div>
+                            </div>
+                            
                             {!! $errors->first('codpatrimonial','<span class="help-block">:message</span>') !!}
                         </div>
 
@@ -209,7 +216,7 @@
     </script>
 
     <!-- Select2 -->
-    <script src="{{asset('plugins/select2//select2.full.min.js')}}"></script>
+    <script src="{{asset('plugins/select2/select2.full.min.js')}}"></script>
 
     <script>
         
@@ -236,11 +243,12 @@
                     };
                 }
             },
-            templateResult: formatRepo,
+            templateSelection: formatRepo,
         });
 
         function formatRepo (repo) {
             $("#codpatrimonial").val(repo.id);
+            $("#idbien").val("0001");
             return repo.text;
         }
 
@@ -248,6 +256,31 @@
         cascade('idlocal','centrocosto','/data/CentroCosto/idlocal/','codcentrocosto','centrocosto');
         cascade('centrocosto','idpersonal','/data/CentroCosto/codcentrocosto/','idpersonal','nombres','personal');
 
+
+        function autoCompleteCod(urlajax){
+            $.ajax({
+                type:'GET',
+                url:urlajax,
+                success:function(data){
+
+                        if(data.length>0){
+                            $('#'+children).html('<option value="">Seleccione '+ namefield +'</option>');
+                            $('#'+children).removeAttr('disabled');
+                            $.each(data,function(v,item){
+                                //console.log(item.personal); 
+                                var options = "<option value='"+item.personal.idpersonal+"' >"+ item.personal.nombres +' '+item.personal.apellido_paterno+' '+ item.personal.apellido_materno+"</option>";
+                               
+                               $('#'+children).append(options);
+                               console.log(options);
+                            });
+                        }else{
+                            $('#'+children).html('<option value="">Seleccione '+ namefield +' </option>');
+                            $('#'+children).attr('disabled','disabled');
+                            console.log("no data");
+                        }
+                }
+            });   
+        }
 
         function cascade(parent,children,urlajax,id,column,withjoin=''){
             $('#' + parent).on('change',function(){
