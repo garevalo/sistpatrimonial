@@ -42,12 +42,13 @@
                         <div class="form-group-sm {{ $errors->has('codpatrimonial') ? ' has-error' : '' }}">
                             <label>Código Patrimonial:</label>
                             <div class="row">
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" name="codpatrimonial" id="codpatrimonial" value="{{old('codpatrimonial')}}" >        
+                                <div class="col-md-6 col-xs-6">
+                                    <input type="text" class="form-control" name="codigocatalogo" id="codigocatalogo" value="{{old('codigocatalogo')}}" readonly >        
                                 </div>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" name="idbien" id="idbien" value="{{old('idbien')}}">        
+                                <div class="col-md-6 col-xs-6">
+                                    <input type="text" class="form-control" name="idbien" id="idbien" value="{{old('idbien')}}" readonly >        
                                 </div>
+                                <input type="hidden" name="codpatrimonial" id="codpatrimonial" value="">
                             </div>
                             
                             {!! $errors->first('codpatrimonial','<span class="help-block">:message</span>') !!}
@@ -220,6 +221,10 @@
 
     <script>
         
+        cascade('idlocal','idoficina','/data/Oficina/idlocal/','idoficina','oficina',);
+        cascade('idlocal','centrocosto','/data/CentroCosto/idlocal/','codcentrocosto','centrocosto');
+        cascade('centrocosto','idpersonal','/data/CentroCosto/codcentrocosto/','idpersonal','nombres','personal');
+
         $("#catalogo").select2({
             language: "es",
             minimumInputLength: 2,
@@ -247,26 +252,35 @@
         });
 
         function formatRepo (repo) {
-            $("#codpatrimonial").val(repo.id);
+            $("#codigocatalogo").val(repo.id);
             autoCompleteCod('/bien/getbiencod/',repo.id,"idbien");
             return repo.text;
         }
-
-        cascade('idlocal','idoficina','/data/Oficina/idlocal/','idoficina','oficina',);
-        cascade('idlocal','centrocosto','/data/CentroCosto/idlocal/','codcentrocosto','centrocosto');
-        cascade('centrocosto','idpersonal','/data/CentroCosto/codcentrocosto/','idpersonal','nombres','personal');
-
 
         function autoCompleteCod(urlajax,cod,input){
             $.ajax({
                 type:'GET',
                 url:urlajax+cod,
                 success:function(data){
-                        console.log(data);
-                        if(data){
-                            $("#"+input).val(data.codpatrimonial);
+                        if(data.codpatrimonial){
+                            var codpatrimonial = data.codpatrimonial;
+                            var correlativo =  parseInt(codpatrimonial.substring(8, 12)) + parseInt(1) ;
+                            
+                            if(correlativo){
+                                $("#"+input).val(correlativo);
+                                $("#codpatrimonial").val(codpatrimonial + pad("3", correlativo));
+                                console.log(codpatrimonial+'-'+correlativo);    
+                            }else{
+                                $("#"+input).val('0000');
+                                $("#codpatrimonial").val(codpatrimonial + '0000');    
+                                console.log(codpatrimonial+'-'+'0000');
+                            }
+
+                            
                         }else{
-                            console.log("no data"+ data.codpatrimonial);
+                            console.log("no data");
+                            $("#"+input).val('0000');
+                            $("#codpatrimonial").val(cod + '0000');
                         }
                 }
             });   
