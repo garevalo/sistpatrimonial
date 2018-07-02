@@ -8,9 +8,9 @@ class Bien extends Model
 {
     protected $primaryKey = 'idbien';
     
-   protected $fillable = ['codcatalogo','codinventario','codpatrimonial','ordencompra','idmarca','idmodelo','idcolor','imagen','numserie','centrocosto','idpersonal','idestado','valor','idadquisicion','fecha_adquisicion','descripcion','situacion','idproveedor','idlocal','idoficina'];
+   protected $fillable = ['codcatalogo','codinventario','codpatrimonial','ordencompra','idmarca','idmodelo','idcolor','imagen','numserie','centrocosto','idpersonal','idestado','valor','idadquisicion','fecha_adquisicion','descripcion','situacion','idproveedor','idlocal','idoficina','fecha_ordencompra'];
 
-    protected $dates = ['fecha_adquisicion'];
+    protected $dates = ['fecha_adquisicion','fecha_ordencompra'];
 
 
     public function marca()

@@ -40,6 +40,8 @@
                         
                         {{ Form::textfield('ordencompra','Orden de Compra:',$bien->ordencompra) }}
 
+                        {{ Form::textfield('fecha_ordencompra','Fecha Orden Compra:',($bien->fecha_ordencompra)? $bien->fecha_ordencompra->format('d/m/Y'): '' ,["data-mask"=>"","data-inputmask" => "'alias': 'dd/mm/yyyy'"]) }}
+
                         {{ Form::selectfield('idmarca','Marca',$marcas,'Seleccione marca',$bien->idmarca) }}
 
                         {{ Form::selectfield('idmodelo','Modelo',$modelos,'Seleccione modelo',$bien->idmodelo) }}
@@ -73,7 +75,7 @@
                             <select name="idestado" id="idestado" class="form-control select2" required="">
                                 <option value="">Seleccione Estado</option>
                                 @foreach($estados as $key => $estado)
-                                <option value="{{$key}}" @if($key==old('idestado')) selected @endif >{{$estado}}</option>
+                                <option value="{{$key}}" @if($bien->idestado==$key) selected @endif >{{$estado}}</option>
                                 @endforeach
 
                             </select>

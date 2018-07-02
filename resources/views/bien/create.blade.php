@@ -42,12 +42,13 @@
                         <div class="form-group-sm {{ $errors->has('codpatrimonial') ? ' has-error' : '' }}">
                             <label>Código Patrimonial:</label>
                             <div class="row">
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" name="codpatrimonial" id="codpatrimonial" value="{{old('codpatrimonial')}}" >        
+                                <div class="col-md-6 col-xs-6">
+                                    <input type="text" class="form-control" name="codigocatalogo" id="codigocatalogo" value="{{old('codigocatalogo')}}" readonly >        
                                 </div>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" name="idbien" id="idbien" value="{{old('idbien')}}">        
+                                <div class="col-md-6 col-xs-6">
+                                    <input type="text" class="form-control" name="idbien" id="idbien" value="{{old('idbien')}}" readonly >        
                                 </div>
+                                <input type="hidden" name="codpatrimonial" id="codpatrimonial" value="">
                             </div>
                             
                             {!! $errors->first('codpatrimonial','<span class="help-block">:message</span>') !!}
@@ -58,6 +59,17 @@
 
                             <input type="text" class="form-control" name="ordencompra" id="ordencompra" value="{{old('ordencompra')}}" required>
                             {!! $errors->first('ordencompra','<span class="help-block">:message</span>') !!}
+                        </div>
+
+                        <div class="form-group-sm {{ $errors->has('fecha_ordencompra') ? ' has-error' : '' }}">
+                            <label>Fecha Orden Compra:</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="" name="fecha_ordencompra" id="fecha_ordencompra">
+                            </div>
+                            {!! $errors->first('fecha_ordencompra','<span class="help-block">:message</span>') !!}
                         </div>
 
                         <div class="form-group-sm {{ $errors->has('idmarca') ? ' has-error' : '' }}">
@@ -206,11 +218,6 @@
 
     <script>
         $(function () {
-            //Datemask dd/mm/yyyy
-            $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-            //Datemask2 mm/dd/yyyy
-            $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
-            //Money Euro
             $("[data-mask]").inputmask();
         });
     </script>
@@ -220,6 +227,10 @@
 
     <script>
         
+        cascade('idlocal','idoficina','/data/Oficina/idlocal/','idoficina','oficina',);
+        cascade('idlocal','centrocosto','/data/CentroCosto/idlocal/','codcentrocosto','centrocosto');
+        cascade('centrocosto','idpersonal','/data/CentroCosto/codcentrocosto/','idpersonal','nombres','personal');
+
         $("#catalogo").select2({
             language: "es",
             minimumInputLength: 2,
@@ -247,36 +258,40 @@
         });
 
         function formatRepo (repo) {
-            $("#codpatrimonial").val(repo.id);
-            $("#idbien").val("0001");
+            $("#codigocatalogo").val(repo.id);
+            autoCompleteCod('/bien/getbiencod/',repo.id,"idbien");
             return repo.text;
         }
 
-        cascade('idlocal','idoficina','/data/Oficina/idlocal/','idoficina','oficina',);
-        cascade('idlocal','centrocosto','/data/CentroCosto/idlocal/','codcentrocosto','centrocosto');
-        cascade('centrocosto','idpersonal','/data/CentroCosto/codcentrocosto/','idpersonal','nombres','personal');
+        function pad(str,len)
+        {
+           return ("000000"+str).slice(-len);
+        }
 
-
-        function autoCompleteCod(urlajax){
+        function autoCompleteCod(urlajax,cod,input){
             $.ajax({
                 type:'GET',
-                url:urlajax,
+                url:urlajax+cod,
                 success:function(data){
+                        if(data.codpatrimonial){
+                            var codpatrimonial = data.codpatrimonial;
+                            var correlativo =  parseInt(codpatrimonial.substring(8, 12)) + parseInt(1) ;
+                            
+                            if(correlativo){
+                                $("#"+input).val(correlativo);
+                                $("#codpatrimonial").val(codpatrimonial + pad(correlativo,3));
+                                console.log(codpatrimonial+'-'+correlativo);    
+                            }else{
+                                $("#"+input).val('0000');
+                                $("#codpatrimonial").val(codpatrimonial + '0000');    
+                                console.log(codpatrimonial+'-'+'0000');
+                            }
 
-                        if(data.length>0){
-                            $('#'+children).html('<option value="">Seleccione '+ namefield +'</option>');
-                            $('#'+children).removeAttr('disabled');
-                            $.each(data,function(v,item){
-                                //console.log(item.personal); 
-                                var options = "<option value='"+item.personal.idpersonal+"' >"+ item.personal.nombres +' '+item.personal.apellido_paterno+' '+ item.personal.apellido_materno+"</option>";
-                               
-                               $('#'+children).append(options);
-                               console.log(options);
-                            });
+                            
                         }else{
-                            $('#'+children).html('<option value="">Seleccione '+ namefield +' </option>');
-                            $('#'+children).attr('disabled','disabled');
                             console.log("no data");
+                            $("#"+input).val('0000');
+                            $("#codpatrimonial").val(cod + '0000');
                         }
                 }
             });   
@@ -307,12 +322,12 @@
                                             options += '</option>';
                                            
                                            $('#'+children).append(options);
-                                           console.log(options);
+                                           //console.log(options);
                                         });
                                     }else{
                                         $('#'+children).html('<option value="">Seleccione '+ namefield +' </option>');
                                         $('#'+children).attr('disabled','disabled');
-                                        console.log("no data");
+                                        //console.log("no data");
                                     }
                             }
                         }); 
@@ -332,12 +347,12 @@
                                             var options = "<option value='"+item.personal.idpersonal+"' >"+ item.personal.nombres +' '+item.personal.apellido_paterno+' '+ item.personal.apellido_materno+"</option>";
                                            
                                            $('#'+children).append(options);
-                                           console.log(options);
+                                           //console.log(options);
                                         });
                                     }else{
                                         $('#'+children).html('<option value="">Seleccione '+ namefield +' </option>');
                                         $('#'+children).attr('disabled','disabled');
-                                        console.log("no data");
+                                        //console.log("no data");
                                     }
                             }
                         }); 

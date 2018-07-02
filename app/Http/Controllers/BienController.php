@@ -97,7 +97,8 @@ class BienController extends Controller
                 'descripcion'       => $request->descripcion,
                 'idproveedor'       => $request->idproveedor,
                 'idlocal'           => $request->idlocal,
-                'idoficina'         => $request->idoficina
+                'idoficina'         => $request->idoficina,
+                'fecha_ordencompra' => Carbon::createFromFormat('d/m/Y', $request->fecha_ordencompra),
             ]);
             /*
             if($bien){
@@ -203,7 +204,8 @@ class BienController extends Controller
                 'descripcion'       => $request->descripcion,
                 'idproveedor'       => $request->idproveedor,
                 'idlocal'           => $request->idlocal,
-                'idoficina'         => $request->idoficina
+                'idoficina'         => $request->idoficina,
+                'fecha_ordencompra' => Carbon::createFromFormat('d/m/Y', $request->fecha_ordencompra),
             ]);
         } else{
 
@@ -225,7 +227,8 @@ class BienController extends Controller
                 'descripcion'       => $request->descripcion,
                 'idproveedor'       => $request->idproveedor,
                 'idlocal'           => $request->idlocal,
-                'idoficina'         => $request->idoficina
+                'idoficina'         => $request->idoficina,
+                'fecha_ordencompra' => Carbon::createFromFormat('d/m/Y', $request->fecha_ordencompra),
             ]);
         }
 
@@ -428,9 +431,9 @@ class BienController extends Controller
         return response()->json($result);
     }
 
-    public function getBienCod(){
-        $bien = Bien::first();
-        return $bien;
+    public function getBienCod($codpatrimonial){
+        $bien = Bien::select('codpatrimonial')->where("codcatalogo",$codpatrimonial)->latest('codpatrimonial')->first();
+        return response()->json($bien);
     }
 
     public function dataTransferenciaTable(){

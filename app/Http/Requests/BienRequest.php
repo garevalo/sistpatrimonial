@@ -44,6 +44,7 @@ class BienRequest extends FormRequest
                 'idoficina'     => 'required|integer',
                 'fecha_adquisicion' => 'required|date_format:d/m/Y',
                 'descripcion' => 'required|max:250',
+                'fecha_ordencompra' => 'required|date_format:d/m/Y'
             ];
         } else{
 
@@ -67,6 +68,7 @@ class BienRequest extends FormRequest
                 'idoficina'     => 'required|integer',
                 'fecha_adquisicion' => 'required|date_format:d/m/Y',
                 'descripcion' => 'required|max:250',
+                'fecha_ordencompra' => 'required|date_format:d/m/Y'
             ];
 
         }
