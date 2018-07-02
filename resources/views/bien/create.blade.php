@@ -278,12 +278,12 @@
                             var correlativo =  parseInt(codpatrimonial.substring(8, 12)) + parseInt(1) ;
                             
                             if(correlativo){
-                                $("#"+input).val(correlativo);
-                                $("#codpatrimonial").val(codpatrimonial + pad(correlativo,3));
-                                console.log(codpatrimonial+'-'+correlativo);    
+                                $("#"+input).val(pad(correlativo,4));
+                                $("#codpatrimonial").val(cod + pad(correlativo,4));
+                                console.log(codpatrimonial+'-'+pad(correlativo,4));    
                             }else{
                                 $("#"+input).val('0000');
-                                $("#codpatrimonial").val(codpatrimonial + '0000');    
+                                $("#codpatrimonial").val(cod + '0000');    
                                 console.log(codpatrimonial+'-'+'0000');
                             }
 
