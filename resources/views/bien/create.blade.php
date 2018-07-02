@@ -283,7 +283,7 @@
                                 console.log(codpatrimonial+'-'+pad(correlativo,4));    
                             }else{
                                 $("#"+input).val('0000');
-                                $("#codpatrimonial").val(cod + '0000');    
+                                $("#codpatrimonial").val(cod + '0001');    
                                 console.log(codpatrimonial+'-'+'0000');
                             }
 
@@ -291,7 +291,7 @@
                         }else{
                             console.log("no data");
                             $("#"+input).val('0000');
-                            $("#codpatrimonial").val(cod + '0000');
+                            $("#codpatrimonial").val(cod + '0001');
                         }
                 }
             });   
