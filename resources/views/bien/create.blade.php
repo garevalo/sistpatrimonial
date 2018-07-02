@@ -48,7 +48,7 @@
                                 <div class="col-md-6 col-xs-6">
                                     <input type="text" class="form-control" name="idbien" id="idbien" value="{{old('idbien')}}" readonly >        
                                 </div>
-                                <input type="hidden" name="codpatrimonial" id="codpatrimonial" value="">
+                                <input type="hidden" name="codpatrimonial" id="codpatrimonial" value="{{old('codpatrimonial')}}">
                             </div>
                             
                             {!! $errors->first('codpatrimonial','<span class="help-block">:message</span>') !!}
