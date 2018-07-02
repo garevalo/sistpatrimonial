@@ -282,15 +282,15 @@
                                 $("#codpatrimonial").val(cod + pad(correlativo,4));
                                 console.log(codpatrimonial+'-'+pad(correlativo,4));    
                             }else{
-                                $("#"+input).val('0000');
+                                $("#"+input).val('0001');
                                 $("#codpatrimonial").val(cod + '0001');    
-                                console.log(codpatrimonial+'-'+'0000');
+                                console.log(codpatrimonial+'-'+'0001');
                             }
 
                             
                         }else{
                             console.log("no data");
-                            $("#"+input).val('0000');
+                            $("#"+input).val('0001');
                             $("#codpatrimonial").val(cod + '0001');
                         }
                 }
