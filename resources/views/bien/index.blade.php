@@ -1,6 +1,6 @@
 @extends('back.app')
 
-@section('title')Módulo de Hardware @endsection
+@section('title')Módulo de Bienes @endsection
 
 @section('head')
     @parent

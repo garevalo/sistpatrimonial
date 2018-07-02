@@ -1,5 +1,5 @@
 @extends('back.app')
-@section('title')Reporte de activos inoperativos @endsection
+@section('title')Reporte nivel de cumplimiento @endsection
 @section('content')
 
     <div class="col-xs-12">

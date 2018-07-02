@@ -1,12 +1,12 @@
 @extends('back.app')
-@section('title')Reporte de activos inoperativos @endsection
+@section('title')Reporte de exactitud @endsection
 @section('content')
 
     <div class="col-xs-12">
 
         <div class="box box-danger">
             <div class="box-header">
-                <h3 class="box-title">Nivel de cumplimiento de entrega</h3>
+                <h3 class="box-title">Nivel de exactitud</h3>
             </div>
 
             <form method="POST" action="{{url('reporte/nivelexactitud')}}" target="_blank">
