@@ -89,16 +89,7 @@
                     		<td><input type="checkbox" id="select_all"></td>
                     	</thead>
                     	<tbody id="contenidotransferencia">
-                    		@foreach($bienes as $bien)
-                    		<tr>
-                    			<td>{{$bien->idbien}}</td>
-                    			<td>{{$bien->catalogo->denom_catalogo }}</td>
-                    			<td>{{$bien->codpatrimonial}}</td>
-                    			<td>{{$bien->color->color}}</td>
-                    			<td>{{$bien->marca->marca}}</td>
-                    			<td><input type="checkbox" name="bien[{{$bien->idbien}}]" value="{{$bien->idbien}}" ></td>
-                    		</tr>
-                    		@endforeach
+                    		
                     	</tbody>
                     </table>
                 </div>
@@ -220,10 +211,10 @@
                 $.ajax({
                     type:'GET',
                     url:urlajax+idvar,
-                    timeout: 3000,
-                    beforeSend: function() {
-                        // setting a timeout
-                        $("#"+children).addClass('loading');
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function( xhr ) {
+                      $("#"+children).html("<tr><td align='center' colspan='6'>Cargando...</td></tr>");
                     },
                     success:function(data){
                             
@@ -245,6 +236,7 @@
                         }else{
                             $('#'+children).html("");
                             console.log("no data");
+                            alert("Este centro de costos no tiene bienes");
                         }
                     }
                 })
