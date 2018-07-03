@@ -6,7 +6,7 @@
 
         <div class="box box-danger">
             <div class="box-header">
-                <h3 class="box-title">Nivel de exactitud</h3>
+                <h3 class="box-title">Nivel de Exactitud de Inventario</h3>
             </div>
 
             <form method="POST" action="{{url('reporte/nivelexactitud')}}" target="_blank">
