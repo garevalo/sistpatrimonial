@@ -330,9 +330,13 @@ class BienController extends Controller
 
         $term       =   $request->term ? : ''; 
 
-        $catalogo   =   Bien::orWhereHas('catalogo',function($query) use ($term){
+        $catalogo   =   Bien::whereHas('catalogo',function($query) use ($term){
             $query->where('denom_catalogo', 'like', $term.'%');
-        })->with('catalogo','color','modelo','marca')->get();
+        })
+        ->WhereHas('centrocostos',function($query){
+            $query->where('centrocosto', 'like', 'ALMACEN%');
+        })
+        ->with('color','modelo','marca')->get();
         
         $result     =   array();
 
