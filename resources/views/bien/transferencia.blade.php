@@ -115,6 +115,8 @@
 
     <link rel="stylesheet" href="{{asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
 
+    <script src="{{asset('plugins/bootbox.min.js')}}"></script>
+
     <script>
         $(function () {
             //Datemask dd/mm/yyyy
@@ -214,8 +216,9 @@
                     contentType: false,
                     processData: false,
                     beforeSend: function( xhr ) {
-                      $("#"+children).html("<tr><td align='center' colspan='6'>Cargando...</td></tr>");
+                      $("#"+children).html("<tr><td align='center' colspan='6'><i class='fa fa-refresh fa-spin'></i></td></tr>");
                     },
+                    timeout: 3000,
                     success:function(data){
                             
                         if(data.length>0){
@@ -236,7 +239,12 @@
                         }else{
                             $('#'+children).html("");
                             console.log("no data");
-                            alert("Este centro de costos no tiene bienes");
+                            //bootbox.alert("Este centro de costos no tiene bienes");
+                            bootbox.alert({ 
+                              size: "small",
+                              title: "<h3>Alerta</h3>",
+                              message: "Este Centro de Costo no tiene bienes asignados"
+                            });
                         }
                     }
                 })

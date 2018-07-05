@@ -9,11 +9,11 @@
 	
 	<tbody>
 		<tr><td colspan="6" style="text-align: center;font-weight: bold;background-color: skyblue;">FICHA DE REGISTO</td></tr>
-		<tr style="
-">
-			<td colspan="2" style="width: 20%">Investigador</td>
+		<tr style="">
+			<td colspan="2" style="width: 25%">Investigador</td>
 			<td colspan="2">SANCHEZ AGAPITO, PEDRO KENNEDY</td>
-			<td colspan="2">Datos recopilados de la empresa</td>
+			<td style="background-color: skyblue;">TIPO DE PRUEBA</td>
+			<td>POST-TEST</td>
 		</tr>
 		<tr>
 			<td colspan="2">Empresa donde se investiga</td>
@@ -29,44 +29,29 @@
 		</tr>
 		<tr>
 			<td colspan="2">FECHA DE INICIO</td>
-			<td></td>
+			<td style="text-align: center;">{{$data['desde']}}</td>
 			<td>FECHA FINAL</td>
-			<td colspan="2"></td>
+			<td colspan="2" style="text-align: center;">{{$data['hasta']}}</td>
 		</tr>
-		<tr style="
-    background-color: skyblue;
-    font-size: 14px;
-    text-align: center;
-    font-weight: bold;
-">
+		<tr style="background-color: skyblue;font-size: 14px;text-align: center;font-weight: bold;">
 			<td colspan="2">VARIABLE</td>
 			<td colspan="2">INDICADOR</td>
 			<td>MEDIDA</td>
 			<td>FÓRMULA</td>
 		</tr>
-		<tr style="
-    text-align: center;
-    /* padding: 5px 5px 5px 10px; */
-">
-			<td colspan="2" style="
-    padding: 15px;
-    /* font-size: 14px; */
-">CONTROL DE BIENES PATRIMONIALES</td>
+		<tr style="text-align: center;">
+			<td colspan="2" style="padding: 15px;">CONTROL DE BIENES PATRIMONIALES</td>
 			<td colspan="2">NIVEL DE EXACTITUD DE INVENTARIO</td>
 			<td>UNIDAD</td>
-			<td>EXI = (N.R / U.A) * 100% </td>
+			<td>NEI = N.R / U.A</td>
 		</tr>
-		<tr style="
-    text-align: center;
-">
-<td colspan="2"></td><td colspan="2">Pre Test</td>
-<td colspan="2"></td></tr>
-		<tr style="text-align: center;">
-			<td rospan="2" style="width: 1%;">Item</td>
+		<tr style="text-align: center; background-color: skyblue">
+			<td style="width: 1%;">Ítem</td>
 			<td>Fecha</td>
+			<td>Código de Centro de Costo</td>
 			<td>Número De Referencia (NR)</td>
 			<td>Unidad Almacenada (UA)</td>	
-			<td colspan="2">Nivel de Cumplimiento de Entrega</td>
+			<td>NIVEL DE EXACTITUD DE INVENTARIO</td>
 		</tr>
 				@php 
 					$talmacenadas = 0; $treferencia = 0;
@@ -82,17 +67,18 @@
 				<tr style="text-align: center;">
 					<td>{{$key + 1 }}</td>
 					<td>{{$item->fecha}}</td>
+					<td>{{ $item->centro_costos }}</td>
 					<td>{{$item->referencia}}</td>
 					<td>{{$item->almacenada}}</td>
-					<td colspan="2"> @if($item->almacenada > 0 ) {{ round(($item->referencia / $item->almacenada) * 100 , 2)  }} @else 0 @endif </td>
+					<td> @if($item->almacenada > 0 ) {{ round(($item->referencia / $item->almacenada) * 100 , 2)  }} @else 0 @endif </td>
 				</tr>
 				@endforeach
 
 				<tr style="text-align: center;">
-					<td colspan="2">Total de bienes</td>
+					<td colspan="3">TOTAL, DE BIENES</td>
 					<td>{{ $treferencia }}</td>
 					<td>{{ $talmacenadas }}</td>
-					<td colspan="2" style="text-align: center;">@if($talmacenadas > 0 ) {{ round(($treferencia / $talmacenadas ) * 100 , 2)  }} @else 0 @endif % </td>
+					<td style="text-align: center;">@if($talmacenadas > 0 ) {{ round(($treferencia / $talmacenadas ) * 100 , 2)  }} @else 0 @endif % </td>
 				</tr>
 			</tbody>
 
