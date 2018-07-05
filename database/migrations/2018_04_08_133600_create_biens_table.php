@@ -27,7 +27,7 @@ class CreateBiensTable extends Migration
             $table->string('centrocosto',50)->nullable();
             $table->integer('idpersonal')->unsigned()->nullable();
             $table->integer('idestado')->unsigned()->nullable();
-            $table->decimal('valor',9,2)->nullable();
+            $table->decimal('valor',11,2)->nullable();
             $table->integer('idadquisicion')->unsigned()->nullable();
             $table->datetime('fecha_adquisicion')->nullable();
             $table->text('descripcion');

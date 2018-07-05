@@ -14,9 +14,9 @@
                 {{csrf_field()}}
                 <div class="box-body">
 
-                    {{Form::textfield('desde','Desde:','',["data-inputmask" => "'alias': 'dd/mm/yyyy'" ,"data-mask"=>"" ])}} 
+                    {{Form::textfield('desde','Desde:','',["data-inputmask" => "'alias': 'dd/mm/yyyy'" ,"data-mask"=>"","required"=>"required" ])}} 
                     
-                    {{Form::textfield('hasta','Hasta:','',["data-inputmask" => "'alias': 'dd/mm/yyyy'" ,"data-mask"=>"" ])}} 
+                    {{Form::textfield('hasta','Hasta:','',["data-inputmask" => "'alias': 'dd/mm/yyyy'" ,"data-mask"=>"","required"=>"required" ])}} 
 
                 </div>
 

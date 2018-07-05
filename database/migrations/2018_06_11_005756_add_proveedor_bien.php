@@ -23,7 +23,7 @@ class AddProveedorBien extends Migration
            $table->integer('idlocal')->nullable();
            $table->integer('idoficina')->nullable();
 
-           $table->varchar('desde_centrocosto',50)->nullable();
+           $table->string('desde_centrocosto',50)->nullable();
            $table->integer('desde_personal')->nullable();
            $table->integer('desde_local')->nullable();
            $table->integer('desde_oficina')->nullable();

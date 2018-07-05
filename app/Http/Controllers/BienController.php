@@ -344,7 +344,7 @@ class BienController extends Controller
             if( $id==$value->codcatalogo ){
                 $result[]  = array(
                     'id'            => $value->idbien, 
-                    'text'          => $value->catalogo->denom_catalogo.' | Marca: '. $value->marca->marca .' | Modelo: '. $value->modelo->modelo .' | Color: '. $value->color->color,
+                    'text'          => $value->catalogo->denom_catalogo.' | Marca: '. $value->marca->marca .' | Modelo: '. $value->modelo->modelo .' | Color: '. $value->color->color.'| CP: '.$value->codpatrimonial,
                     'term'          => $value->catalogo->denom_catalogo.'|'. $value->marca->marca , 
                     'codcatalogo'   => $value->codcatalogo,
                     "selected"      => true
@@ -352,7 +352,7 @@ class BienController extends Controller
             }else{
                 $result[]  = array(
                     'id' => $value->idbien, 
-                    'text'          => $value->catalogo->denom_catalogo.' | Marca: '. $value->marca->marca .' | Modelo: '. $value->modelo->modelo .' | Color: '. $value->color->color,
+                    'text'          => $value->catalogo->denom_catalogo.' | Marca: '. $value->marca->marca .' | Modelo: '. $value->modelo->modelo .' | Color: '. $value->color->color.'| CP: '.$value->codpatrimonial,
                     'term' => $value->catalogo->denom_catalogo.'|'. $value->marca->marca , 
                     'codcatalogo' => $value->codcatalogo
                 );  

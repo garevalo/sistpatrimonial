@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Articulo extends Model
 {
-    protected $fillable = ['cantidad','umedida','idbien','idpedido','estado_articulo'];
+    protected $fillable = ['cantidad','umedida','idbien','idpedido','estado_articulo','updated_at'];
     protected $primaryKey = 'idarticulos';
-
+   
 
     public function GrupoGenericos()
     {

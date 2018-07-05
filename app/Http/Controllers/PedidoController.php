@@ -182,6 +182,8 @@ class PedidoController extends Controller
 
     public function atencionStore(PedidoRequest $request,$id){
 
+        //dd($request->all());
+
         Pedido::FindOrFail($id)->update([
             'estado_pedido' => $request->estado,
             'descripcion'   => $request->descripcion,
@@ -191,7 +193,8 @@ class PedidoController extends Controller
 
         foreach ($request->idarticulo as $key => $idarticulo) {
             Articulo::FindOrFail($idarticulo)->update([
-                'estado_articulo' => $request->estado_articulo[$key] 
+                'estado_articulo' => $request->estado_articulo[$key],
+                'updated_at'      => Carbon::createFromFormat('d/m/Y', $request->fecha_entrega)
             ]);
         }
 

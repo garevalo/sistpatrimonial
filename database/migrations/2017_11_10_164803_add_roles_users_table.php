@@ -15,9 +15,9 @@ class AddRolesUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
 
-            $table->string('apellidos')->nullable();
-            $table->string('usuario')->nullable();
-            $table->string('image')->nullable();
+            $table->string('apellidos',50)->nullable();
+            $table->string('usuario',50)->nullable();
+            $table->string('image',100)->nullable();
             $table->integer('estado')->nullable();
             $table->integer('idrol')->unsigned()->nullable();
             //$table->foreign('idrol')->references('idrol')->on('roles');

@@ -34,7 +34,7 @@ class ReporteController extends Controller
                             FROM articulos i
                             WHERE DATE(i.created_at) 
                             BETWEEN DATE('".Carbon::createFromFormat('d/m/Y', $request->desde)."') 
-                                and DATE('".Carbon::createFromFormat('d/m/Y', $request->hasta)."')
+                                and DATE('".Carbon::createFromFormat('d/m/Y', $request->hasta)."')   
                         GROUP BY fecha"));
         
        // dd($pedidos);
@@ -62,8 +62,8 @@ class ReporteController extends Controller
         $conteo = DB::select(DB::raw("select 
                     i.fecha_desde fecha,
                     count(i.fecha_desde),
-                    (select count(ci.fecha_conteo) from conteo_inventarios ci where i.fecha_desde = date(ci.created_at) ) almacenada,
-                    (select count(ci2.fecha_conteo) from conteo_inventarios ci2 where i.fecha_desde = date(ci2.created_at) and ci2.situacion=1) referencia
+                    (select count(ci.fecha_conteo) from conteo_inventarios ci where i.fecha_desde = date(ci.fecha_conteo) ) almacenada,
+                    (select count(ci2.fecha_conteo) from conteo_inventarios ci2 where i.fecha_desde = date(ci2.fecha_conteo) and ci2.situacion=1) referencia
                     ,(select GROUP_CONCAT(i2.centrocosto SEPARATOR ' - ') from inventarios i2 where i2.fecha_desde = i.fecha_desde) centro_costos
                      from inventarios i
                     where i.fecha_desde between date('".Carbon::createFromFormat('d/m/Y', $request->desde)."') and date('".Carbon::createFromFormat('d/m/Y', $request->hasta)."')

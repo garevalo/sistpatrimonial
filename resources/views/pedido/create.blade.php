@@ -63,7 +63,6 @@
 @parent
 
 <script type="text/javascript">
-
     $(function(){
             $("body").on("click",".eliminar",function(){
                      $(this).parents("tr").remove();
@@ -135,78 +134,6 @@
         }
     });
 
-    cascade('cc_solicitante','responsable','/data/CentroCosto/codcentrocosto/','idpersonal','nombres','personal');
-
-    function cascade(parent,children,urlajax,id,column,withjoin=''){
-            $('#' + parent).on('change',function(){
-                var idvar = $(this).val();
-                var namefield =  $("#"+children).attr('name').replace('id','');
-                if(idvar){
-
-                    if(withjoin===''){
-
-                        $.ajax({
-                            type:'GET',
-                            url:urlajax+idvar,
-                            contentType: false,
-                            processData: false,
-                            beforeSend: function( xhr ) {
-                              $("#"+children).html("<option>Cargando ...</option>");
-                            },
-                            success:function(data){
-                                
-                                    if(data.length>0){
-                                        $('#'+children).html('<option value="">Seleccione '+ namefield +'</option>');
-                                        $('#'+children).removeAttr('disabled');
-                                        $.each(data,function(v,item){
-                                            var options = "<option ";
-                                            $.each(item,function(i,val){
-                                                if(i===id){ options += "value='" + val + "'>"; }
-                                                if(i===column){ options +=  val; }
-                                           });
-                                            options += '</option>';
-                                           
-                                           $('#'+children).append(options);
-                                           //console.log(options);
-                                        });
-                                    }else{
-                                        $('#'+children).html('<option value="">Seleccione '+ namefield +' </option>');
-                                        $('#'+children).attr('disabled','disabled');
-                                        //console.log("no data");
-                                    }
-                            }
-                        }); 
-
-                    } else {
-
-                         $.ajax({
-                            type:'GET',
-                            url:urlajax+idvar+'/'+withjoin,
-                            success:function(data){
-
-                                    if(data.length>0){
-                                        $('#'+children).html('<option value="">Seleccione '+ namefield +'</option>');
-                                        $('#'+children).removeAttr('disabled');
-                                        $.each(data,function(v,item){
-                                            //console.log(item.personal); 
-                                            var options = "<option value='"+item.personal.idpersonal+"' >"+ item.personal.nombres +' '+item.personal.apellido_paterno+' '+ item.personal.apellido_materno+"</option>";
-                                           
-                                           $('#'+children).append(options);
-                                           //console.log(options);
-                                        });
-                                    }else{
-                                        $('#'+children).html('<option value="">Seleccione '+ namefield +' </option>');
-                                        $('#'+children).attr('disabled','disabled');
-                                        //console.log("no data");
-                                    }
-                            }
-                        }); 
-
-                    }
-
-                }
-            });
-        }
 
 
 </script>
