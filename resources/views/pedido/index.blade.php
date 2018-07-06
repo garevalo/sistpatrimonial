@@ -35,6 +35,7 @@
                         <th>Destino</th>
                         <th>Responsable</th>
                         <th>Estado</th>
+                        <th>Fecha Entrega</th>
                         <th>Editar</th>
 
                     </tr>
@@ -81,6 +82,7 @@
                 {data: 'destino', name: 'destino'},
                 {data: 'responsable', name: 'responsable'},
                 {data: 'estado', name: 'estado'},
+                {data: 'fechaentrega', name: 'fechaentrega'},
                 {
                     data: 'edit',
                     name: 'edit',

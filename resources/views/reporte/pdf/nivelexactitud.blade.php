@@ -66,11 +66,11 @@
 
 				<tr style="text-align: center;">
 					<td>{{$key + 1 }}</td>
-					<td>{{$item->fecha}}</td>
+					<td>{{ date('d/m/Y',strtotime($item->fecha)) }}</td>
 					<td>{{ $item->centro_costos }}</td>
 					<td>{{$item->referencia}}</td>
 					<td>{{$item->almacenada}}</td>
-					<td> @if($item->almacenada > 0 ) {{ round(($item->referencia / $item->almacenada) * 100 , 2)  }} @else 0 @endif </td>
+					<td> @if($item->almacenada > 0 ) {{ round(($item->referencia / $item->almacenada) , 2)  }} @else 0 @endif </td>
 				</tr>
 				@endforeach
 

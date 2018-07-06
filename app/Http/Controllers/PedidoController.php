@@ -217,6 +217,10 @@ class PedidoController extends Controller
                 return  $field->PersonalResponsable->FullName;
             })
 
+            ->addColumn('fechaentrega',function($field){
+                return  date('d/m/Y',strtotime($field->fecha_entrega) );
+            })    
+
             ->addColumn('estado',function($field){
                 if($field->estado_pedido == 1 ){
                     return 'Solicitado';

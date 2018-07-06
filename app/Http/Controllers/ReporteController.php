@@ -28,11 +28,11 @@ class ReporteController extends Controller
 
         $pedidos = DB::select(
                     DB::raw("SELECT 
-                            DATE_FORMAT(i.created_at,'%d/%m/%Y') fecha,
+                            DATE(i.updated_at)  fecha,
                             count((SELECT a1.idarticulos FROM articulos a1 where i.idarticulos =  a1.idarticulos)) solicitados,
                             count((SELECT a2.idarticulos FROM articulos a2 where i.idarticulos =  a2.idarticulos and a2.estado_articulo=2 )) entregados
                             FROM articulos i
-                            WHERE DATE(i.created_at) 
+                            WHERE DATE(i.updated_at) 
                             BETWEEN DATE('".Carbon::createFromFormat('d/m/Y', $request->desde)."') 
                                 and DATE('".Carbon::createFromFormat('d/m/Y', $request->hasta)."')   
                         GROUP BY fecha"));

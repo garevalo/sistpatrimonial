@@ -65,10 +65,10 @@
 
 				<tr style="text-align: center;">
 					<td>{{$key + 1 }}</td>
-					<td>{{$item->fecha}}</td>
+					<td>{{date('d/m/Y',strtotime($item->fecha)) }}</td>
 					<td>{{ $item->entregados }}</td>
 					<td>{{$item->solicitados}}</td>
-					<td colspan="2"> @if($item->solicitados > 0 ) {{ round(($item->entregados / $item->solicitados) * 100 , 2)  }} @else 0 @endif </td>
+					<td colspan="2"> @if($item->solicitados > 0 ) {{ round(($item->entregados / $item->solicitados) , 2)  }} @else 0 @endif </td>
 				</tr>
 				@endforeach
 
