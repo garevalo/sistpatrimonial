@@ -289,8 +289,9 @@ class BienController extends Controller
         //dd(Bien::with('marca','modelo','color','adquisicion','centrocostos','personal','catalogo')->get());
         return Datatables::of(Bien::with('marca','modelo','color','adquisicion','centrocostos','personal','catalogo')->get())
             ->addColumn('edit',function($bien){
-                return '<a href="'.route('bien.edit',$bien->idbien).'" class="btn btn-primary btn-xs">Editar</a>
-                        <a href="'.route('bien.movimiento',$bien->idbien).'" class="btn btn-success btn-xs">Transferir</a>
+                return '<a href="'.route('bien.edit',$bien->idbien).'" class="btn btn-primary btn-xs">Editar</a><br>
+                        <a href="'.route('bien.movimiento',$bien->idbien).'" class="btn btn-success btn-xs">Transferir</a><br>
+                        <a href="'.route('bien.edit',$bien->idbien).'" class="btn btn-danger btn-xs">Baja</a><br>
                         <a href="'.route('bien.show',$bien->idbien).'" class="btn btn-info btn-xs">Ver</a>' ;
             })
             ->addColumn('foto',function($bien){
@@ -461,5 +462,9 @@ class BienController extends Controller
             ->rawColumns(['edit'])
             ->make(true);
 
+    }
+
+    public function baja($id){
+        return view();
     }
 }

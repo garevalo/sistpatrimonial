@@ -108,6 +108,8 @@
                     
 
                     <li class="@if(request()->getRequestUri()=='/pedido') active @endif"><a href="/reporte/nivelexactitud"><i class="fa fa-file-pdf-o"></i> Nivel de Exactitud</a></li>
+
+                    <li class="@if(request()->getRequestUri()=='/pedido') active @endif"><a href="/reporte/nivelexactitud"><i class="fa fa-file-pdf-o"></i> Reporte Inventarios</a></li>
                 </ul>
             </li> 
             @endif

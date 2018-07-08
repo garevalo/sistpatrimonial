@@ -26,6 +26,8 @@ Route::middleware(['auth'])->group(function () {
     //Bienes
     Route::get('bien/data/{model?}/{by?}/{id?}/{with?}','BienController@getItemBy')->name('getdatabien');
 
+    Route::get('bien/baja/{id?}','BienController@baja')->name('bien.baja');
+
     Route::get('transferencia/show/{idtransferencia?}','BienController@transferenciaShow')->name('showtransferencia');
     Route::get('transferencia','BienController@transferenciaIndex')->name('indextransferencia');
     Route::get('transferencia/alldata','BienController@dataTransferenciaTable')->name('gettransferencia');

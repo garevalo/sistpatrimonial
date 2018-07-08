@@ -74,7 +74,6 @@
     <!-- page script -->
 
     <script>
-        //var template = Handlebars.compile($("#details-template").html());
 
         var table = $('#table').DataTable({
             processing: true,
