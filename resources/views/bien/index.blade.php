@@ -40,6 +40,7 @@
                         <th>Imagen</th>
                         <th>Centro Costo</th>
                         <th>Responsable</th>
+                        <th>Estado</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -90,6 +91,7 @@
                 {data:'foto',name:'foto'},
                 {data:'centrocosto',name:'centrocosto'},
                 {data:'responsable',name:'responsable'},
+                {data:'estado',name:'estado'},
                 {
                     data: 'edit',
                     name: 'edit',

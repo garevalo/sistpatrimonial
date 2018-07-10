@@ -25,7 +25,12 @@
 	          <br>
 	          <strong>Orden Compra:</strong>
 	          {{$bien->ordencompra}}
-
+            <br>
+            @if($bien->idestado == 1 ) 
+                <h3><label class="label label-primary">Activo</label></h3>  
+              @else 
+                <h3><label class="label btn-block label-danger">De Baja</label></h3> 
+            @endif
 	        </div>
 	        <!-- /.col -->
 	        <div class="col-sm-4 invoice-col">
@@ -54,19 +59,44 @@
 	          {{$bien->local->local}}
 
 	          <br>
-	          <strong>Orden Compra:</strong>
-	          {{$bien->ordencompra}}
-
-	          <br>
 	          <img class="img img-rounded" src="{{$bien->imagen}}" width="120" height="100"> 
 	        </div>	
 
         </div>
-        
-
       </div>
-      <!-- /.row -->
+
+      @if($baja)
+      <div class="row invoice-info">
+        <div class="box-header with-border">
+          <h3 class="box-title"><i class="fa fa-tag"></i> Detalles de la baja</h3>
+        </div>
+        <div class="box-body">
+          <div class="col-sm-6 invoice-col">
+            <strong>Local:</strong>
+            {{$baja->bien->local->local}}
+            <br>
+            <strong>Centro Costo:</strong>
+            {{$baja->bien->centrocostos->centrocosto}}
+            <br>
+            <strong>Personal :</strong>
+            {{$baja->bien->personal->FullName}}
+            <br>
+            <strong>Detalle de la baja:</strong>
+            {{$baja->descripcion}}
+            <br>
+            <strong>Fecha de baja:</strong>
+            {{$baja->fechabaja->format('d/m/Y')}}
+          </div>
+
+          <div class="col-sm-6 invoice-col">
+            <img class="img img-rounded" src="{{$baja->imagen}}" width="120" height="100"> 
+          </div>   
+
+        </div>
+      </div>
       <br><br>
+      @endif
+
       <!-- Table row -->
       <div class="row">
         <div class="col-xs-12 table-responsive">

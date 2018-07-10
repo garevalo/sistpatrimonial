@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\BienRequest;
+use App\Http\Requests\BajaRequest;
 use App\Bien;
 use App\Color;
 use App\Adquisicion;
@@ -18,9 +19,8 @@ use App\Proveedor;
 use App\Local;
 use App\Oficina;
 use App\Transferencia;
+use App\Baja;
 use Carbon\Carbon;
-
-
 use DB;
 use Datatables;
 
@@ -90,7 +90,7 @@ class BienController extends Controller
                 'numserie'          => $request->numserie,
                 'centrocosto'       => $request->centrocosto,
                 'idpersonal'        => $request->idpersonal,
-                'idestado'          => $request->idestado,
+                'idestado'          => 1,
                 'valor'             => $request->valor,
                 'idadquisicion'     => $request->idadquisicion,
                 'fecha_adquisicion' => Carbon::createFromFormat('d/m/Y', $request->fecha_adquisicion),
@@ -129,20 +129,17 @@ class BienController extends Controller
      */
     public function show($id)
     {
-        $colores        =   Color::all();
-        $adquisiciones  =   Adquisicion::all();
-        $marcas         =   Marca::all();
-        $modelos        =   Modelo::all();
-        $personals      =   Personal::all();
-        $centrocostos   =   CentroCosto::all();
+
 
         $estados        =   array(1=>'Activo',2=>'Inactivo');
 
         $bien    = Bien::with('marca','modelo','color','adquisicion','centrocostos','personal','movimientos.personal','movimientos.centrocosto_destino','movimientos.personal_origen','movimientos.centrocosto_origen','local')->FindOrFail($id);
 
-        //dd($bien);
+        $baja = Baja::with('bien.personal','bien.local','bien.centrocostos')->where('idbien',$id)->latest('idbaja')->first();
 
-        return view('bien.view',compact('colores','adquisiciones','marcas','modelos','personals','centrocostos','estados','bien'));
+        //dd($baja);
+
+        return view('bien.view',compact('estados','bien','baja'));
     }
 
     /**
@@ -289,10 +286,13 @@ class BienController extends Controller
         //dd(Bien::with('marca','modelo','color','adquisicion','centrocostos','personal','catalogo')->get());
         return Datatables::of(Bien::with('marca','modelo','color','adquisicion','centrocostos','personal','catalogo')->get())
             ->addColumn('edit',function($bien){
-                return '<a href="'.route('bien.edit',$bien->idbien).'" class="btn btn-primary btn-xs">Editar</a><br>
-                        <a href="'.route('bien.movimiento',$bien->idbien).'" class="btn btn-success btn-xs">Transferir</a><br>
-                        <a href="'.route('bien.edit',$bien->idbien).'" class="btn btn-danger btn-xs">Baja</a><br>
-                        <a href="'.route('bien.show',$bien->idbien).'" class="btn btn-info btn-xs">Ver</a>' ;
+                $btnbaja = '<p><a href="'.route('bien.baja',$bien->idbien).'" class="btn btn-danger btn-block btn-xs">Baja</a></p>';
+                if($bien->idestado == 2){
+                    $btnbaja = '<p><a href="'.route('bien.baja',$bien->idbien).'" class="btn btn-danger btn-block btn-xs disabled" disabled >Baja</a></p>';
+                }
+                //<p><a href="'.route('bien.movimiento',$bien->idbien).'" class="btn btn-success btn-block btn-xs">Transferir</a></p>
+                return '<p><a href="'.route('bien.edit',$bien->idbien).'" class="btn btn-primary btn-block btn-xs">Editar</a></p>
+                        <p><a href="'.route('bien.show',$bien->idbien).'" class="btn btn-info btn-block btn-xs">Ver</a></p>' . $btnbaja ;
             })
             ->addColumn('foto',function($bien){
                 return '<img src="'.$bien->imagen.'" style="width: 120px;height: 100px;" >' ;
@@ -311,9 +311,9 @@ class BienController extends Controller
             })
             ->addColumn('estado',function($field){
                 if($field->idestado==1){
-                    return "Activo";
+                    return "<h4><label class='label label-info'>Activo</label></h4>";
                 }else{
-                    return "Inactivo";
+                    return "<h4><label class='label label-danger'>De Baja</label></h4>";
                 }
             })
             ->addColumn('centrocosto',function($field){
@@ -322,7 +322,7 @@ class BienController extends Controller
             ->addColumn('responsable',function($field){
                 return isset($field->personal->FullName) ? $field->personal->FullName : '';
             })
-            ->rawColumns(['edit','foto'])
+            ->rawColumns(['edit','foto','estado'])
             ->make(true);
 
     }
@@ -337,6 +337,7 @@ class BienController extends Controller
         ->WhereHas('centrocostos',function($query){
             $query->where('centrocosto', 'like', 'ALMACEN%');
         })
+        ->where('idestado',1)
         ->with('color','modelo','marca')->get();
         
         $result     =   array();
@@ -431,7 +432,7 @@ class BienController extends Controller
 
         $model = app( str_replace(" ","","App\ ").$model);
          
-        $result = $model::with('catalogo','color','marca')->where($by,$id)->get();
+        $result = $model::with('catalogo','color','marca')->where([$by=>$id,'idestado'=>1])->get();
                
         return response()->json($result);
     }
@@ -465,6 +466,41 @@ class BienController extends Controller
     }
 
     public function baja($id){
-        return view();
+        
+        $personals      =   Personal::all()->pluck('FullName','idpersonal');
+        $centrocostos   =   CentroCosto::all()->pluck('centrocosto','codcentrocosto');
+        $locales        =   Local::all()->pluck('local','idlocal');
+        $oficinas       =   Oficina::all()->pluck('oficina','idoficina');
+
+        $bien    = Bien::with('catalogo')->FindOrFail($id);
+
+        return view('bien.baja',compact('personals','centrocostos','bien','locales','oficinas','id'));
+    }
+
+    public function bajaStore(BajaRequest $request, $id){
+
+        DB::transaction(function () use ($request,$id) {
+
+            $path = $request->file('imagen')->storeAs(
+                'public/fotos/baja/', $id.'.'.$request->imagen->extension()
+            );
+
+            Bien::FindOrFail($id)->update(['idestado'=>2]);
+
+            Baja::create([
+                'idlocal'       => $request->idlocal,
+                'idoficina'     => $request->idoficina,
+                'centrocosto'   => $request->centrocosto,
+                'idpersonal'    => $request->idpersonal,
+                'fechabaja'    => Carbon::createFromFormat('d/m/Y', $request->fechabaja),
+                'descripcion'   => $request->descripcion,
+                'imagen'        => asset(Storage::url($path)),
+                'idbien'        => $id,
+            ]);
+
+        });
+
+        return redirect()->route(self::MODULO.'.index');
+
     }
 }
