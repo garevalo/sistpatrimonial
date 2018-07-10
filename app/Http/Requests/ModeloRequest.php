@@ -25,11 +25,11 @@ class ModeloRequest extends FormRequest
     {
         if($this->request->has('_method')){
             return [
-                'modelo'=>'required|min:2|max:50'
+                'modelo'=>'required|min:2|max:25'
             ];
         }else{
             return [
-                'modelo'=>'required|min:2|max:50'
+                'modelo'=>'required|min:2|max:25'
             ];
         }
     }
