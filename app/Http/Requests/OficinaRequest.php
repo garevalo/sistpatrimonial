@@ -25,12 +25,12 @@ class OficinaRequest extends FormRequest
     {
         if($this->request->has('_method')){
             return [
-                'oficina'=>'required|min:1|max:20',
+                'oficina'=>'required|min:1|max:50',
                 'idlocal'    =>'required|integer',
             ];
         } else {
             return [
-                'oficina'=>'required|min:1|max:20',
+                'oficina'=>'required|min:1|max:50',
                 'idlocal'    =>'required|integer',
             ];
         }
