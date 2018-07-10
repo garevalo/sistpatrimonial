@@ -29,7 +29,7 @@ class MarcaRequest extends FormRequest
             ];
         }else{
             return [
-                'marca'=>'required|min:2|max:20|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:marcas,marca'
+                'marca'=>'required|min:2|max:20|unique:marcas,marca'
             ];
         }
 
