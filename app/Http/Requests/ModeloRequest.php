@@ -25,11 +25,11 @@ class ModeloRequest extends FormRequest
     {
         if($this->request->has('_method')){
             return [
-                'modelo'=>'required|min:2|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:modelos,modelo,'.$this->route('modelo').',idmodelo'
+                'modelo'=>'required|min:2|max:20'
             ];
         }else{
             return [
-                'modelo'=>'required|min:2|regex:/^[a-z A-Z áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:modelos,modelo'
+                'modelo'=>'required|min:2|max:20'
             ];
         }
     }
