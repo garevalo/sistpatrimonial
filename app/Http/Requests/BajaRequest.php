@@ -31,6 +31,7 @@ class BajaRequest extends FormRequest
                 'idoficina'     => 'required|integer',
                 'fechabaja' => 'required|date_format:d/m/Y',
                 'descripcion' => 'required|max:250',
+                'causalbaja'  => 'required',
         ];
     }
 }

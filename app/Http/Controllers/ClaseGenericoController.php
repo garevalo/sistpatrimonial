@@ -36,7 +36,11 @@ class ClaseGenericoController extends Controller
         $modulo = self::MODULO;
         $titulomod = self::TITLEMOD;
         $table = new ClaseGenerico;
-        $grupos = GrupoGenerico::all()->pluck('grupo_generico','cod_grupo_generico');
+        $grupos = GrupoGenerico::all()
+        ->map(function ($setting) {
+            return ['grupo_generico' => $setting->cod_grupo_generico.' - '.$setting->grupo_generico, 'cod_grupo_generico' => $setting->cod_grupo_generico];
+        })
+        ->pluck('grupo_generico','cod_grupo_generico');
 
         return view(self::MODULO.'.create',compact('modulo','table','titulomod','grupos'));
     }

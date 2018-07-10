@@ -55,7 +55,7 @@ class BienController extends Controller
         $modelos        =   Modelo::all();
         $personals      =   Personal::all();
         $centrocostos   =   CentroCosto::all();
-        $estados        =   array(1=>'Activo',2=>'Inactivo');
+        $estados        =   array(1=>'Bueno',2=>'Regular',3=>'Malo',4=>'Muy Malo','Nuevo');
         $proveedores    =   Proveedor::all()->pluck('razon_social','idproveedor');
         $locales        =   Local::all()->pluck('local','idlocal');
         $oficinas       =   Oficina::all()->pluck('oficina','idoficina');
@@ -90,7 +90,8 @@ class BienController extends Controller
                 'numserie'          => $request->numserie,
                 'centrocosto'       => $request->centrocosto,
                 'idpersonal'        => $request->idpersonal,
-                'idestado'          => 1,
+                'idestado'          => $request->idestado,
+                'idbaja'            => 1,
                 'valor'             => $request->valor,
                 'idadquisicion'     => $request->idadquisicion,
                 'fecha_adquisicion' => Carbon::createFromFormat('d/m/Y', $request->fecha_adquisicion),
@@ -131,15 +132,15 @@ class BienController extends Controller
     {
 
 
-        $estados        =   array(1=>'Activo',2=>'Inactivo');
-
+        $estados     =   array(1=>'Bueno',2=>'Regular',3=>'Malo',4=>'Muy Malo',5=>'Nuevo');
+        $causalbaja  =   array(1=>'Perdida',2=>'Robo',3=>'Destrucción');
         $bien    = Bien::with('marca','modelo','color','adquisicion','centrocostos','personal','movimientos.personal','movimientos.centrocosto_destino','movimientos.personal_origen','movimientos.centrocosto_origen','local')->FindOrFail($id);
 
         $baja = Baja::with('bien.personal','bien.local','bien.centrocostos')->where('idbien',$id)->latest('idbaja')->first();
 
         //dd($baja);
 
-        return view('bien.view',compact('estados','bien','baja'));
+        return view('bien.view',compact('estados','bien','baja','causalbaja'));
     }
 
     /**
@@ -156,7 +157,7 @@ class BienController extends Controller
         $modelos        =   Modelo::all()->pluck('modelo','idmodelo');
         $personals      =   Personal::all()->pluck('FullName','idpersonal');
         $centrocostos   =   CentroCosto::all()->pluck('centrocosto','codcentrocosto');
-        $estados        =   array(1=>'Activo',2=>'Inactivo');
+        $estados        =   array(1=>'Bueno',2=>'Regular',3=>'Malo',4=>'Muy Malo','Nuevo');
 
         $proveedores    =   Proveedor::all()->pluck('razon_social','idproveedor');
         $locales        =   Local::all()->pluck('local','idlocal');
@@ -287,7 +288,7 @@ class BienController extends Controller
         return Datatables::of(Bien::with('marca','modelo','color','adquisicion','centrocostos','personal','catalogo')->get())
             ->addColumn('edit',function($bien){
                 $btnbaja = '<p><a href="'.route('bien.baja',$bien->idbien).'" class="btn btn-danger btn-block btn-xs">Baja</a></p>';
-                if($bien->idestado == 2){
+                if($bien->idbaja == 2){
                     $btnbaja = '<p><a href="'.route('bien.baja',$bien->idbien).'" class="btn btn-danger btn-block btn-xs disabled" disabled >Baja</a></p>';
                 }
                 //<p><a href="'.route('bien.movimiento',$bien->idbien).'" class="btn btn-success btn-block btn-xs">Transferir</a></p>
@@ -310,7 +311,7 @@ class BienController extends Controller
                 return isset($field->catalogo->denom_catalogo)? $field->catalogo->denom_catalogo : '';
             })
             ->addColumn('estado',function($field){
-                if($field->idestado==1){
+                if($field->idbaja!=2){
                     return "<h4><label class='label label-info'>Activo</label></h4>";
                 }else{
                     return "<h4><label class='label label-danger'>De Baja</label></h4>";
@@ -337,7 +338,10 @@ class BienController extends Controller
         ->WhereHas('centrocostos',function($query){
             $query->where('centrocosto', 'like', 'ALMACEN%');
         })
-        ->where('idestado',1)
+        ->where(function ($query) {
+            $query->where('idbaja', '=', 1)
+                  ->orWhereNull('idbaja');
+        })
         ->with('color','modelo','marca')->get();
         
         $result     =   array();
@@ -432,7 +436,13 @@ class BienController extends Controller
 
         $model = app( str_replace(" ","","App\ ").$model);
          
-        $result = $model::with('catalogo','color','marca')->where([$by=>$id,'idestado'=>1])->get();
+        $result = $model::with('catalogo','color','marca')
+                    ->where($by,'=',$id)
+                    ->where(function ($query) {
+                        $query->where('idbaja', '=', 1)
+                              ->orWhereNull('idbaja');
+                    })   
+                    ->get();
                
         return response()->json($result);
     }
@@ -471,10 +481,11 @@ class BienController extends Controller
         $centrocostos   =   CentroCosto::all()->pluck('centrocosto','codcentrocosto');
         $locales        =   Local::all()->pluck('local','idlocal');
         $oficinas       =   Oficina::all()->pluck('oficina','idoficina');
+        $causalbaja  =   array(1=>'Perdida',2=>'Robo',3=>'Destrucción');
 
         $bien    = Bien::with('catalogo')->FindOrFail($id);
 
-        return view('bien.baja',compact('personals','centrocostos','bien','locales','oficinas','id'));
+        return view('bien.baja',compact('personals','centrocostos','bien','locales','oficinas','id','causalbaja'));
     }
 
     public function bajaStore(BajaRequest $request, $id){
@@ -485,7 +496,7 @@ class BienController extends Controller
                 'public/fotos/baja/', $id.'.'.$request->imagen->extension()
             );
 
-            Bien::FindOrFail($id)->update(['idestado'=>2]);
+            Bien::FindOrFail($id)->update(['idbaja'=>2]);
 
             Baja::create([
                 'idlocal'       => $request->idlocal,
@@ -496,6 +507,7 @@ class BienController extends Controller
                 'descripcion'   => $request->descripcion,
                 'imagen'        => asset(Storage::url($path)),
                 'idbien'        => $id,
+                'causalbaja'    => $request->causalbaja,
             ]);
 
         });

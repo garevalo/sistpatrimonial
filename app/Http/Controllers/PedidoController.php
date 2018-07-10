@@ -198,6 +198,35 @@ class PedidoController extends Controller
             ]);
         }
 
+        /*
+        DB::transaction(function () use ($request) {
+            
+           $idtransferencia = Transferencia::insertGetId([
+                'cc_origen'           => $request->centrocosto,
+                'personal_origen'     => $request->idpersonal,
+                'cc_destino'          => $request->centrocostodestino,
+                'personal_destino'    => $request->idpersonaldestino
+            ]);
+
+            foreach ($request->bien as $key => $bien) {
+                Bien::FindOrFail($key)->update([
+                    'centrocosto'=> $request->centrocostodestino,
+                    'idpersonal' => $request->idpersonaldestino
+                ]); 
+
+                Movimiento::create([
+                    'idbien'            => $key,
+                    'centrocosto'       => $request->centrocostodestino,
+                    'idpersonal'        => $request->idpersonaldestino,
+                    'desde_centrocosto' => $request->centrocosto,
+                    'desde_personal'    => $request->idpersonal,
+                    'fecha_movimiento'  => Carbon::now(),
+                    'idtransferencia'   => $idtransferencia
+                ]);
+            }
+            
+        });*/
+
         return redirect()->route(self::REDIRECT);
     }
 

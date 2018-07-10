@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCatalogosTable extends Migration
+class AddBajaToBien extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,9 @@ class CreateCatalogosTable extends Migration
      */
     public function up()
     {
-        Schema::create('catalogos', function (Blueprint $table) {
-            $table->increments('idcatalogo');
-            $table->string('codcatalogo',8);
-            $table->string('denom_catalogo',100);
-            $table->integer('idestado');
-            $table->timestamps();
+        Schema::table('biens', function (Blueprint $table) {
+            $table->integer('idbaja')->nullable();
         });
-
     }
 
     /**
@@ -30,6 +25,8 @@ class CreateCatalogosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('catalogos');
+        Schema::table('biens', function (Blueprint $table) {
+            $table->dropColumn('idbaja');
+        });
     }
 }

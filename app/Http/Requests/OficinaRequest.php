@@ -25,12 +25,12 @@ class OficinaRequest extends FormRequest
     {
         if($this->request->has('_method')){
             return [
-                'oficina'=>'required|min:1|regex:/^[a-z A-Z 0-9 áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:oficinas,oficina,'.$this->route('oficina').',idoficina',
+                'oficina'=>'required|min:1|max:20',
                 'idlocal'    =>'required|integer',
             ];
         } else {
             return [
-                'oficina'=>'required|min:1|regex:/^[a-z A-Z 0-9 áéíóúñ ÁÉÍÓÚÑ]+$/u|unique:oficinas,oficina',
+                'oficina'=>'required|min:1|max:20',
                 'idlocal'    =>'required|integer',
             ];
         }

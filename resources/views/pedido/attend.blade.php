@@ -13,11 +13,11 @@
         {!! Form::model($table, ['route' => ['atencion.store',$table->idpedido]] ) !!}
             <div class="box-body">
                 <div class="col-xs-12">
-                    {{ Form::selectfield('cc_solicitante','Dependencia Solicitante',$centrocostos,'Seleccione Centro Costo',$table->centroCostoSolicitante->codcentrocosto,['disabled'=>'disabled']) }}
+                    {{ Form::selectfield('cc_solicitante','Dependencia Solicitante',$centrocostos,'Seleccione Centro Costo',$table->centroCostoSolicitante->codcentrocosto,[]) }}
 
-                    {{ Form::selectfield('cc_destino','Con Destino a',$oficinas,'Seleccione Oficina',(isset($table->CentroCostoDestino->idoficina) ? $table->CentroCostoDestino->idoficina : ''),[''=>'']) }}
+                    {{ Form::selectfield('cc_destino','Con Destino a',$oficinas,'Seleccione Oficina',(isset($table->CentroCostoDestino->idoficina) ? $table->CentroCostoDestino->idoficina : ''),[]) }}
 
-                    {{ Form::selectfield('responsable','Entregar a',$personales,'Seleccione Personal',$table->PersonalResponsable->idpersonal,['disabled'=>'disabled']) }}
+                    {{ Form::selectfield('responsable','Entregar a',$personales,'Seleccione Personal',$table->PersonalResponsable->idpersonal,[]) }}
 
                     {{ Form::selectfield('estado','Estado',$estados,'Seleccione Estados',$table->estado_pedido) }}
                     

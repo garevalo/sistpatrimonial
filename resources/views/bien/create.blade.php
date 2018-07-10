@@ -152,6 +152,19 @@
                             {!! $errors->first('idpersonal','<span class="help-block">:message</span>') !!}
                         </div>
 
+                        <div class="form-group-sm {{ $errors->has('idestado') ? ' has-error' : '' }}">
+                            <label>Estado:</label>
+
+                            <select name="idestado" id="idestado" class="form-control select2" required="">
+                                <option value="">Seleccione Estado</option>
+                                @foreach($estados as $key => $estado)
+                                <option value="{{$key}}" @if($estado== old('idpersonal') ) selected @endif >{{$estado}}</option>
+                                @endforeach
+
+                            </select>
+                            {!! $errors->first('idestado','<span class="help-block">:message</span>') !!}
+                        </div>
+
                         <div class="form-group-sm {{ $errors->has('valor') ? ' has-error' : '' }}">
                             <label>Valor:</label>
 

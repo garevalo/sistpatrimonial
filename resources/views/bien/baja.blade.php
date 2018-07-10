@@ -31,7 +31,18 @@
                    	</div>
 
                     <div class="col-md-6 col-xs-12">
+                        <div class="form-group-sm {{ $errors->has('causalbaja') ? ' has-error' : '' }}">
+                            <label>Causal de baja:</label>
 
+                            <select name="causalbaja" id="causalbaja" class="form-control select2" required="">
+                                <option value="">Seleccione Causal</option>
+                                @foreach($causalbaja as $key => $estado)
+                                <option value="{{$key}}" @if($key == old('causalbaja')) selected @endif >{{$estado}}</option>
+                                @endforeach
+
+                            </select>
+                            {!! $errors->first('causalbaja','<span class="help-block">:message</span>') !!}
+                        </div>
                         <div class="form-group-sm {{ $errors->has('fechabaja') ? ' has-error' : '' }}">
                             <label>Fecha de Baja:</label>
                             <div class="input-group">

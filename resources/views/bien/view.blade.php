@@ -26,7 +26,20 @@
 	          <strong>Orden Compra:</strong>
 	          {{$bien->ordencompra}}
             <br>
-            @if($bien->idestado == 1 ) 
+            <strong>Estado del bien:</strong>
+            @if($bien->idestado == 1) 
+                Bueno  
+              @elseif($bien->idestado == 2) 
+                Regular 
+              @elseif($bien->idestado == 3) 
+                Malo
+              @elseif($bien->idestado == 4) 
+                Muy Malo
+              @elseif($bien->idestado == 5) 
+                Nuevo      
+            @endif
+            <br>
+            @if($bien->idbaja == 1 or $bien=='') 
                 <h3><label class="label label-primary">Activo</label></h3>  
               @else 
                 <h3><label class="label btn-block label-danger">De Baja</label></h3> 
@@ -86,6 +99,15 @@
             <br>
             <strong>Fecha de baja:</strong>
             {{$baja->fechabaja->format('d/m/Y')}}
+            <br>
+            <strong>Causal de baja:</strong>
+            @if($baja->causalbaja == 1) 
+                Perdida  
+              @elseif($baja->causalbaja == 2) 
+                Robo 
+              @elseif($baja->causalbaja == 3) 
+                Destrucción
+            @endif
           </div>
 
           <div class="col-sm-6 invoice-col">

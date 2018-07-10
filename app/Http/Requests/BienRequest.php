@@ -41,6 +41,7 @@ class BienRequest extends FormRequest
                 'idproveedor'   => 'required|integer',
                 'idlocal'       => 'required|integer',
                 'idoficina'     => 'required|integer',
+                'idestado'     => 'required|integer',
                 'fecha_adquisicion' => 'required|date_format:d/m/Y',
                 'descripcion' => 'required|max:250',
                 'fecha_ordencompra' => 'required|date_format:d/m/Y'
@@ -64,6 +65,7 @@ class BienRequest extends FormRequest
                 'idproveedor'   => 'required|integer',
                 'idlocal'       => 'required|integer',
                 'idoficina'     => 'required|integer',
+                'idestado'     => 'required|integer',
                 'fecha_adquisicion' => 'required|date_format:d/m/Y',
                 'descripcion' => 'required|max:250',
                 'fecha_ordencompra' => 'required|date_format:d/m/Y'

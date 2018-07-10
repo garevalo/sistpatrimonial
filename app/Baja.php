@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Baja extends Model
 {
-    protected $fillable = ['idlocal','idoficina','centrocosto','idpersonal','imagen','fechabaja','descripcion','idbien'];
+    protected $fillable = ['idlocal','idoficina','centrocosto','idpersonal','imagen','fechabaja','descripcion','idbien','causalbaja'];
     protected $primarykey = 'idbaja';
     protected $dates = ['fechabaja'];
 
