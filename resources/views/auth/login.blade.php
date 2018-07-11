@@ -23,9 +23,9 @@
 @section('aside') @endsection
 @section('footer') @endsection
 @section('content-wrapp') @endsection
-@section('end-content-wrapp') @endsection
+@section('end-content-wrapp') @endsection 
 @section('body')
-    <body class="hold-transition login-page" style="background-image: url({{asset('images/banner-login.png')}}); background-repeat: round; " >
+    <body class="hold-transition login-page" style="background: url({{asset('images/banner-loginv2.jpg')}}) no-repeat center; background-size: 100%;" >
 @endsection
 
 @section('wrapper') @endsection
@@ -35,7 +35,7 @@
 
     <div class="login-box" >
         <div class="login-logo">
-            <a href="#"><b>Sistema</b> {{config('app.name')}}</a>
+            <a href="#"><b>Control Bienes Patrimoniales</a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">

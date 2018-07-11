@@ -1,13 +1,13 @@
 <header class="main-header">
     <!-- Logo -->
-    <a href="/" class="logo" style="background-color: #555299;">
+    <a href="/" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b></b>C.I</span>
+        <span class="logo-mini"><b></b>CBP</span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg">Control. <b>{{config('app.name')}}</b></span>
+        <span class="logo-lg">Cont. <b>Bienes</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top" style="background-color: #605ca8;">
+    <nav class="navbar navbar-static-top">
         <!-- Sidebar toggle button-->
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
@@ -18,7 +18,7 @@
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        
+                        <img src="{{asset('dist/img/avatar5.png')}}" class="user-image" alt="User Image">
                         @if(Auth::check())
                         <span class="hidden-xs">{{ Auth::user()->name }}</span>
                         @endif
@@ -26,7 +26,8 @@
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            
+                            <img src="{{asset('dist/img/avatar5.png')}}" class="img-circle" alt="User Image">
+
                             <p>
                                 @if(Auth::check())
                                     {{ Auth::user()->name }}
@@ -50,10 +51,10 @@
                         </li>
                     </ul>
                 </li>
-                <!-- 
+                <!-- Control Sidebar Toggle Button -->
                 <li>
                     <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-                </li> Control Sidebar Toggle Button -->
+                </li>
             </ul>
         </div>
     </nav>

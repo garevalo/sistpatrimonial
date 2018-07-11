@@ -77,7 +77,7 @@
     @show
 
     @section('asidecontrol')
-     {{-- @include('back.asidecontrol') --}} 
+      @include('back.asidecontrol') 
     @show
 
     @section('endwrapper')

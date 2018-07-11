@@ -114,7 +114,7 @@ class ProveedorController extends Controller
                     <input type="submit" value="Eliminar" class="btn btn-danger btn-xs" onclick="borrar()" >
                 </form>';
 
-                return '<a href="'.route('proveedor.edit',$table->idproveedor).'" class="btn btn-primary btn-xs">Editar</a>'. ' '.$delete  ;
+                return '<a href="'.route('proveedor.edit',$table->idproveedor).'" class="btn btn-primary btn-xs">Editar</a>'  ;
             })
             ->rawColumns(['edit'])
             ->make(true);

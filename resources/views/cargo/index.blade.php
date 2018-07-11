@@ -33,7 +33,7 @@
                         <th>ID</th>
                         <th>Cargo</th>
                         <th>Editar</th>
-                        <th>Eliminar</th>
+                        {{--<th>Eliminar</th>--}}
                     </tr>
                     </thead>
                     <tbody>
@@ -42,14 +42,14 @@
                             <td>{{$cargo->idcargo}}</td>
                             <td>{{$cargo->cargo}}</td>
                             <td><a href="{{route('cargo.edit',$cargo->idcargo)}}" class="btn btn-primary btn-sm">Editar</a></td>
-                            <td>
+                            {{--<td>
                                 <form method="post" action="{{route('cargo.destroy',$cargo->idcargo)}}">
                                     {!! csrf_field() !!}
                                     {!! method_field('DELETE') !!}
                                     <input type="submit" value="Eliminar" class="btn btn-danger btn-sm">
 
                                 </form>
-                            </td>
+                            </td>--}}
                         </tr>
                     @endforeach
                     </tbody>

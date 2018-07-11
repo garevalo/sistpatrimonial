@@ -5,19 +5,17 @@
     <section class="sidebar">
 
     
-    {{--
-    <!-- search form -->
-    <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-            <input type="text" name="q" class="form-control" placeholder="Search...">
-            <span class="input-group-btn">
-            <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-            </button>
-          </span>
+    <div class="user-panel">
+        <div class="pull-left image">
+            <img src="{{asset('dist/img/avatar5.png')}}" class="img-circle" alt="User Image">
         </div>
-    </form>
-    <!-- /.search form -->
-    --}}
+        <div class="pull-left info">
+            @if(Auth::check())
+            <p>{{Auth::user()->name}}</p>
+            @endif
+            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+    </div>
     <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="header">MENU</li>
@@ -103,13 +101,13 @@
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
-                <ul class="treeview-menu"> 
-                    <li class="@if(request()->is('reporte/*')) active @endif"><a href="/reporte/nivelcumplimiento"><i class="fa fa-file-pdf-o"></i> Nivel de Cumplimiento</a></li>
+                <ul class="treeview-menu">
+                    <li class="@if(request()->getRequestUri()=='/reporte') active @endif"><a href="/reporte/nivelcumplimiento"><i class="fa fa-file-pdf-o"></i> Nivel de Cumplimiento</a></li>
                     
 
-                    <li class="@if(request()->is('reporte/*')) active @endif"><a href="/reporte/nivelexactitud"><i class="fa fa-file-pdf-o"></i> Nivel de Exactitud</a></li>
+                    <li class="@if(request()->getRequestUri()=='/reporte') active @endif"><a href="/reporte/nivelexactitud"><i class="fa fa-file-pdf-o"></i> Nivel de Exactitud</a></li>
 
-                    <li class="@if(request()->is('reporte/*')) active @endif"><a href="/reporte/inventario"><i class="fa fa-file-pdf-o"></i> Reporte Inventarios</a></li>
+                    <li class="@if(request()->getRequestUri()=='/reporte') active @endif"><a href="/reporte/inventario"><i class="fa fa-file-pdf-o"></i> Reporte Inventarios</a></li>
                 </ul>
             </li> 
             @endif
