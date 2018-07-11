@@ -14,11 +14,11 @@
             <div class="box-body">
 
                 <div class="col-xs-12">
-                    {{ Form::selectfield('cc_solicitante','Dependencia Solicitante',$centrocostos,'Seleccione Centro Costo') }}
+                    {{ Form::selectfield('cc_solicitante','Dependencia Solicitante',$centrocostos,'Seleccione Centro Costo','',["required"=>"required"]) }}
 
-                    {{ Form::selectfield('cc_destino','Con Destino a (Oficina)',$oficinas,'Seleccione Oficina') }}
+                    {{ Form::selectfield('cc_destino','Con Destino a (Oficina)',$oficinas,'Seleccione Oficina','',["required"=>"required"]) }}
 
-                    {{ Form::selectfield('responsable','Entregar a',$personales,'Seleccione Personal') }}
+                    {{ Form::selectfield('responsable','Entregar a',$personales,'Seleccione Personal','',["required"=>"required"]) }}
                 </div>
 
                 <div class="col-xs-12">
@@ -198,18 +198,23 @@ function cascade(parent,children,urlajax,id,column,withjoin=''){
             },
             results: function (data) {
                 return {
-                    results: $.map(data, function (item) {
+                    results: function (item) {
                         return {
                             text: item.text,
                             id: item.id
                         }
-                    })
+                    }
                 };
             }
-        }
+        },
+        //templateSelection: formatRepo,
     });
 
-
+    function formatRepo(repo){
+        var arr = new Array(); 
+        arr.push(repo.id);
+        //alert(repo.id);
+    }
 
 </script>
 

@@ -59,7 +59,7 @@ class PedidoController extends Controller
     public function store(PedidoRequest $request)
     {
 
-       dd($request->descripcion);
+       //dd($request->descripcion);
 
         $idpedido = Pedido::insertGetId([
             
