@@ -103,13 +103,13 @@
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
-                <ul class="treeview-menu">
-                    <li class="@if(request()->getRequestUri()=='/pedido') active @endif"><a href="/reporte/nivelcumplimiento"><i class="fa fa-file-pdf-o"></i> Nivel de Cumplimiento</a></li>
+                <ul class="treeview-menu"> 
+                    <li class="@if(request()->is('reporte/*')) active @endif"><a href="/reporte/nivelcumplimiento"><i class="fa fa-file-pdf-o"></i> Nivel de Cumplimiento</a></li>
                     
 
-                    <li class="@if(request()->getRequestUri()=='/pedido') active @endif"><a href="/reporte/nivelexactitud"><i class="fa fa-file-pdf-o"></i> Nivel de Exactitud</a></li>
+                    <li class="@if(request()->is('reporte/*')) active @endif"><a href="/reporte/nivelexactitud"><i class="fa fa-file-pdf-o"></i> Nivel de Exactitud</a></li>
 
-                    <li class="@if(request()->getRequestUri()=='/pedido') active @endif"><a href="/reporte/nivelexactitud"><i class="fa fa-file-pdf-o"></i> Reporte Inventarios</a></li>
+                    <li class="@if(request()->is('reporte/*')) active @endif"><a href="/reporte/inventario"><i class="fa fa-file-pdf-o"></i> Reporte Inventarios</a></li>
                 </ul>
             </li> 
             @endif

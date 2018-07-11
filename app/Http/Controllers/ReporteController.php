@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use PDF;
 use Carbon\Carbon;
 use App\Pedido;
+use App\ConteoInventario;
+use App\inventario;
 use DB;
 
 
@@ -77,6 +79,40 @@ class ReporteController extends Controller
         $pdf = PDF::loadView('reporte.pdf.nivelexactitud',compact('conteo','data'));
         return $pdf->stream('ReporteExactitud.pdf');
     }
+
+    public function inventario()
+    {
+        $years = collect(range(date('Y')-10,date('Y')))
+                ->map(function ($item, $key) {
+                    return ['key'=>$item,'val'=>$item];
+                })
+                ->pluck('key','val')
+                ->reverse()
+                ->toArray();
+
+        return view('reporte.reporteinventario',compact('years'));
+    }
+
+
+    public function inventarioPdf(Request $request){
+       
+        $resultConciliado = ConteoInventario::where('situacion',1)
+                                ->whereYear('fecha_conteo',$request->year)
+                                ->with('Inventario.CentroCosto','bien.catalogo')
+                                ->get();
+
+        $resultFaltante = ConteoInventario::where('situacion',2)
+                                ->whereYear('fecha_conteo',$request->year)
+                                ->with('Inventario.CentroCosto','bien.catalogo')
+                                ->get();                                  
+        $year = $request->year;
+        //dd($resultConciliado);                            
+
+        $pdf = PDF::loadView('reporte.pdf.inventario',compact('resultFaltante','resultConciliado','year'));
+        return $pdf->stream('ReporteInventario.pdf');
+        //return view('reporte.pdf.inventario',compact('resultFaltante','resultConciliado'));
+    }
+
 
     /**
      * Store a newly created resource in storage.

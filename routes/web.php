@@ -11,6 +11,9 @@
 |
 */
 
+DB::listen(function($sql) {
+    //var_dump($sql);
+});
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -117,6 +120,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('usuario','UsuarioController');
 
     //Reportes
+    Route::post('reporte/inventario','ReporteController@inventarioPdf')->name('reporteInventario');
+    Route::get('reporte/inventario','ReporteController@inventario');
+
     Route::post('reporte/nivelexactitud','ReporteController@nivelExactitudPdf');
     Route::get('reporte/nivelexactitud','ReporteController@nivelexactitud');
 
