@@ -1,5 +1,5 @@
 @extends('back.app')
-@section('title') Gestion de Activos TI @endsection
+@section('title')Sistema web de control de bienes patrimoniales @endsection
 
 
 @section('content')

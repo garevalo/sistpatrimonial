@@ -1,6 +1,6 @@
 @extends('back.app')
 
-@section('title')Ver Bien @endsection
+@section('title')Ver Pedido @endsection
 
 
 @section('content')
