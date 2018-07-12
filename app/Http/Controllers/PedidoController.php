@@ -206,14 +206,15 @@ class PedidoController extends Controller
            $idtransferencia = Transferencia::insertGetId([
                 'cc_origen'           => $request->centrocosto,
                 'personal_origen'     => $request->idpersonal,
-                'cc_destino'          => $request->centrocostodestino,
-                'personal_destino'    => $request->idpersonaldestino
+
+                'cc_destino'          => $request->cc_solicitante,
+                'personal_destino'    => $request->responsable
             ]);
 
             foreach ($request->bien as $key => $bien) {
                 Bien::FindOrFail($key)->update([
-                    'centrocosto'=> $request->centrocostodestino,
-                    'idpersonal' => $request->idpersonaldestino
+                    'centrocosto'=> $request->cc_solicitante,
+                    'idpersonal' => $request->responsable
                 ]); 
 
                 Movimiento::create([

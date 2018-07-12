@@ -109,8 +109,7 @@
 
 <script>
     
-
-    cascade('cc_solicitante','responsable','/data/CentroCosto/codcentrocosto/','idpersonal','nombres','personal');
+cascade('cc_solicitante','responsable','/data/CentroCosto/codcentrocosto/','idpersonal','nombres','personal');
 
 function cascade(parent,children,urlajax,id,column,withjoin=''){
         $('#' + parent).on('change',function(){
@@ -185,35 +184,47 @@ function cascade(parent,children,urlajax,id,column,withjoin=''){
 
     
     $(".descripcion").select2({
-        language: "es",
-        minimumInputLength: 2,
-        ajax: {
-            url:  "{{route('bienitems')}}",
-            delay: 250,
-            dataType: 'json',
-            data: function(params) {
-                return {
-                    term: params.term
+            language: "es",
+            minimumInputLength: 2,
+            ajax: {
+                url:  "{{route('bienitems')}}",
+                delay: 250,
+                dataType: 'json',
+                data: function(params) {
+                    return {
+                        term: params.term
+                    }
+                },
+                results: function (data) {
+                    return {
+                        results: function (item) {
+                            return {
+                                text: item.text,
+                                id: item.id
+                            }
+                        }
+                    };
                 }
             },
-            results: function (data) {
-                return {
-                    results: function (item) {
-                        return {
-                            text: item.text,
-                            id: item.id
-                        }
-                    }
-                };
-            }
-        },
-        //templateSelection: formatRepo,
+            templateSelection: formatRepo,
     });
+    
+    var arr = new Array();
 
     function formatRepo(repo){
-        var arr = new Array(); 
+        
         arr.push(repo.id);
-        //alert(repo.id);
+        
+
+        return repo.text;
+    }
+
+    function remove(arr, item) {
+        for (var i = arr.length; i--;) {
+            if (arr[i] === item) {
+                arr.splice(i, 1);
+            }
+        }
     }
 
 </script>

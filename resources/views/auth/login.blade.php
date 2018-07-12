@@ -25,7 +25,7 @@
 @section('content-wrapp') @endsection
 @section('end-content-wrapp') @endsection 
 @section('body')
-    <body class="hold-transition login-page" style="background: url({{asset('images/banner-loginv2.jpg')}}) no-repeat center; background-size: 100%;" >
+    <body class="hold-transition login-page">
 @endsection
 
 @section('wrapper') @endsection
@@ -35,7 +35,7 @@
 
     <div class="login-box" >
         <div class="login-logo">
-            <a href="#"><b>Control Bienes Patrimoniales</a>
+            <a href="#"><b>Control de bienes patrimoniales</a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
