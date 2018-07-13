@@ -12,7 +12,7 @@
 */
 
 DB::listen(function($sql) {
-    //var_dump($sql);
+   // var_dump($sql);
 });
 
 Route::get('/', function () {

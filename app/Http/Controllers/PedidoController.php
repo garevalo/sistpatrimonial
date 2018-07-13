@@ -8,6 +8,7 @@ use App\CentroCosto;
 use App\Personal;
 use App\Local;
 use App\Oficina;
+use App\Bien;
 use Datatables;
 use Carbon\Carbon;
 use App\Http\Requests\PedidoRequest;

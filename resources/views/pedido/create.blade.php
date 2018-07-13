@@ -195,28 +195,21 @@ function cascade(parent,children,urlajax,id,column,withjoin=''){
                         term: params.term
                     }
                 },
-                results: function (data) {
-                    return {
-                        results: function (item) {
-                            return {
-                                text: item.text,
-                                id: item.id
-                            }
-                        }
-                    };
-                }
+                cache: true
             },
             templateSelection: formatRepo,
     });
+
+
     
     var arr = new Array();
 
     function formatRepo(repo){
+    
+            arr.push(repo.id);
+            console.log(arr.includes("'"+ repo.id + "'"));
+            return repo.text;
         
-        arr.push(repo.id);
-        
-
-        return repo.text;
     }
 
     function remove(arr, item) {
