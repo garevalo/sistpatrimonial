@@ -8,7 +8,7 @@
 
         <div class="box box-danger">
             <div class="box-header">
-                <h3 class="box-title">Realizar inventario {{ucwords($titulomod)}}</h3>
+                <h3 class="box-title">Realizar {{ucwords($titulomod)}}</h3>
             </div>
 
             {{ Form::model($table, ['route' => ['inventario.fisico',$table->idinventario]]) }}
@@ -26,6 +26,7 @@
 
                     @if(count($bienes)>0)
                         @foreach($bienes as $bien)
+                         @if($bien->idbaja== 1 or $bien->idbaja=='') 
                         <tr>
                             <td>{{$bien->catalogo->denom_catalogo}}</td>
                             <td>
@@ -39,9 +40,11 @@
                             <td>{{ $bien->codpatrimonial}}</td>
                             <td>{{ Form::select('situacion[]',$situacion,$bien->situacion,['placeholder'=> 'Seleccione Situación','class'=>'form-control input-sm']) }}</td>
                         </tr>
+                        @endif
                         @endforeach
                     @else
                         @foreach($centrocosto->bien as $bien)
+                        @if($bien->idbaja== 1 or $bien->idbaja=='')
                         <tr>
                             <td>{{ $bien->catalogo->denom_catalogo  }}</td>
                             <td>
@@ -55,6 +58,7 @@
                             <td>{{ $bien->codpatrimonial}}</td>
                             <td>{{ Form::select('situacion[]',$situacion,'',['placeholder'=> 'Seleccione Situación','class'=>'form-control input-sm']) }}</td>
                         </tr>
+                        @endif
                         @endforeach
                     @endif
 
