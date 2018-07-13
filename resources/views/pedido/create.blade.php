@@ -68,38 +68,13 @@
                      $(this).parents("tr").remove();
                 });
 
-            $("body").on("click","#agregar",function(){
-                     $("#articulos tbody").append('<tr>'+
-                                        '<td> <select class="form-control input-sm descripcion" name="descripcion[]"  required > </select></td>'+
-                                        '<td><button type="button" class="btn btn-xs btn-danger eliminar"><i class="fa fa-trash"></i> Eliminar</button></td>'+
-                                    '</tr>');
+            $("body").on("click","#agregar",function(event){
+                     $("#articulos tbody").append(
+                                        '<tr><td> <select class="form-control input-sm descripcion" name="descripcion[]"  required > </select></td>'+
+                                        '<td><button type="button" class="btn btn-xs btn-danger eliminar"><i class="fa fa-trash"></i> Eliminar</button></td></tr>');
 
 
-                     $('.descripcion').select2({
-                        language: "es",
-                        minimumInputLength: 2,
-                        ajax: {
-                            url:  "{{route('bienitems')}}",
-                            delay: 250,
-                            dataType: 'json',
-                            data: function(params) {
-                                return {
-                                    term: params.term
-                                }
-                            },
-                            results: function (data) {
-                                return {
-                                    results: $.map(data, function (item) {
-                                        return {
-                                            text: item.text,
-                                            id: item.id
-                                        }
-                                    })
-                                };
-                            }
-                        }
-                    });
-
+                    formatselect();
                 });
                                
     });
@@ -182,8 +157,30 @@ function cascade(parent,children,urlajax,id,column,withjoin=''){
         });
     }
 
+
     
-    $(".descripcion").select2({
+
+    formatselect();
+
+    var arr = new Array();
+
+
+    function formatselect(){
+
+       
+
+        $(".descripcion").on("change", function (e) { 
+            console.log($(this).val());
+            var idbien = $(this).val();
+            if($.inArray(idbien.toString(), arr) > -1 ){
+                event.preventDefault();
+                alert("seleccione otro bien");
+                $('.descripcion').val(null).trigger('change');
+            }
+
+        });
+
+        $(".descripcion").select2({
             language: "es",
             minimumInputLength: 2,
             ajax: {
@@ -195,26 +192,21 @@ function cascade(parent,children,urlajax,id,column,withjoin=''){
                         term: params.term
                     }
                 },
-                results: function (data) {
-                    return {
-                        results: function (item) {
-                            return {
-                                text: item.text,
-                                id: item.id
-                            }
-                        }
-                    };
-                }
+                cache: true
             },
-            templateSelection: formatRepo,
-    });
-    
-    var arr = new Array();
+            templateSelection: formatRepo
+        });  
 
+    }
+
+    
     function formatRepo(repo){
-        
-        arr.push(repo.id);
-        
+
+        var cod = repo.id;   
+        console.log(cod);
+        if($.inArray(cod.toString(), arr) === -1 ){
+            arr.push(repo.id);
+        }
 
         return repo.text;
     }
