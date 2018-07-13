@@ -342,6 +342,10 @@ class BienController extends Controller
             $query->where('idbaja', '=', 1)
                   ->orWhereNull('idbaja');
         })
+        ->where(function ($query) {
+            $query->where('estado_pedido', '=', 1)
+                  ->orWhereNull('estado_pedido');
+        })
         ->with('color','modelo','marca')->get();
         
         $result     =   array();
@@ -401,7 +405,11 @@ class BienController extends Controller
     public function transferenciaStore(Request $request){
 
         DB::transaction(function () use ($request) {
-            
+           
+           $almacen = CentroCosto::where('centrocosto','like','ALMACEN%')->first();
+
+           //dd($almacen->codcentrocosto);
+
            $idtransferencia = Transferencia::insertGetId([
                 'cc_origen'           => $request->centrocosto,
                 'personal_origen'     => $request->idpersonal,
@@ -410,10 +418,19 @@ class BienController extends Controller
             ]);
 
             foreach ($request->bien as $key => $bien) {
-                Bien::FindOrFail($key)->update([
-                    'centrocosto'=> $request->centrocostodestino,
-                    'idpersonal' => $request->idpersonaldestino
-                ]); 
+                if($almacen->codcentrocosto == $request->centrocostodestino ){
+                    Bien::FindOrFail($key)->update([
+                        'centrocosto'=> $request->centrocostodestino,
+                        'idpersonal' => $request->idpersonaldestino,
+                        'estado_pedido' => 1
+                    ]);
+                }else{
+                    Bien::FindOrFail($key)->update([
+                        'centrocosto'=> $request->centrocostodestino,
+                        'idpersonal' => $request->idpersonaldestino
+                    ]);
+                }
+                 
 
                 Movimiento::create([
                     'idbien'            => $key,

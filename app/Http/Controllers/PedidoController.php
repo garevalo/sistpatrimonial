@@ -60,8 +60,6 @@ class PedidoController extends Controller
     public function store(PedidoRequest $request)
     {
 
-       //dd($request->descripcion);
-
         $idpedido = Pedido::insertGetId([
             
             'cc_solicitante'=> $request->cc_solicitante,
@@ -74,6 +72,8 @@ class PedidoController extends Controller
         if($idpedido){
 
             foreach ($request->descripcion as $key => $value) {
+                Bien::FindOrFail($request->descripcion[$key])->update(['estado_pedido'=>2]);
+
                 Articulo::create([
                     //"cantidad"          => $request->cantidad[$key],
                     //"umedida"           => $request->umedida[$key],
