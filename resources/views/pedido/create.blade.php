@@ -32,7 +32,10 @@
                             <table id="articulos" class="table table-condensed table-striped table-responsive">
                                 <thead>
                                     <th width="80%">Articulos Solicitados</th>
-                                    <th><button class="btn btn-xs btn-primary" id="agregar" type="button"><i class="fa fa-plus-circle"></i> Agregar  </button></th>
+                                    <th>
+                                        <button class="btn btn-xs btn-primary" id="agregar" type="button"><i class="fa fa-plus-circle"></i> Agregar  </button>
+                                        <button class="btn btn-xs btn-info" id="refresh" type="button"><i class="fa fa-refresh"></i> </button>
+                                    </th>
                                 </thead>
                                 <tbody>
                                     <tr> 
@@ -164,10 +167,12 @@ function cascade(parent,children,urlajax,id,column,withjoin=''){
 
     var arr = new Array();
 
+    $("#refresh").on("click",function(){
+
+        arr = [];
+    })
 
     function formatselect(){
-
-       
 
         $(".descripcion").on("change", function (e) { 
             console.log($(this).val());
